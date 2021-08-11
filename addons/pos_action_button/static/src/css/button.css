@@ -1,0 +1,23 @@
+.pos .product .umgian-price-tag {
+    position: absolute;
+    top: 20px;
+    right: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #80c57e;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+.pos .product .family-price-tag {
+    position: absolute;
+    top: 38px;
+    right: 2px;
+    vertical-align: top;
+    color: white;
+    line-height: 13px;
+    background: #9a9e63;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
