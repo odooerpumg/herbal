@@ -11,7 +11,6 @@ odoo.define('js_framework_sample.SampleFramework', function(require){
             this.$('.pay').click(function(){
                 var order = self.pos.get_order();
                 console.log("ORDER",order.get_total_balance());
-                alert("ORDER", order.get_total_balance())
                 var has_valid_product_lot = _.every(order.orderlines.models, function(line){
                     return line.has_valid_product_lot();
                 });
