@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <!-- Declared the same in every module that may need it -->
+    <record id="personal_information" model="ir.ui.view">
+        <field name="name">Personal information page for contacts form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="personal_information_page" string="Personal Information">
+                    <group name="personal_information_group" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">Birthdate Date field</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="inventory_ext.personal_information"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='personal_information_group']">
+                <field name='birthdate_date' />
+                <field name="age" attrs="{'invisible': [('birthdate_date', '=', False)]}"/>
+                <field name="customer_type" />
+                <field name="referee_name" />
+                <field name="referee_number" />
+                <field name="sec_contact_name" />
+                <field name="sec_contact_number" />
+                <field name="medical_history" />
+                <field name="remark" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
