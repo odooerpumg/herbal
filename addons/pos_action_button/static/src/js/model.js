@@ -9,6 +9,12 @@ odoo.define('pos_action_button.models', function (require) {
             // TODO: should be replaced with native Promise
             this.reload_debts_timer = $.when();
             models.load_fields('product.product', ['umgian_price', 'umgian_family_price']);
+            models.load_fields('res.partner', [
+                'birthdate_date', 'age', 'customer_type', 
+                'referee_name', 'referee_number',
+                'sec_contact_name', 'sec_contact_number',
+                'medical_history',  'remark',
+            ]);
             _super_posmodel.initialize.apply(this, arguments);
         },
     });

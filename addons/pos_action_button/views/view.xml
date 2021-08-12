@@ -6,6 +6,7 @@
             <!-- Style sheet for button -->
             <link rel="stylesheet" href="/pos_action_button/static/src/css/button.css"/>
             <script type="text/javascript" src="/pos_action_button/static/src/js/model.js"/>
+            <script type="text/javascript" src="/pos_action_button/static/src/js/client.js"/>
             <script type="text/javascript" src="/pos_action_button/static/src/js/action_button.js"/>
         </xpath>
     </template>

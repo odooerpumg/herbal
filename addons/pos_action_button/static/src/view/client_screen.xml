@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery=".client-details-right" t-operation="append">
+            <div class="client-detail">
+                <span class="label">Birthday</span>
+                <input class='detail client_birthdate_date' name="birthdate_date" type="date" t-att-value='partner.birthdate_date'></input>
+            </div>      
+        </t>
+        <t t-jquery=".client-details-left" t-operation="append">
+            <div class="client-detail">
+                <span class="label">Type</span>
+                <!-- <input class='detail client_customer_type' name="customer_type" t-att-value='partner.customer_type'></input> -->
+                <select class="form-control" name="customer_type">
+                    <option selected="true" t-attf-value="'umgian'">Umgian</option>
+                    <option t-attf-value="'umgian_family_member'">Umgian Family Member</option>
+                    <option t-attf-value="'none'">None</option>
+                </select>            
+            </div>   
+        </t>           
+    </t>
+
+    <t t-extend="ClientDetails">
+        <t t-jquery=".client-details-left" t-operation="append">
+            <t t-if="partner.birthdate_date">
+                <div class='client-detail'>
+                    <span class='label'>Birthday</span>
+                    <span class='detail client_birthdate_date'><t t-esc='partner.birthdate_date' /></span>
+                </div>
+            </t>
+            <div class='client-detail'>
+                <span class='label'>Age</span>
+                <span class='detail client_age'><t t-esc='partner.age' /></span>
+            </div>  
+            <div class='client-detail'>
+                <span class='label'>Referee Name</span>
+                <span class='detail client_referee_name'><t t-esc='partner.referee_name' /></span>
+            </div>  
+            <div class='client-detail'>
+                <span class='label'>Referee Number</span>
+                <span class='detail client_referee_number'><t t-esc='partner.referee_number' /></span>
+            </div>      
+        </t>
+        <t t-jquery=".client-details-right" t-operation="append">
+            <div class='client-detail'>
+                <span class='label' width="24">Second Contact Name</span>
+                <span class='detail client_sec_contact_name'><t t-esc='partner.sec_contact_name' /></span>
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Second Contact Nunmber</span>
+                <span class='detail client_sec_contact_number'><t t-esc='partner.sec_contact_number' /></span>
+            </div>                                   
+        </t>
+    </t>
+</templates>
