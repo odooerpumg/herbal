@@ -50,7 +50,11 @@
             <div class='client-detail'>
                 <span class='label' width="24">Second Contact Nunmber</span>
                 <span class='detail client_sec_contact_number'><t t-esc='partner.sec_contact_number' /></span>
-            </div>                                   
+            </div> 
+            <div class='client-detail'>
+                <span class='label' width="24">Employee ID</span>
+                <span class='detail client_sec_contact_number'><t t-esc='partner.umgian_employee_id' /></span>
+            </div>                                  
         </t>
     </t>
 </templates>

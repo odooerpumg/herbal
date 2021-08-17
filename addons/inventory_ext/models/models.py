@@ -25,6 +25,21 @@ class ProductTemplate(models.Model):
         self.umgian_family_price = self.list_price if self.list_price and self.umgian_family_price == 1.0 else self.umgian_family_price
 
 
+class NrcNo(models.Model):
+    _name = 'nrc.no'
+
+    name = fields.Char('Name')
+
+class NrcDescription(models.Model):
+    _name = 'nrc.description'
+    name = fields.Char('Name')
+    nrc_no_id = fields.Many2one('nrc.no',string='NRC No')
+
+class NrcType(models.Model):
+    _name = 'nrc.type'
+    name = fields.Char('Name')
+    description = fields.Text('Description')
+
 class ResPartner(models.Model):
     """Partner with birth date in date format."""
 
@@ -55,3 +70,13 @@ class ResPartner(models.Model):
             if record.birthdate_date:
                 age = relativedelta(fields.Date.today(), record.birthdate_date).years
             record.age = age 
+
+    # NRC
+    nrc_no = fields.Many2one('nrc.no',string="NRC No")
+    nrc_desc = fields.Many2one('nrc.description',string="NRC Description", domain="[('nrc_no_id','=',nrc_no)]")
+    nrc_type = fields.Many2one('nrc.type',string="NRC Type")
+    nrc_number = fields.Char('NRC Number')
+
+    # EMPLOYEE ID
+    umgian_employee_id = fields.Char('Employee ID')
+    

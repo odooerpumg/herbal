@@ -19,9 +19,10 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/res_partner.xml',
+        'security/ir.model.access.csv',
+        'views/product_views.xml',
+        'views/res_partner_views.xml',
+        'views/nrc_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -8,7 +8,7 @@ odoo.define('pos_action_button.models', function (require) {
             this.reload_debts_partner_ids = [];
             // TODO: should be replaced with native Promise
             this.reload_debts_timer = $.when();
-            models.load_fields('product.product', ['umgian_price', 'umgian_family_price']);
+            models.load_fields('product.product', ['umgian_price', 'umgian_family_price', 'umgian_employee_id']);
             models.load_fields('res.partner', [
                 'birthdate_date', 'age', 'customer_type', 
                 'referee_name', 'referee_number',
