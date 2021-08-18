@@ -13,7 +13,7 @@ var UmgianButton = pos_screens.ActionButtonWidget.extend({
         this._super(parent);
         var self = this;
         this.order = this.pos.get_order();   
-        this.selected_orderline = this.order.get_selected_orderline();  
+        this.selected_orderline = this.order.get_selected_orderline();
     },
 
     get_umgian_price(){

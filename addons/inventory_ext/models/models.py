@@ -57,7 +57,7 @@ class ResPartner(models.Model):
     sec_contact_number = fields.Char(string='Second Contact Nunmber')
 
     #CUSTOMER TYPE(UMGian/UMGina Family Member)
-    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', 'UMGina Family Member')], string='Customer Type')
+    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', 'UMGian Family Member')], string='Customer Type')
 
     # TEXT
     medical_history = fields.Text(string='Medical History')
@@ -76,6 +76,13 @@ class ResPartner(models.Model):
     nrc_desc = fields.Many2one('nrc.description',string="NRC Description", domain="[('nrc_no_id','=',nrc_no)]")
     nrc_type = fields.Many2one('nrc.type',string="NRC Type")
     nrc_number = fields.Char('NRC Number')
+
+    def _compute_nrc_string(self):
+        for record in self:
+            if record.nrc_no and record.nrc_desc and record.nrc_type and record.nrc_number:
+                record.nrc_string = str(record.nrc_no) + str(record.nrc_desc) + str(record.nrc_type) + str(record.nrc_number)
+
+    nrc_string = fields.Char('NRC', compute=_compute_nrc_string)
 
     # EMPLOYEE ID
     umgian_employee_id = fields.Char('Employee ID')

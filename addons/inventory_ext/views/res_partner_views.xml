@@ -23,6 +23,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='personal_information_group']" position="inside">
                 <group col='1'>
+                    <field name="umgian_employee_id" />
                     <field name='birthdate_date' />
                     <field name="age" attrs="{'invisible': [('birthdate_date', '=', False)]}"/>
                     <field name="customer_type" />
