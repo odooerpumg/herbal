@@ -47,6 +47,10 @@
                         </div>
                     </div>
                 </group>
+                <group string="" name="business_info">
+                    <field name="business_unit_id" />
+                    <field name="branch_id" />
+                </group>                
             </xpath>
         </field>
     </record>

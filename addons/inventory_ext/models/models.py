@@ -84,4 +84,8 @@ class ResPartner(models.Model):
 
     # EMPLOYEE ID
     umgian_employee_id = fields.Char('Employee ID')
+
+    # BU/BR
+    business_unit_id = fields.Many2one('business.unit',string='Business Unit')
+    branch_id = fields.Many2one('business.branch',string='Branch')
     
