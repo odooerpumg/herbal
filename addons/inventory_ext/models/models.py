@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from typing import Text
 from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
 
@@ -80,7 +78,7 @@ class ResPartner(models.Model):
     def _compute_nrc_string(self):
         for record in self:
             if record.nrc_no and record.nrc_desc and record.nrc_type and record.nrc_number:
-                record.nrc_string = str(record.nrc_no) + str(record.nrc_desc) + str(record.nrc_type) + str(record.nrc_number)
+                record.nrc_string = str(record.nrc_no.name) + '/' + str(record.nrc_desc.name) + '(' + str(record.nrc_type.name) + ')' + str(record.nrc_number)
 
     nrc_string = fields.Char('NRC', compute=_compute_nrc_string)
 

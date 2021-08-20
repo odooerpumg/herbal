@@ -23,6 +23,7 @@
         'views/product_views.xml',
         'views/res_partner_views.xml',
         'views/nrc_views.xml',
+        'views/bu_br_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -146,7 +146,7 @@
                 </t>
             </div>
             <div class='client-detail'>
-                <span class='label' width="24">Second Contact Nunmber</span>
+                <span class='label' width="24">Second Contact Number</span>
                 <t t-if="partner.sec_contact_number">
                     <span class='detail client_sec_contact_number'><t t-esc='partner.sec_contact_number' /></span>
                 </t>  
