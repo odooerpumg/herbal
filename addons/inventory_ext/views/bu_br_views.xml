@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Work Location: Start -->
+        <record id="work_location_tree" model="ir.ui.view">
+            <field name="name">work_location.tree</field>
+            <field name="model">work.location</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="work_location_form" model="ir.ui.view">
+            <field name="name">work_location.form</field>
+            <field name="model">work.location</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group cols="3">
+                            <group>
+                                <field name="name" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="work_location_action" model="ir.actions.act_window">
+            <field name="name">Office Location</field>
+            <field name="res_model">work.location</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <!-- END -->
+
+    <!-- Business Unit : Start -->
+        <record id="business_unit_tree" model="ir.ui.view">
+            <field name="name">business_unit.tree</field>
+            <field name="model">business.unit</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name" />
+                    <field name="location_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_unit_form" model="ir.ui.view">
+            <field name="name">business_unit.form</field>
+            <field name="model">business.unit</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group cols="3">
+                            <group>
+                                <field name="name" />
+                                <field name="location_id" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_unit_action" model="ir.actions.act_window">
+            <field name="name">Business Unit</field>
+            <field name="res_model">business.unit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <!-- END -->
+    <!-- Business Branch : Start -->
+        <record id="business_branch_tree" model="ir.ui.view">
+            <field name="name">business_branch.tree</field>
+            <field name="model">business.branch</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="business_branch_form" model="ir.ui.view">
+            <field name="name">business_branch.form</field>
+            <field name="model">business.branch</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group cols="3">
+                            <group>
+                                <field name="name" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="business_branch_action" model="ir.actions.act_window">
+            <field name="name">Branch</field>
+            <field name="res_model">business.branch</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <!-- END -->
+
+    <menuitem id="business_unit_menu" parent="inventory_ext.customer_conf_menu" action="business_unit_action" name="Business Unit" sequence="40"/>
+    <menuitem id="business_Branch_menu" parent="inventory_ext.customer_conf_menu" action="business_branch_action" name="Branch" sequence="50"/>
+    <menuitem id="work_location_menu" parent="inventory_ext.customer_conf_menu" action="work_location_action" name="Office Location" sequence="50"/>
+</odoo>

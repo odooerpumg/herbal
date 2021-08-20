@@ -13,7 +13,8 @@ odoo.define('pos_action_button.models', function (require) {
                 'birthdate_date', 'age', 'customer_type', 
                 'referee_name', 'referee_number',
                 'sec_contact_name', 'sec_contact_number',
-                'medical_history',  'remark',
+                'medical_history',  'remark', 'umgian_employee_id',
+                'nrc_no','nrc_desc','nrc_type','nrc_number',
             ]);
             _super_posmodel.initialize.apply(this, arguments);
         },
@@ -48,4 +49,32 @@ odoo.define('pos_action_button.models', function (require) {
             }            
         },        
     });
+
+    // At POS Startup, load the New Models, and add them to the pos model
+
+    // nrc.no
+    models.load_models({
+        model: 'nrc.no',
+        fields: ['name'],
+        loaded: function(self,nrc_keys){
+            self.nrc_keys = nrc_keys;
+        },
+    });
+    // nrc.desc
+    models.load_models({
+        model: 'nrc.description',
+        fields: ['name', 'nrc_no_id'],
+        loaded: function(self,nrc_description){
+            self.nrc_description = nrc_description;
+        },
+    }); 
+    // nrc.type   
+    models.load_models({
+        model: 'nrc.type',
+        fields: ['name', 'description'],
+        loaded: function(self,nrc_types){
+            self.nrc_types = nrc_types;
+        },
+    });
+
 });

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+		<!-- NRC No -->
+            <record model="ir.ui.view" id="nrc_no_tree">
+                <field name="name">NRC No</field>
+                <field name="model">nrc.no</field>
+                <field name="arch" type="xml">
+                    <tree editable="bottom">
+                        <field name="name" />
+                    </tree>
+                </field>
+            </record>
+            <record model="ir.ui.view" id="nrc_no_form">
+                <field name="name">NRC No</field>
+                <field name="model">nrc.no</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <field name="name" />
+                    </form>
+                </field>
+            </record>
+            <record model="ir.actions.act_window" id="nrc_no_action_window">
+                <field name="name">NRC No</field>
+                <field name="res_model">nrc.no</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+		<!-- End -->
+
+		<!-- NRC Description -->
+            <record model="ir.ui.view" id="nrc_description_tree">
+                <field name="name">NRC Description</field>
+                <field name="model">nrc.description</field>
+                <field name="arch" type="xml">
+                    <tree editable="bottom">
+                        <field name="name" />
+                        <field name="nrc_no_id" />
+                    </tree>
+                </field>
+            </record>
+            <record model="ir.ui.view" id="nrc_description_form">
+                <field name="name">NRC Description</field>
+                <field name="model">nrc.description</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <field name="name" />
+                        <field name="nrc_no_id" />
+                    </form>
+                </field>
+            </record>
+            <record model="ir.actions.act_window" id="nrc_description_action_window">
+                <field name="name">NRC Description</field>
+                <field name="res_model">nrc.description</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+		<!-- End -->
+
+		<!-- NRC Type -->
+            <record model="ir.ui.view" id="nrc_type_tree">
+                <field name="name">NRC Type</field>
+                <field name="model">nrc.type</field>
+                <field name="arch" type="xml">
+                    <tree editable="bottom">
+                        <field name="name" />
+                        <field name="description" />
+                    </tree>
+                </field>
+            </record>
+            <record model="ir.ui.view" id="nrc_type_form">
+                <field name="name">NRC Type</field>
+                <field name="model">nrc.type</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <field name="name" />
+                    </form>
+                </field>
+            </record>
+            <record model="ir.actions.act_window" id="nrc_type_action_window">
+                <field name="name">NRC Type</field>
+                <field name="res_model">nrc.type</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+		<!-- End -->
+    
+        <!-- MENUITEM START -->
+            <menuitem name="Customer" id="customer_conf_menu" parent="point_of_sale.menu_point_config_product" sequence="50"/>
+            
+            <menuitem name="NRC No" id="nrc_no_menu" parent="customer_conf_menu" action="nrc_no_action_window" sequence="10"/>		
+		    <menuitem name="NRC Description" id="nrc_description_menu" parent="customer_conf_menu" action="nrc_description_action_window" sequence="20"/>		
+		    <menuitem name="NRC Type" id="nrc_type_menu" parent="customer_conf_menu" action="nrc_type_action_window" sequence="30"/>        
+        <!-- END -->
+</odoo>

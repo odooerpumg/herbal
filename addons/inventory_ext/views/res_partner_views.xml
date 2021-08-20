@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <!-- Declared the same in every module that may need it -->
+    <record id="personal_information" model="ir.ui.view">
+        <field name="name">Personal information page for contacts form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="personal_information_page" string="Personal Information">
+                    <group name="personal_information_group" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">Birthdate Date field</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="inventory_ext.personal_information"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='personal_information_group']" position="inside">
+                <group col='1'>
+                    <field name="umgian_employee_id" />
+                    <field name='birthdate_date' />
+                    <field name="age" attrs="{'invisible': [('birthdate_date', '=', False)]}"/>
+                    <field name="customer_type" />
+                    <field name="referee_name" />
+                    <field name="referee_number" />
+                    <field name="sec_contact_name" />
+                    <field name="sec_contact_number" />
+                    <field name="medical_history" />
+                    <field name="remark" />
+                </group>
+                <group string="NRC" name="nrc_info">
+                    <label for="nrc_number" string="NRC" class="oe_inline"/>
+                    <div class="application_form">
+                        <field name="nrc_string" class="oe_read_only"/>
+                        <div class="oe_edit_only">
+                            <field name="nrc_no" class="oe_inline nrc_no" widget="selection" attrs="{'required': [('company_type','in',['person','company'])]}" />
+                            /
+                            <field name="nrc_desc" class="oe_inline nrc_desc" attrs="{'required': [('company_type','in',['person','company'])]}" />
+                            <field name="nrc_type" class="oe_inline nrc_type" widget="selection" attrs="{'required': [('company_type','in',['person','company'])]}" />
+                            <field name="nrc_number" class="oe_inline" attrs="{'required': [('company_type','in',['person','company'])]}" />
+                        </div>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
