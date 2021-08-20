@@ -2,9 +2,9 @@
 <odoo>
 
     <!-- Work Location: Start -->
-        <record id="work_location_tree" model="ir.ui.view">
-            <field name="name">work_location.tree</field>
-            <field name="model">work.location</field>
+        <record id="office_location_tree" model="ir.ui.view">
+            <field name="name">office_location.tree</field>
+            <field name="model">office.location</field>
             <field name="arch" type="xml">
                 <tree string="">
                     <field name="name" />
@@ -12,9 +12,9 @@
             </field>
         </record>
 
-        <record id="work_location_form" model="ir.ui.view">
-            <field name="name">work_location.form</field>
-            <field name="model">work.location</field>
+        <record id="office_location_form" model="ir.ui.view">
+            <field name="name">office_location.form</field>
+            <field name="model">office.location</field>
             <field name="arch" type="xml">
                 <form string="">
                     <header>
@@ -30,9 +30,9 @@
             </field>
         </record>
 
-        <record id="work_location_action" model="ir.actions.act_window">
+        <record id="office_location_action" model="ir.actions.act_window">
             <field name="name">Office Location</field>
-            <field name="res_model">work.location</field>
+            <field name="res_model">office.location</field>
             <field name="view_mode">tree,form</field>
         </record>
     <!-- END -->
@@ -112,5 +112,5 @@
 
     <menuitem id="business_unit_menu" parent="inventory_ext.customer_conf_menu" action="business_unit_action" name="Business Unit" sequence="40"/>
     <menuitem id="business_Branch_menu" parent="inventory_ext.customer_conf_menu" action="business_branch_action" name="Branch" sequence="50"/>
-    <menuitem id="work_location_menu" parent="inventory_ext.customer_conf_menu" action="work_location_action" name="Office Location" sequence="50"/>
+    <menuitem id="office_location_menu" parent="inventory_ext.customer_conf_menu" action="office_location_action" name="Office Location" sequence="50"/>
 </odoo>

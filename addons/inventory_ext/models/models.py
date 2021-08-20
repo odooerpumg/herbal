@@ -55,7 +55,7 @@ class ResPartner(models.Model):
     sec_contact_number = fields.Char(string='Second Contact Nunmber')
 
     #CUSTOMER TYPE(UMGian/UMGina Family Member)
-    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', 'UMGian Family Member')], string='Customer Type')
+    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', "UMGian's Family Member")], string='Customer Type')
 
     # TEXT
     medical_history = fields.Text(string='Medical History')
@@ -74,14 +74,21 @@ class ResPartner(models.Model):
     nrc_desc = fields.Many2one('nrc.description',string="NRC Description", domain="[('nrc_no_id','=',nrc_no)]")
     nrc_type = fields.Many2one('nrc.type',string="NRC Type")
     nrc_number = fields.Char('NRC Number')
+    
+    nrc_string = fields.Char('NRC', compute="_compute_nrc_string")    
 
+    @api.depends("nrc_no", "nrc_desc", "nrc_type", "nrc_number")
     def _compute_nrc_string(self):
         for record in self:
             if record.nrc_no and record.nrc_desc and record.nrc_type and record.nrc_number:
                 record.nrc_string = str(record.nrc_no.name) + '/' + str(record.nrc_desc.name) + '(' + str(record.nrc_type.name) + ')' + str(record.nrc_number)
-
-    nrc_string = fields.Char('NRC', compute=_compute_nrc_string)
+            else:
+                record.nrc_string = None
 
     # EMPLOYEE ID
     umgian_employee_id = fields.Char('Employee ID')
+
+    # BU/BR
+    business_unit_id = fields.Many2one('business.unit',string='Business Unit')
+    branch_id = fields.Many2one('business.branch',string='Branch')
     

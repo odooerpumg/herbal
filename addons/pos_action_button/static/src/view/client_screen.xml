@@ -1,32 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-
+    <!-- EDIT FORM -->
     <t t-extend="ClientDetailsEdit">
-        <t t-jquery=".client-details-right" t-operation="append">
-            <div class="client-detail">
-                <span class="label">Birthday</span>
-                <input class='detail client_birthdate_date' name="birthdate_date" type="date" t-att-value='partner.birthdate_date'></input>
-            </div>      
-            <div class='client-detail'>
-                <span class='label' width="24">Second Contact Name</span>
-                <input class='detail client_sec_contact_name' name='sec_contact_name' t-att-value="partner.sec_contact_name"></input>
-            </div>
-            <div class='client-detail'>
-                <span class='label' width="24">Second Contact Number</span>
-                <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number"></input>
-            </div>  
-            <div class='client-detail'>
-                <span class='label' width="24">Remark</span>
-                <input class='detail client_remark' name="remark" t-att-value="partner.remark"></input>
-            </div>
-            <div class='client-detail'>
-                <span class='label' width="24">Medical History</span>
-                <input class='detail client_medical_history' name="medical_history" t-att-value="partner.medical_history"></input>
-            </div>                         
-        </t>
+        <!-- LEFT -->
         <t t-jquery=".client-details-left" t-operation="append">
             <!-- NRC START -->
-                <div class='client-detail'>
+                <!-- <div class='client-detail'>
                     <span class='label'>NRC No.</span>
                     <select class='detail client-nrc-no needsclick' name='nrc_no'>
                         <option value=''>None</option>
@@ -59,8 +38,57 @@
                     </select>
                     <span class='label'>NRC Number.</span>
                     <input class='detail client_nrc_number' name='nrc_number' t-att-value="partner.nrc_number"></input>
-                </div>
+                </div> -->
             <!-- NRC END -->
+            <div class="client-detail">
+                <span class="label">Birthday</span>
+                <input class='detail client_birthdate_date' name="birthdate_date" type="date" t-att-value='partner.birthdate_date'></input>
+            </div>             
+            <div class='client-detail'>
+                <span class='label' width="24">UMGian ID</span>
+                <input class='detail client_umgian_employee_id' name="umgian_employee_id" t-att-value="partner.umgian_employee_id"></input>
+            </div>
+            <div class='client-detail'>
+                <span class='label'>Business Unit</span>
+                <select class='detail client-business-unit needsclick' name='business_unit_id'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.business_units' t-as='unit'>
+                        <option t-att-value='unit.id'
+                            t-att-selected="partner.business_unit_id ? ((unit.id === partner.business_unit_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='unit.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div>
+            <div class='client-detail'>
+                <span class='label'>Branch</span>
+                <select class='detail client-business-branch needsclick' name='branch_id'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.business_branches' t-as='branch'>
+                        <option t-att-value='branch.id'
+                            t-att-selected="partner.branch_id ? ((branch.id === partner.branch_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='branch.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div>
+            <div class='client-detail'>
+                <span class='label'>Customer Type</span>
+                <select class='detail client-customer-type needsclick' name='customer_type'>
+                    <option value=''>None</option>
+                    <option t-attf-value="umgian" 
+                        t-att-selected="partner.customer_type ? (('umgian' === partner.customer_type) ? true : undefined) : undefined"
+                        >Umgian
+                    </option>
+                    <option t-attf-value="umgian_family_member" 
+                        t-att-selected="partner.customer_type ? (('umgian_family_member' === partner.customer_type) ? true : undefined) : undefined"
+                        >UMGian's Family Member
+                    </option>
+                </select>            
+            </div>                                                   
+        </t>     
+        <!-- RIGHT -->
+        <t t-jquery=".client-details-right" t-operation="append">     
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name'></input>
@@ -68,15 +96,30 @@
             <div class='client-detail'>
                 <span class='label'>Referee Number</span>
                 <input class='detail client_referee_number' name='referee_number' t-att-value='partner.referee_number'></input>
+            </div>              
+            <div class='client-detail'>
+                <span class='label' width="24">Contact Name</span>
+                <input class='detail client_sec_contact_name' name='sec_contact_name' t-att-value="partner.sec_contact_name"></input>
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Contact Number</span>
+                <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number"></input>
             </div>  
             <div class='client-detail'>
-                <span class='label' width="24">Employee ID</span>
-                <input class='detail client_umgian_employee_id' name="umgian_employee_id" t-att-value="partner.umgian_employee_id"></input>
-            </div>                        
-        </t>           
+                <span class='label' width="24">Remark</span>
+                <input class='detail client_remark' name="remark" t-att-value="partner.remark"></input>
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Medical History</span>
+                <input class='detail client_medical_history' name="medical_history" t-att-value="partner.medical_history"></input>
+            </div>                         
+        </t>          
     </t>
 
+    <!-- SHOW FORM -->
     <t t-extend="ClientDetails">
+
+        <!-- LEFT -->
         <t t-jquery=".client-details-left" t-operation="append">            
             <t t-if="partner.birthdate_date">
                 <div class='client-detail'>
@@ -87,7 +130,41 @@
                     <span class='label'>Age</span>
                     <span class='detail client_age'><t t-esc='partner.age' /></span>
                 </div>                
-            </t>             
+            </t>
+            <div class='client-detail'>
+                <t t-if="partner.customer_type == 'umgian'">
+                    <span class='label' width="24">Customer Type</span>
+                    <span class='detail client_customer_type'>UMGian</span>
+                </t>
+                <t t-if="partner.customer_type == 'umgian_family_member'">
+                    <span class='label' width="24">Customer Type</span>
+                    <span class='detail client_customer_type'>UMGian's Family Member</span>
+                </t>                
+            </div>                          
+            <div class='client-detail'>
+                <span class='label' width="24">UMGian ID</span>
+                <t t-if="partner.umgian_employee_id">
+                    <span class='detail client_sec_contact_number'><t t-esc='partner.umgian_employee_id' /></span>
+                </t>
+                <t t-if="!partner.umgian_employee_id">
+                    <span class='detail empty'>N/A</span>
+                </t>
+            </div> 
+            <div class='client-detail'>
+                <t t-if="partner.business_unit_id">
+                    <span class='label' width="24">Business Unit</span>
+                    <span class='detail client_business_unit_id'><t t-esc='partner.business_unit_id[1]' /></span>
+                </t>
+            </div>  
+            <div class='client-detail'>
+                <t t-if="partner.branch_id">
+                    <span class='label' width="24">Branch</span>
+                    <span class='detail client_branch_id'><t t-esc='partner.branch_id[1]' /></span>
+                </t>
+            </div>                                                                   
+        </t>
+        <!-- RIGHT -->
+        <t t-jquery=".client-details-right" t-operation="append">
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <t t-if='!partner.referee_name'>
@@ -106,16 +183,25 @@
                 <t t-if="!partner.referee_number">
                     <span class='detail empty'>N/A</span>
                 </t>
-            </div>  
+            </div>         
             <div class='client-detail'>
-                <span class='label' width="24">Employee ID</span>
-                <t t-if="partner.umgian_employee_id">
-                    <span class='detail client_sec_contact_number'><t t-esc='partner.umgian_employee_id' /></span>
+                <span class='label' width="24">Contact Name</span>
+                <t t-if="partner.sec_contact_name">
+                    <span class='detail client_sec_contact_name'><t t-esc='partner.sec_contact_name' /></span>
                 </t>
-                <t t-if="!partner.umgian_employee_id">
+                <t t-if="!partner.sec_contact_name">
                     <span class='detail empty'>N/A</span>
                 </t>
-            </div> 
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Contact Number</span>
+                <t t-if="partner.sec_contact_number">
+                    <span class='detail client_sec_contact_number'><t t-esc='partner.sec_contact_number' /></span>
+                </t>  
+                <t t-if="!partner.sec_contact_number">
+                    <span class='detail empty'>N/A</span>
+                </t>  
+            </div>  
             <div class='client-detail'>
                 <span class='label' width="24">Remark</span>
                 <t t-if="partner.remark">
@@ -133,31 +219,7 @@
                 <t t-if="!partner.medical_history">
                     <span class='detail empty'>N/A</span>
                 </t>  
-            </div>                                            
-        </t>
-        <t t-jquery=".client-details-right" t-operation="append">
-            <div class='client-detail'>
-                <span class='label' width="24">Second Contact Name</span>
-                <t t-if="partner.sec_contact_name">
-                    <span class='detail client_sec_contact_name'><t t-esc='partner.sec_contact_name' /></span>
-                </t>
-                <t t-if="!partner.sec_contact_name">
-                    <span class='detail empty'>N/A</span>
-                </t>
-            </div>
-            <div class='client-detail'>
-                <span class='label' width="24">Second Contact Number</span>
-                <t t-if="partner.sec_contact_number">
-                    <span class='detail client_sec_contact_number'><t t-esc='partner.sec_contact_number' /></span>
-                </t>  
-                <t t-if="!partner.sec_contact_number">
-                    <span class='detail empty'>N/A</span>
-                </t>  
             </div>  
-            <!-- <div class='client-detail'>
-                <span class='label' width="24">Customer Type</span>
-                <span class='detail client_customer_type'><t t-esc='partner.customer_type' /></span>
-            </div>                                             -->
         </t>
     </t>
 </templates>

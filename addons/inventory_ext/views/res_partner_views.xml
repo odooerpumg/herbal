@@ -37,16 +37,22 @@
                 <group string="NRC" name="nrc_info">
                     <label for="nrc_number" string="NRC" class="oe_inline"/>
                     <div class="application_form">
-                        <field name="nrc_string" class="oe_read_only"/>
+                        
+                        <div class="oe_read_only">
+                            <field name="nrc_string" />
+                        </div>
                         <div class="oe_edit_only">
-                            <field name="nrc_no" class="oe_inline nrc_no" widget="selection" attrs="{'required': [('company_type','in',['person','company'])]}" />
-                            /
-                            <field name="nrc_desc" class="oe_inline nrc_desc" attrs="{'required': [('company_type','in',['person','company'])]}" />
-                            <field name="nrc_type" class="oe_inline nrc_type" widget="selection" attrs="{'required': [('company_type','in',['person','company'])]}" />
-                            <field name="nrc_number" class="oe_inline" attrs="{'required': [('company_type','in',['person','company'])]}" />
+                            <field name="nrc_no" class="oe_inline nrc_no" widget="selection"/>
+                            <field name="nrc_desc" class="oe_inline nrc_desc"/>
+                            <field name="nrc_type" class="oe_inline nrc_type" widget="selection"/>
+                            <field name="nrc_number" class="oe_inline"/>
                         </div>
                     </div>
                 </group>
+                <group string="" name="business_info">
+                    <field name="business_unit_id" />
+                    <field name="branch_id" />
+                </group>                
             </xpath>
         </field>
     </record>
