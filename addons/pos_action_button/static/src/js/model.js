@@ -15,6 +15,7 @@ odoo.define('pos_action_button.models', function (require) {
                 'sec_contact_name', 'sec_contact_number',
                 'medical_history',  'remark', 'umgian_employee_id',
                 'nrc_no','nrc_desc','nrc_type','nrc_number',
+                'business_unit_id','branch_id'
             ]);
             _super_posmodel.initialize.apply(this, arguments);
         },
@@ -74,6 +75,33 @@ odoo.define('pos_action_button.models', function (require) {
         fields: ['name', 'description'],
         loaded: function(self,nrc_types){
             self.nrc_types = nrc_types;
+        },
+    });
+
+    // business.unit
+    models.load_models({
+        model: 'business.unit',
+        fields: ['name', 'location_id'],
+        loaded: function(self,business_units){
+            self.business_units = business_units;
+        },
+    });
+
+    // business.branch
+    models.load_models({
+        model: 'business.branch',
+        fields: ['name'],
+        loaded: function(self,business_branches){
+            self.business_branches = business_branches;
+        },
+    });
+
+    // office.location
+    models.load_models({
+        model: 'office.location',
+        fields: ['name'],
+        loaded: function(self,office_locations){
+            self.office_locations = office_locations;
         },
     });
 
