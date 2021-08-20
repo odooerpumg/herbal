@@ -46,7 +46,7 @@
             </div>             
             <div class='client-detail'>
                 <span class='label' width="24">UMGian ID</span>
-                <input class='detail client_umgian_employee_id' name="umgian_employee_id" t-att-value="partner.umgian_employee_id"></input>
+                <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
             </div>
             <div class='client-detail'>
                 <span class='label'>Business Unit</span>
@@ -91,27 +91,27 @@
         <t t-jquery=".client-details-right" t-operation="append">     
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
-                <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name'></input>
+                <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name || ""'></input>
             </div>  
             <div class='client-detail'>
                 <span class='label'>Referee Number</span>
-                <input class='detail client_referee_number' name='referee_number' t-att-value='partner.referee_number'></input>
+                <input class='detail client_referee_number' name='referee_number' t-att-value='partner.referee_number || ""'></input>
             </div>              
             <div class='client-detail'>
                 <span class='label' width="24">Contact Name</span>
-                <input class='detail client_sec_contact_name' name='sec_contact_name' t-att-value="partner.sec_contact_name"></input>
+                <input class='detail client_sec_contact_name' name='sec_contact_name' t-att-value="partner.sec_contact_name || ''"></input>
             </div>
             <div class='client-detail'>
                 <span class='label' width="24">Contact Number</span>
-                <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number"></input>
+                <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number || ''"></input>
             </div>  
             <div class='client-detail'>
                 <span class='label' width="24">Remark</span>
-                <input class='detail client_remark' name="remark" t-att-value="partner.remark"></input>
+                <input class='detail client_remark' name="remark" t-att-value="partner.remark || ''"></input>
             </div>
             <div class='client-detail'>
                 <span class='label' width="24">Medical History</span>
-                <input class='detail client_medical_history' name="medical_history" t-att-value="partner.medical_history"></input>
+                <input class='detail client_medical_history' name="medical_history" t-att-value="partner.medical_history || ''"></input>
             </div>                         
         </t>          
     </t>
