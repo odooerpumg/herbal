@@ -21,6 +21,7 @@ pos_screens.ClientListScreenWidget.include({
     //             to maintain consistent scroll.
     display_client_details: function(visibility,partner,clickpos){
         var self = this;
+        console.log("POS", self.pos);
         var searchbox = this.$('.searchbox input');
         var contents = this.$('.client-details-contents');
         var parent   = this.$('.client-list').parent();
