@@ -221,5 +221,12 @@
                 </t>  
             </div>  
         </t>
+        <!-- client-details-box clearfix -->
+        <t t-jquery=".client-details-box" t-operation="append">
+            <div class='client-detail'>
+                <span class='label' width="24">Cashier Name:</span>
+                <span class='detail client_employee'><t t-esc='widget.pos.employee.name' /></span>
+            </div> 
+        </t>
     </t>
 </templates>
