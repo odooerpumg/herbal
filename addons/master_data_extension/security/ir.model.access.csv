@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_region,hr_region,model_hr_region,base.group_user,1,1,1,1
+access_hr_city,hr_city,model_hr_city,base.group_user,1,1,1,1
+access_hr_township,hr_township,model_hr_township,base.group_user,1,1,1,1
+access_hr_district,hr_district,model_hr_district,base.group_user,1,1,1,1
+access_hr_country,hr_country,model_hr_country,base.group_user,1,1,1,1
+access_business_type,business_type,model_business_type,base.group_user,1,1,1,1
+access_industry_zone,industry_zone,model_industry_zone,base.group_user,1,1,1,1

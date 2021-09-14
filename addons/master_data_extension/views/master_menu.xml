@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Master Data" id="master_data_menu" web_icon="master_data_extension,static/description/master_data.png" sequence="99"/>
+</odoo>
