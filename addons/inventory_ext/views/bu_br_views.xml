@@ -38,7 +38,7 @@
     <!-- END -->
 
     <!-- Business Unit : Start -->
-        <record id="business_unit_tree" model="ir.ui.view">
+        <!-- <record id="business_unit_tree" model="ir.ui.view">
             <field name="name">business_unit.tree</field>
             <field name="model">business.unit</field>
             <field name="arch" type="xml">
@@ -72,7 +72,7 @@
             <field name="name">Business Unit</field>
             <field name="res_model">business.unit</field>
             <field name="view_mode">tree,form</field>
-        </record>
+        </record> -->
     <!-- END -->
     <!-- Business Branch : Start -->
         <record id="business_branch_tree" model="ir.ui.view">
@@ -110,7 +110,7 @@
         </record>
     <!-- END -->
 
-    <menuitem id="business_unit_menu" parent="inventory_ext.customer_conf_menu" action="business_unit_action" name="Business Unit" sequence="40"/>
+    <!-- <menuitem id="business_unit_menu" parent="inventory_ext.customer_conf_menu" action="business_unit_action" name="Business Unit" sequence="40"/> -->
     <menuitem id="business_Branch_menu" parent="inventory_ext.customer_conf_menu" action="business_branch_action" name="Branch" sequence="50"/>
     <menuitem id="office_location_menu" parent="inventory_ext.customer_conf_menu" action="office_location_action" name="Office Location" sequence="50"/>
 </odoo>

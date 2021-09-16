@@ -37,7 +37,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 	<!-- End -->
-		<menuitem name="Industry Zone" id="job_industry_menu" parent="master_data_menu" action="job_industry_action_window" sequence="13"/>
+		<menuitem name="Industry Zone" id="job_industry_menu" parent="master_data_menu" action="job_industry_action_window" sequence="60"/>
 
 
 </odoo>

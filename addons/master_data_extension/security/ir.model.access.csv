@@ -5,4 +5,6 @@ access_hr_township,hr_township,model_hr_township,base.group_user,1,1,1,1
 access_hr_district,hr_district,model_hr_district,base.group_user,1,1,1,1
 access_hr_country,hr_country,model_hr_country,base.group_user,1,1,1,1
 access_business_type,business_type,model_business_type,base.group_user,1,1,1,1
+access_building_floor,building_floor,model_building_floor,base.group_user,1,1,1,1
 access_industry_zone,industry_zone,model_industry_zone,base.group_user,1,1,1,1
+access_business_unit,business_unit,model_business_unit,base.group_user,1,1,1,1

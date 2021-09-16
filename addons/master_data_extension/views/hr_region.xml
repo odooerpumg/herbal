@@ -54,5 +54,5 @@
             <field name="search_view_id" ref="hr_region_search"/>
         </record>
     <!-- End -->
-        <menuitem name="Region" id="hr_region_menu" parent="master_data_extension.master_data_menu" action="hr_region_action_window" sequence="15"/>
+        <menuitem name="Region" id="hr_region_menu" parent="master_data_extension.master_data_menu" action="hr_region_action_window" sequence="20"/>
 </odoo>

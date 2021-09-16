@@ -5,11 +5,12 @@ class OfficeLocation(models.Model):
 
 	name = fields.Char('Office Name')
 
-class BusinessUnits(models.Model):
-    _name = 'business.unit'
+# class BusinessUnits(models.Model):
+#     _name = 'business.unit'
+#     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char('Name')
-    location_id = fields.Many2one('office.location',string='Office Location')
+#     name = fields.Char('Name')
+#     location_id = fields.Many2one('office.location',string='Office Location')
 
 class Branch(models.Model):
     _name = 'business.branch'
