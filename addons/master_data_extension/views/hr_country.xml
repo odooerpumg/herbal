@@ -40,5 +40,5 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 	<!-- End -->
-		<menuitem name="Country" id="hr_country_menu" parent="master_data_extension.master_data_menu" action="hr_country_action_window" sequence="18"/>
+		<menuitem name="Country" id="hr_country_menu" parent="master_data_extension.master_data_menu" action="hr_country_action_window" sequence="10"/>
 </odoo>

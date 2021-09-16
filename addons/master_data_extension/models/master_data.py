@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from odoo import models, fields
+from odoo import models, fields, api
 
 # DIVISION
 class HrRegion(models.Model):
@@ -69,8 +68,41 @@ class Floor(models.Model):
 	('_unique', 'unique (name)', 'No duplication of Floor is allowed')
 	]
 
+# INDUSTRY ZONE
 class IndustryZone(models.Model):
 	_name = 'industry.zone'
 	_inherit = ['mail.thread', 'mail.activity.mixin']
 
 	name = fields.Char('Industry Zone',required=True)
+
+# BUSINESS UNIT
+class BusinessUnit(models.Model):
+	_name = 'business.unit'
+	_inherit = ['mail.thread', 'mail.activity.mixin']
+
+	name = fields.Char('Name')
+	code = fields.Char('Code')
+	business_unit_type_id = fields.Many2one('business.type', string='Type')
+	company = fields.Char('Company')
+	number = fields.Char('Number')
+	building_floor_id = fields.Many2one('building.floor', string='Floor')
+	building = fields.Char('Building')
+	street = fields.Char('Street')
+	zone = fields.Many2one('industry.zone')
+	road = fields.Char('Road')
+	quarter = fields.Char('Quarter')
+	township_id = fields.Many2one('hr.township', string='Township')
+	city_id = fields.Many2one('hr.city', string='City')
+	division_id = fields.Many2one('hr.region', string='Division')
+	country_id = fields.Many2one('hr.country', string='Country')
+	country_code = fields.Char(string="Country code", related='country_id.country_code', readonly=True)
+	active = fields.Boolean(string='Active', default=True)
+
+	phone = fields.Char('Phone')
+	mobile = fields.Char('Mobile')
+
+
+	@api.onchange('city_id')
+	def onchange_city_id(self):
+		self.division_id = self.city_id.region_id.id
+	

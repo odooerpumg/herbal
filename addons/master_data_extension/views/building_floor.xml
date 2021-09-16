@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<!-- Business Type -->
-		<record model="ir.ui.view" id="business_type_tree">
-			<field name="name">Business Type</field>
-			<field name="model">business.type</field>
+	<!-- Floor -->
+		<record model="ir.ui.view" id="building_floor_tree">
+			<field name="name">Floor</field>
+			<field name="model">building.floor</field>
 			<field name="arch" type="xml">
 				<tree>
 					<field name="name" />
 				</tree>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="business_type_form">
-			<field name="name">Business Type</field>
-			<field name="model">business.type</field>
+		<record model="ir.ui.view" id="building_floor_form">
+			<field name="name">Floor</field>
+			<field name="model">building.floor</field>
 			<field name="arch" type="xml">
 				<form>
 					<sheet>
@@ -30,12 +30,12 @@
 				</form>
 			</field>
 		</record>
-		<record model="ir.actions.act_window" id="business_type_action_window">
-			<field name="name">Business Type</field>
-			<field name="res_model">business.type</field>
+		<record model="ir.actions.act_window" id="building_floor_action_window">
+			<field name="name">Floor</field>
+			<field name="res_model">building.floor</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 	<!-- End -->
-		<menuitem name="Business Type" id="business_type_menu" parent="master_data_extension.master_data_menu" action="business_type_action_window" sequence="70"/>
+		<menuitem name="Floor" id="business_type_menu" parent="master_data_extension.master_data_menu" action="building_floor_action_window" sequence="80"/>
 
 </odoo>

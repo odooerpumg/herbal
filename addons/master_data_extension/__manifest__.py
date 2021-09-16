@@ -33,6 +33,8 @@
         'views/hr_township.xml',
         'views/business_type.xml',
         'views/industry_zone.xml',
+        'views/building_floor.xml',
+        'views/business_unit.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

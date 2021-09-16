@@ -37,7 +37,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 	<!-- End -->
-		<menuitem name="District" id="hr_district_menu" parent="master_data_extension.master_data_menu" action="hr_district_action_window" sequence="17"/>
+		<menuitem name="District" id="hr_district_menu" parent="master_data_extension.master_data_menu" action="hr_district_action_window" sequence="30"/>
 
 
 </odoo>

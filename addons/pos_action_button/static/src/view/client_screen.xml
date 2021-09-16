@@ -60,7 +60,7 @@
                     </t>
                 </select>            
             </div>
-            <div class='client-detail'>
+            <!-- <div class='client-detail'>
                 <span class='label'>Branch</span>
                 <select class='detail client-business-branch needsclick' name='branch_id'>
                     <option value=''>None</option>
@@ -71,7 +71,7 @@
                         </option>
                     </t>
                 </select>            
-            </div>
+            </div> -->
             <div class='client-detail'>
                 <span class='label'>Customer Type</span>
                 <select class='detail client-customer-type needsclick' name='customer_type'>
@@ -156,12 +156,12 @@
                     <span class='detail client_business_unit_id'><t t-esc='partner.business_unit_id[1]' /></span>
                 </t>
             </div>  
-            <div class='client-detail'>
+            <!-- <div class='client-detail'>
                 <t t-if="partner.branch_id">
                     <span class='label' width="24">Branch</span>
                     <span class='detail client_branch_id'><t t-esc='partner.branch_id[1]' /></span>
                 </t>
-            </div>                                                                   
+            </div>                                                                    -->
         </t>
         <!-- RIGHT -->
         <t t-jquery=".client-details-right" t-operation="append">
