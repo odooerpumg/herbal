@@ -42,24 +42,48 @@
 									<field name="country_id" />
 								</group>
 							</group>
-							<group>
+
+							<!-- START: Phone/Mobile Read Only Mode -->
+							<group  class="oe_read_only">
 								<label for="phone" string="Phone" class="oe_inline"/>
 								<div>
 									<div>
-										<field name="country_code" nolabel="1" class="oe_inline" />
+										<field name="country_code" attrs="{'invisible': [('mobile', '=', False)]}" nolabel="1" class="oe_inline" />
 										<field name="phone" nolabel="1" class="oe_inline" />
 									</div>
 								</div>
-							</group>
-							<group>
+							</group>													
+							<group  class="oe_read_only">
 								<label for="mobile" string="Mobile" class="oe_inline"/>
 								<div>
 									<div>
-										<field name="country_code" nolabel="1" class="oe_inline" />
+										<field name="country_code" attrs="{'invisible': [('mobile', '=', False)]}" nolabel="1" class="oe_inline" />
 										<field name="mobile" nolabel="1" class="oe_inline" />
 									</div>
 								</div>
 							</group>
+							<!-- END: Phone/Mobile Read Only Mode -->
+
+							<!-- START: Phone/Mobile Edit Only Mode -->
+							<group  class="oe_edit_only">
+								<label for="phone" string="Phone" class="oe_inline"/>
+								<div>
+									<div>
+										<field name="country_code" attrs="{'invisible': [('country_id', '=', False)]}" nolabel="1" class="oe_inline" />
+										<field name="phone" nolabel="1" class="oe_inline" />
+									</div>
+								</div>
+							</group>							
+							<group class="oe_edit_only">
+								<label for="mobile" string="Mobile" class="oe_inline"/>
+								<div>
+									<div>
+										<field name="country_code" attrs="{'invisible': [('country_id', '=', False)]}" nolabel="1" class="oe_inline" />
+										<field name="mobile" nolabel="1" class="oe_inline" />
+									</div>
+								</div>
+							</group>
+							<!-- END: Phone/Mobile Edit Only Mode -->
 						</group>
 					</sheet>
 					<div class="oe_chatter">
