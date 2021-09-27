@@ -89,6 +89,22 @@ class ResPartner(models.Model):
     umgian_employee_id = fields.Char('Employee ID')
 
     # BU/BR
-    business_unit_id = fields.Many2one('business.unit',string='Business Unit')
+    business_unit_id = fields.Many2one('business.unit', string='Business Unit')
     branch_id = fields.Many2one('business.branch',string='Branch')
+    
+    # BU address
+    bu_township_id = fields.Many2one('hr.township', string='BU Township')
+    bu_city_id = fields.Many2one('hr.city', string='BU City')
+    bu_division_id = fields.Many2one('hr.region', string='BU Division')
+    bu_country_id = fields.Many2one('hr.country', string='BU Country')
+
+    @api.onchange('business_unit_id')
+    def onchange_business_unit_id(self):
+        if self.business_unit_id:
+            self.bu_township_id = self.business_unit_id.township_id.id
+            self.bu_city_id = self.business_unit_id.city_id.id
+            self.bu_division_id = self.business_unit_id.division_id.id
+            self.bu_country_id = self.business_unit_id.country_id.id
+
+
     
