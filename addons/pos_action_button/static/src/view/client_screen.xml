@@ -43,35 +43,7 @@
             <div class="client-detail">
                 <span class="label">Birthday</span>
                 <input class='detail client_birthdate_date' name="birthdate_date" type="date" t-att-value='partner.birthdate_date'></input>
-            </div>             
-            <div class='client-detail'>
-                <span class='label' width="24">UMGian ID</span>
-                <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
             </div>
-            <div class='client-detail'>
-                <span class='label'>Business Unit</span>
-                <select class='detail client-business-unit needsclick' name='business_unit_id'>
-                    <option value=''>None</option>
-                    <t t-foreach='widget.pos.business_units' t-as='unit'>
-                        <option t-att-value='unit.id'
-                            t-att-selected="partner.business_unit_id ? ((unit.id === partner.business_unit_id[0]) ? true : undefined) : undefined">
-                            <t t-esc='unit.name'/>
-                        </option>
-                    </t>
-                </select>            
-            </div>
-            <!-- <div class='client-detail'>
-                <span class='label'>Branch</span>
-                <select class='detail client-business-branch needsclick' name='branch_id'>
-                    <option value=''>None</option>
-                    <t t-foreach='widget.pos.business_branches' t-as='branch'>
-                        <option t-att-value='branch.id'
-                            t-att-selected="partner.branch_id ? ((branch.id === partner.branch_id[0]) ? true : undefined) : undefined">
-                            <t t-esc='branch.name'/>
-                        </option>
-                    </t>
-                </select>            
-            </div> -->
             <div class='client-detail'>
                 <span class='label'>Customer Type</span>
                 <select class='detail client-customer-type needsclick' name='customer_type'>
@@ -85,11 +57,51 @@
                         >UMGian's Family Member
                     </option>
                 </select>            
-            </div>                                                   
+            </div>      
+            <t t-if="partner.customer_type == 'umgian'">                    
+            <div class='client-detail umgian-id-block'>
+                <span class='label' width="24">UMGian ID</span>
+                <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
+            </div>
+            </t>
+            <t t-else="">
+                <div class='client-detail umgian-id-block'>
+                </div>
+            </t>
+            <t t-if="partner.customer_type == 'umgian'">
+            <div class='client-detail umgian-bu-block'>
+                <span class='label'>Business Unit</span>
+                <select class='detail client-business-unit needsclick' name='business_unit_id'>
+                    <option class='bu_non_option' value=''>None</option>
+                    <t t-foreach='widget.pos.business_units' t-as='unit'>
+                        <option t-att-value='unit.id'
+                            t-att-selected="partner.business_unit_id ? ((unit.id === partner.business_unit_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='unit.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div>
+            </t>
+            <t t-else="">
+                <div class='client-detail umgian-bu-block'>
+                </div>
+            </t>
+            <!-- <div class='client-detail'>
+                <span class='label'>Branch</span>
+                <select class='detail client-business-branch needsclick' name='branch_id'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.business_branches' t-as='branch'>
+                        <option t-att-value='branch.id'
+                            t-att-selected="partner.branch_id ? ((branch.id === partner.branch_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='branch.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div> -->                                                  
         </t>     
         <!-- RIGHT -->
         <t t-jquery=".client-details-right" t-operation="append">     
-            <div class='client-detail'>
+            <!-- <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name || ""'></input>
             </div>  
@@ -104,7 +116,7 @@
             <div class='client-detail'>
                 <span class='label' width="24">Contact Number</span>
                 <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number || ''"></input>
-            </div>  
+            </div>   -->
             <div class='client-detail'>
                 <span class='label' width="24">Remark</span>
                 <input class='detail client_remark' name="remark" t-att-value="partner.remark || ''"></input>
@@ -174,7 +186,7 @@
                     <span class='detail client_referee_name'><t t-esc='partner.referee_name' /></span>
                 </t>
             </div>  
-
+<!-- 
             <div class='client-detail'>
                 <span class='label'>Referee Number</span>
                 <t t-if="partner.referee_number">
@@ -201,7 +213,7 @@
                 <t t-if="!partner.sec_contact_number">
                     <span class='detail empty'>N/A</span>
                 </t>  
-            </div>  
+            </div>   -->
             <div class='client-detail'>
                 <span class='label' width="24">Remark</span>
                 <t t-if="partner.remark">

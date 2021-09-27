@@ -7,7 +7,9 @@ var pos_screens = require('point_of_sale.screens');
 
 var core = require('web.core');
 var QWeb = core.qweb;
-var _super_ClientListScreenWidget = pos_screens.ClientListScreenWidget.prototype;
+
+var rpc = require('web.rpc');
+// var _super_ClientListScreenWidget = pos_screens.ClientListScreenWidget.prototype;
 pos_screens.ClientListScreenWidget.include({
 
     testing_fun: function(){
@@ -104,6 +106,52 @@ pos_screens.ClientListScreenWidget.include({
                     }
                 });
             });
+
+            contents.find('.client-customer-type').on('change', function (ev) {
+                var $umgIdBlockSelection = contents.find('.umgian-id-block');
+                var value = this.value;
+                $umgIdBlockSelection.empty()
+                if(value === 'umgian'){
+                    $umgIdBlockSelection.append(
+                        `<span class='label' width="24">UMGian ID</span>
+                        <input class='detail client_umgian_employee_id' name="umgian_employee_id"  value="`+ 
+                        ((partner.umgian_employee_id) ? partner.umgian_employee_id : '')
+                        +`"></input>
+                        `
+                    )
+                }else if(value === 'umgian_family_member'){
+                    contents.find('.client_umgian_employee_id').val('');
+                }else{
+                    contents.find('.umgian-id-block').empty();
+                }
+
+                var $umgBuBlockSelection = contents.find('.umgian-bu-block');
+                $umgBuBlockSelection.empty()
+                if(value === 'umgian'){
+                    var $bu_options = `<option value=''>None</option>`
+                    $.each(self.pos.business_units, function(key,value) {
+                        if (partner.business_unit_id[0] === value['id']){
+                            $bu_options += `<option selected='1' value='`+ value['id'] +`'>`+value['name']+`</option>`
+                        }else{
+                            $bu_options += `<option value='`+ value['id'] +`'>`+value['name']+`</option>`
+                        }
+                        
+                    });
+                    $umgBuBlockSelection.append(
+                        `<span class='label'>Business Unit</span>
+                         <select class='detail client-business-unit needsclick' name='business_unit_id'>
+                                   ` +$bu_options +`                      
+                         </select>`
+                    );
+                }else if(value !== 'umgian'){
+                    contents.find('.umgian-bu-block').empty();
+                }else{
+                    contents.find('.umgian-bu-block').empty();
+                }
+                
+                
+            });
+                        
             contents.find('.client-nrc-no').on('change', function (ev) {
                 var $descriptionSelection = contents.find('.client-nrc-description');
                 var value = this.value;
@@ -148,6 +196,68 @@ pos_screens.ClientListScreenWidget.include({
             this.details_visible = false;
             this.toggle_save_button();
         }
+    },
+
+    // what happens when we save the changes on the client edit form -> we fetch the fields, sanitize them,
+    // send them to the backend for update, and call saved_client_details() when the server tells us the
+    // save was successfull.
+    save_client_details: function(partner) {
+        var self = this;
+
+        var fields = {};
+        this.$('.client-details-contents .detail').each(function(idx,el){
+            if (self.integer_client_details.includes(el.name)){
+                var parsed_value = parseInt(el.value, 10);
+                if (isNaN(parsed_value)){
+                    fields[el.name] = false;
+                }
+                else{
+                    fields[el.name] = parsed_value
+                }
+            }
+            else{
+                fields[el.name] = el.value || false;
+            }
+        });
+
+        if (!fields.name) {
+            this.gui.show_popup('error',_t('A Customer Name Is Required'));
+            return;
+        }
+
+        if (this.uploaded_picture) {
+            fields.image_1920 = this.uploaded_picture;
+        }
+
+        fields.id = partner.id || false;
+
+        var contents = this.$(".client-details-contents");
+        contents.off("click", ".button.save");
+
+        if(jQuery.inArray("customer_type", fields) && fields["customer_type"] === false){
+            fields["umgian_employee_id"] = false
+            fields["business_unit_id"] = false
+        }
+        rpc.query({
+                model: 'res.partner',
+                method: 'create_from_ui',
+                args: [fields],
+            })
+            .then(function(partner_id){
+                self.saved_client_details(partner_id);
+            }).catch(function(error){
+                error.event.preventDefault();
+                var error_body = _t('Your Internet connection is probably down.');
+                if (error.message.data) {
+                    var except = error.message.data;
+                    error_body = except.arguments && except.arguments[0] || except.message || error_body;
+                }
+                self.gui.show_popup('error',{
+                    'title': _t('Error: Could not Save Changes'),
+                    'body': error_body,
+                });
+                contents.on('click','.button.save',function(){ self.save_client_details(partner); });
+            });
     },
 
 });
