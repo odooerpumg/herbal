@@ -27,9 +27,9 @@
                     <field name='birthdate_date' />
                     <field name="age" attrs="{'invisible': [('birthdate_date', '=', False)]}"/>
                     <field name="customer_type" />
-                    <!-- <field name="referee_name" />
+                    <field name="referee_name" />
                     <field name="referee_number" />
-                    <field name="sec_contact_name" />
+                    <!-- <field name="sec_contact_name" />
                     <field name="sec_contact_number" /> -->
                     <field name="medical_history" />
                     <field name="remark" />                    

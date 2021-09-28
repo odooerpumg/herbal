@@ -101,7 +101,7 @@
         </t>     
         <!-- RIGHT -->
         <t t-jquery=".client-details-right" t-operation="append">     
-            <!-- <div class='client-detail'>
+            <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name || ""'></input>
             </div>  
@@ -109,7 +109,7 @@
                 <span class='label'>Referee Number</span>
                 <input class='detail client_referee_number' name='referee_number' t-att-value='partner.referee_number || ""'></input>
             </div>              
-            <div class='client-detail'>
+            <!-- <div class='client-detail'>
                 <span class='label' width="24">Contact Name</span>
                 <input class='detail client_sec_contact_name' name='sec_contact_name' t-att-value="partner.sec_contact_name || ''"></input>
             </div>
@@ -118,14 +118,23 @@
                 <input class='detail client_sec_contact_number' name='sec_contact_number' t-att-value="partner.sec_contact_number || ''"></input>
             </div>   -->
             <div class='client-detail'>
-                <span class='label' width="24">Remark</span>
-                <input class='detail client_remark' name="remark" t-att-value="partner.remark || ''"></input>
-            </div>
-            <div class='client-detail'>
                 <span class='label' width="24">Medical History</span>
                 <input class='detail client_medical_history' name="medical_history" t-att-value="partner.medical_history || ''"></input>
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Remark</span>
+                <input class='detail client_remark' name="remark" t-att-value="partner.remark || ''"></input>
             </div>                         
-        </t>          
+        </t>
+        <t t-jquery=".client-details-right > div:nth-child(3), .client-details-right > div:nth-child(4)" t-operation="attributes">
+            <attribute name="class">client-details oe_hidden</attribute>
+        </t>  
+        <t t-jquery=".client-details-right > div:nth-child(4)" t-operation="after">
+            <div class='client-detail'>
+                <span class='label'>Mobile</span>
+                <input class='detail client-mobile' name='mobile' type='tel' t-att-value='partner.mobile || ""'></input>
+            </div>
+        </t>                  
     </t>
 
     <!-- SHOW FORM -->
@@ -143,6 +152,27 @@
                     <span class='detail client_age'><t t-esc='partner.age' /></span>
                 </div>                
             </t>
+ 
+            <!-- <div class='client-detail'>
+                <t t-if="partner.branch_id">
+                    <span class='label' width="24">Branch</span>
+                    <span class='detail client_branch_id'><t t-esc='partner.branch_id[1]' /></span>
+                </t>
+            </div>                                                                    -->
+        </t>
+        <t t-jquery=".client-details-left > div:first" t-operation="replace">
+            <div class='client-detail'>
+                <span class='label'>Address</span>
+                <t t-if='partner.address'>
+                    <span class='detail client-address' style="width:45%;display:inline-block;vertical-align:top;"><t t-esc='partner.address' /></span>
+                </t>
+                <t t-if='!partner.address'>
+                    <span class='detail client-address empty'>N/A</span>
+                </t>
+            </div>
+        </t>
+        <!-- RIGHT -->
+        <t t-jquery=".client-details-right" t-operation="append">
             <div class='client-detail'>
                 <t t-if="partner.customer_type == 'umgian'">
                     <span class='label' width="24">Customer Type</span>
@@ -167,16 +197,7 @@
                     <span class='label' width="24">Business Unit</span>
                     <span class='detail client_business_unit_id'><t t-esc='partner.business_unit_id[1]' /></span>
                 </t>
-            </div>  
-            <!-- <div class='client-detail'>
-                <t t-if="partner.branch_id">
-                    <span class='label' width="24">Branch</span>
-                    <span class='detail client_branch_id'><t t-esc='partner.branch_id[1]' /></span>
-                </t>
-            </div>                                                                    -->
-        </t>
-        <!-- RIGHT -->
-        <t t-jquery=".client-details-right" t-operation="append">
+            </div>         
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <t t-if='!partner.referee_name'>
@@ -186,7 +207,7 @@
                     <span class='detail client_referee_name'><t t-esc='partner.referee_name' /></span>
                 </t>
             </div>  
-<!-- 
+
             <div class='client-detail'>
                 <span class='label'>Referee Number</span>
                 <t t-if="partner.referee_number">
@@ -196,7 +217,7 @@
                     <span class='detail empty'>N/A</span>
                 </t>
             </div>         
-            <div class='client-detail'>
+            <!-- <div class='client-detail'>
                 <span class='label' width="24">Contact Name</span>
                 <t t-if="partner.sec_contact_name">
                     <span class='detail client_sec_contact_name'><t t-esc='partner.sec_contact_name' /></span>
@@ -213,16 +234,7 @@
                 <t t-if="!partner.sec_contact_number">
                     <span class='detail empty'>N/A</span>
                 </t>  
-            </div>   -->
-            <div class='client-detail'>
-                <span class='label' width="24">Remark</span>
-                <t t-if="partner.remark">
-                    <span class='detail client_remark'><t t-esc='partner.remark' /></span>
-                </t>  
-                <t t-if="!partner.remark">
-                    <span class='detail empty'>N/A</span>
-                </t>  
-            </div> 
+            </div>   --> 
             <div class='client-detail'>
                 <span class='label' width="24">Medical History</span>
                 <t t-if="partner.medical_history">
@@ -231,14 +243,37 @@
                 <t t-if="!partner.medical_history">
                     <span class='detail empty'>N/A</span>
                 </t>  
+            </div>
+            <div class='client-detail'>
+                <span class='label' width="24">Remark</span>
+                <t t-if="partner.remark">
+                    <span class='detail client_remark'><t t-esc='partner.remark' /></span>
+                </t>  
+                <t t-if="!partner.remark">
+                    <span class='detail empty'>N/A</span>
+                </t>  
             </div>  
         </t>
         <!-- client-details-box clearfix -->
-        <t t-jquery=".client-details-box" t-operation="append">
+        <!-- <t t-jquery=".client-details-box" t-operation="append">
             <div class='client-detail'>
                 <span class='label' width="24">Cashier Name:</span>
                 <span class='detail client_employee'><t t-esc='widget.pos.employee.name' /></span>
             </div> 
-        </t>
+        </t> -->
+        <t t-jquery=".client-details-right > div:first, .client-details-right > div:nth-child(2)" t-operation="attributes">
+            <attribute name="class">client-details oe_hidden</attribute>
+        </t>     
+        <t t-jquery=".client-details-left > div:nth-child(3)" t-operation="after">
+            <div class='client-detail'>
+                <span class='label'>Mobile</span>
+                <t t-if='partner.mobile'>
+                    <span class='detail client-mobile'><t t-esc='partner.mobile' /></span>
+                </t>
+                <t t-if='!partner.mobile'>
+                    <span class='detail client-mobile empty'>N/A</span>
+                </t>
+            </div>
+        </t>   
     </t>
 </templates>
