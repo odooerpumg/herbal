@@ -23,7 +23,7 @@ pos_screens.ClientListScreenWidget.include({
     //             to maintain consistent scroll.
     display_client_details: function(visibility,partner,clickpos){
         var self = this;
-        console.log("POS", self.pos);
+        // console.log("POS", self.pos);
         var searchbox = this.$('.searchbox input');
         var contents = this.$('.client-details-contents');
         var parent   = this.$('.client-list').parent();
@@ -112,10 +112,12 @@ pos_screens.ClientListScreenWidget.include({
                 var value = this.value;
                 $umgIdBlockSelection.empty()
                 if(value === 'umgian'){
+                    var val_check = (("umgian_employee_id" in partner === true) ? partner.umgian_employee_id : '')
+                    console.log("partner.umgian_employee_id",partner.umgian_employee_id);
                     $umgIdBlockSelection.append(
                         `<span class='label' width="24">UMGian ID</span>
                         <input class='detail client_umgian_employee_id' name="umgian_employee_id"  value="`+ 
-                        ((partner.umgian_employee_id) ? partner.umgian_employee_id : '')
+                        ( (val_check !== false) ? val_check : '')
                         +`"></input>
                         `
                     )
@@ -129,9 +131,14 @@ pos_screens.ClientListScreenWidget.include({
                 $umgBuBlockSelection.empty()
                 if(value === 'umgian'){
                     var $bu_options = `<option value=''>None</option>`
+                    var bu_check = (("business_unit_id" in partner === true) ? true : false)
                     $.each(self.pos.business_units, function(key,value) {
-                        if (partner.business_unit_id[0] === value['id']){
-                            $bu_options += `<option selected='1' value='`+ value['id'] +`'>`+value['name']+`</option>`
+                        if(bu_check){
+                            if (partner.business_unit_id[0] === value['id']){
+                                $bu_options += `<option selected='1' value='`+ value['id'] +`'>`+value['name']+`</option>`
+                            }else{
+                                $bu_options += `<option value='`+ value['id'] +`'>`+value['name']+`</option>`
+                            } 
                         }else{
                             $bu_options += `<option value='`+ value['id'] +`'>`+value['name']+`</option>`
                         }
@@ -140,7 +147,7 @@ pos_screens.ClientListScreenWidget.include({
                     $umgBuBlockSelection.append(
                         `<span class='label'>Business Unit</span>
                          <select class='detail client-business-unit needsclick' name='business_unit_id'>
-                                   ` +$bu_options +`                      
+                                   ` +$bu_options+`                      
                          </select>`
                     );
                 }else if(value !== 'umgian'){

@@ -81,7 +81,7 @@ odoo.define('pos_action_button.models', function (require) {
     // business.unit
     models.load_models({
         model: 'business.unit',
-        fields: ['name'],
+        fields: ['name', 'country_id', 'division_id', 'city_id', 'township_id'],
         loaded: function(self,business_units){
             self.business_units = business_units;
         },
