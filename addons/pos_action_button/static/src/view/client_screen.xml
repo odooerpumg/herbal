@@ -91,34 +91,6 @@
         </t>     
         <!-- RIGHT -->
         <t t-jquery=".client-details-right" t-operation="append">     
-            <t t-if="partner.customer_type == 'umgian'">                    
-                <div class='client-detail umgian-id-block'>
-                    <span class='label' width="24">UMGian ID</span>
-                    <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
-                </div>
-            </t>
-            <t t-else="">
-                <div class='client-detail umgian-id-block'>
-                </div>
-            </t>
-            <t t-if="partner.customer_type == 'umgian'">
-            <div class='client-detail umgian-bu-block'>
-                <span class='label'>Business Unit</span>
-                <select class='detail client-business-unit needsclick' name='business_unit_id'>
-                    <option class='bu_non_option' value=''>None</option>
-                    <t t-foreach='widget.pos.business_units' t-as='unit'>
-                        <option t-att-value='unit.id'
-                            t-att-selected="partner.business_unit_id ? ((unit.id === partner.business_unit_id[0]) ? true : undefined) : undefined">
-                            <t t-esc='unit.name'/>
-                        </option>
-                    </t>
-                </select>            
-            </div>
-            </t>
-            <t t-else="">
-                <div class='client-detail umgian-bu-block'>
-                </div>
-            </t>
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name || ""'></input>
@@ -153,8 +125,36 @@
                 <input class='detail client-mobile' name='mobile' type='tel' t-att-value='partner.mobile || ""'></input>
             </div>
         </t>
-        <t t-jquery=".client-details-right > div:nth-child(3)" t-operation="before">
-        </t>                  
+        <t t-jquery=".client-details-right > div:first" t-operation="before">
+            <t t-if="partner.customer_type == 'umgian'">                    
+                <div class='client-detail umgian-id-block'>
+                    <span class='label' width="24">UMGian ID</span>
+                    <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
+                </div>
+            </t>
+            <t t-else="">
+                <div class='client-detail umgian-id-block'>
+                </div>
+            </t>
+            <t t-if="partner.customer_type == 'umgian'">
+            <div class='client-detail umgian-bu-block'>
+                <span class='label'>Business Unit</span>
+                <select class='detail client-business-unit needsclick' name='business_unit_id'>
+                    <option class='bu_non_option' value=''>None</option>
+                    <t t-foreach='widget.pos.business_units' t-as='unit'>
+                        <option t-att-value='unit.id'
+                            t-att-selected="partner.business_unit_id ? ((unit.id === partner.business_unit_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='unit.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div>
+            </t>
+            <t t-else="">
+                <div class='client-detail umgian-bu-block'>
+                </div>
+            </t>
+        </t>              
     </t>
 
     <!-- SHOW FORM -->
