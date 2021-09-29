@@ -26,6 +26,7 @@
                     <field name="umgian_employee_id" />
                     <field name='birthdate_date' />
                     <field name="age" attrs="{'invisible': [('birthdate_date', '=', False)]}"/>
+                    <field name="gender" />
                     <field name="customer_type" />
                     <field name="referee_name" />
                     <field name="referee_number" />

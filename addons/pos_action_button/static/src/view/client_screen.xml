@@ -45,6 +45,24 @@
                 <input class='detail client_birthdate_date' name="birthdate_date" type="date" t-att-value='partner.birthdate_date'></input>
             </div>
             <div class='client-detail'>
+                <span class='label'>Gender</span>
+                <select class='detail client-gender needsclick' name='gender'>
+                    <!-- <option value=''>None</option> -->
+                    <option t-attf-value="male" 
+                        t-att-selected="partner.gender ? (('male' === partner.gender) ? true : undefined) : undefined"
+                        >Male
+                    </option>
+                    <option t-attf-value="female" 
+                        t-att-selected="partner.gender ? (('female' === partner.gender) ? true : undefined) : undefined"
+                        >Female
+                    </option>
+                    <option t-attf-value="other" 
+                        t-att-selected="partner.gender ? (('other' === partner.gender) ? true : undefined) : undefined"
+                        >Other
+                    </option>
+                </select>            
+            </div> 
+            <div class='client-detail'>
                 <span class='label'>Customer Type</span>
                 <select class='detail client-customer-type needsclick' name='customer_type'>
                     <option value=''>None</option>
@@ -58,11 +76,26 @@
                     </option>
                 </select>            
             </div>      
+            <!-- <div class='client-detail'>
+                <span class='label'>Branch</span>
+                <select class='detail client-business-branch needsclick' name='branch_id'>
+                    <option value=''>None</option>
+                    <t t-foreach='widget.pos.business_branches' t-as='branch'>
+                        <option t-att-value='branch.id'
+                            t-att-selected="partner.branch_id ? ((branch.id === partner.branch_id[0]) ? true : undefined) : undefined">
+                            <t t-esc='branch.name'/>
+                        </option>
+                    </t>
+                </select>            
+            </div> -->                                                  
+        </t>     
+        <!-- RIGHT -->
+        <t t-jquery=".client-details-right" t-operation="append">     
             <t t-if="partner.customer_type == 'umgian'">                    
-            <div class='client-detail umgian-id-block'>
-                <span class='label' width="24">UMGian ID</span>
-                <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
-            </div>
+                <div class='client-detail umgian-id-block'>
+                    <span class='label' width="24">UMGian ID</span>
+                    <input class='detail client_umgian_employee_id' name="umgian_employee_id"  t-att-value="partner.umgian_employee_id || ''"></input>
+                </div>
             </t>
             <t t-else="">
                 <div class='client-detail umgian-id-block'>
@@ -86,21 +119,6 @@
                 <div class='client-detail umgian-bu-block'>
                 </div>
             </t>
-            <!-- <div class='client-detail'>
-                <span class='label'>Branch</span>
-                <select class='detail client-business-branch needsclick' name='branch_id'>
-                    <option value=''>None</option>
-                    <t t-foreach='widget.pos.business_branches' t-as='branch'>
-                        <option t-att-value='branch.id'
-                            t-att-selected="partner.branch_id ? ((branch.id === partner.branch_id[0]) ? true : undefined) : undefined">
-                            <t t-esc='branch.name'/>
-                        </option>
-                    </t>
-                </select>            
-            </div> -->                                                  
-        </t>     
-        <!-- RIGHT -->
-        <t t-jquery=".client-details-right" t-operation="append">     
             <div class='client-detail'>
                 <span class='label'>Referee Name</span>
                 <input class='detail client_referee_name' name='referee_name' t-att-value='partner.referee_name || ""'></input>
@@ -152,7 +170,20 @@
                     <span class='detail client_age'><t t-esc='partner.age' /></span>
                 </div>                
             </t>
- 
+            <div class='client-detail'>
+                <t t-if="partner.gender == 'male'">
+                    <span class='label' width="24">Gender</span>
+                    <span class='detail client_gender'>male</span>
+                </t>
+                <t t-if="partner.gender == 'female'">
+                    <span class='label' width="24">Gender</span>
+                    <span class='detail client_gender'>Female</span>
+                </t> 
+                <t t-if="partner.gender == 'other'">
+                    <span class='label' width="24">Gender</span>
+                    <span class='detail client_gender'>Other</span>
+                </t>                                
+            </div> 
             <!-- <div class='client-detail'>
                 <t t-if="partner.branch_id">
                     <span class='label' width="24">Branch</span>

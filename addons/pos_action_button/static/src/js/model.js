@@ -14,8 +14,8 @@ odoo.define('pos_action_button.models', function (require) {
                 'referee_name', 'referee_number',
                 'sec_contact_name', 'sec_contact_number',
                 'medical_history',  'remark', 'umgian_employee_id',
-                'nrc_no','nrc_desc','nrc_type','nrc_number',
-                'business_unit_id','branch_id'
+                'nrc_no', 'nrc_desc', 'nrc_type', 'nrc_number',
+                'business_unit_id', 'branch_id', 'gender'
             ]);
             _super_posmodel.initialize.apply(this, arguments);
         },

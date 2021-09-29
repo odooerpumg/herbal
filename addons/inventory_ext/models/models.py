@@ -46,6 +46,8 @@ class ResPartner(models.Model):
     birthdate_date = fields.Date("Birthdate")
     age = fields.Integer(string="Age", readonly=True, compute="_compute_age")    
 
+    # GENDER
+    gender  = fields.Selection([('male', 'Male'), ('female', 'Female'), ('other', 'Other')], string='Gender')
     # REFEREE
     referee_name = fields.Char(string='Referee Name')
     referee_number = fields.Char(string='Referee Number')
@@ -55,7 +57,7 @@ class ResPartner(models.Model):
     sec_contact_number = fields.Char(string='Second Contact Nunmber')
 
     #CUSTOMER TYPE(UMGian/UMGina Family Member)
-    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', "UMGian's Family Member")], string='Customer Type')
+    customer_type = fields.Selection([('umgian', 'UMGian'),('umgian_family_member', "UMGian's Family Member")], string='Customer Type', default='male')
 
     # TEXT
     medical_history = fields.Text(string='Medical History')
