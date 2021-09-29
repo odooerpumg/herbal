@@ -152,6 +152,8 @@
                 <span class='label'>Mobile</span>
                 <input class='detail client-mobile' name='mobile' type='tel' t-att-value='partner.mobile || ""'></input>
             </div>
+        </t>
+        <t t-jquery=".client-details-right > div:nth-child(3)" t-operation="before">
         </t>                  
     </t>
 
