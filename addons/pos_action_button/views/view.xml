@@ -9,6 +9,7 @@
             <script type="text/javascript" src="/pos_action_button/static/src/js/model.js"/>
             <script type="text/javascript" src="/pos_action_button/static/src/js/client.js"/>
             <script type="text/javascript" src="/pos_action_button/static/src/js/action_button.js"/>
+            <script type="text/javascript" src="/pos_action_button/static/src/js/order_receipt_screen.js"/>            
         </xpath>
     </template>
   </data>

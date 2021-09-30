@@ -13,6 +13,7 @@
         'static/src/view/action_button.xml',
         'static/src/view/client_screen.xml',
         'static/src/view/numpad_widget.xml',
+        'static/src/view/order_receipt.xml',
     ],
     'data': [
         'views/view.xml',
