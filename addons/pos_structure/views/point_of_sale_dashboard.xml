@@ -51,13 +51,15 @@
                 <field name="pos_session_state"/>
                 <field name="pos_session_duration"/>
                 <field name="currency_id"/>
+                <field name="cashier_ids" />
+                <field name="cashier_count" />
                 <templates>
                     <t t-name="kanban-box">
                         <div>
                             <div class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title mb16">
                                     <div class="o_primary">
-                                        <t t-esc="record.name.value"/>
+                                        <t t-esc="record.name.value"/>                                        
                                     </div>
                                     <t t-if="record.pos_session_state.raw_value == 'opening_control'">
                                         <div class="badge badge-info o_kanban_inline_block">Opening Control</div>
@@ -65,9 +67,9 @@
                                     <t t-if="record.pos_session_state.raw_value == 'opened'">
                                         <div class="badge badge-success o_kanban_inline_block">In Progress</div>
                                     </t>
-                                    <t t-if="!record.current_session_id.raw_value &amp;&amp; record.pos_session_username.value">
+                                    <!-- <t t-if="!record.current_session_id.raw_value &amp;&amp; record.pos_session_username.value">
                                         <div class="badge badge-info o_kanban_inline_block">Opened by <t t-esc="record.pos_session_username.value"/></div>
-                                    </t>
+                                    </t> -->
                                     <t t-if="record.pos_session_state.raw_value == 'closing_control'">
                                         <div class="badge badge-info o_kanban_inline_block">Closing Control</div>
                                     </t>
@@ -94,7 +96,6 @@
                                         <button t-if="_.contains(['opened', 'closing_control'], record.current_session_state.raw_value)" class="btn btn-secondary" name="open_existing_session_cb" type="object">Close</button>
 
                                         <button t-if="!record.current_session_id.raw_value &amp;&amp; !record.pos_session_username.value" class="btn btn-primary" name="open_session_cb" type="object">New Session</button>
-
                                     </div>
                                     <div class="col-6 o_kanban_primary_right">
 
@@ -117,7 +118,18 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+                                <t t-if="record.cashier_count.value > 0">
+                                    <div class="row cashiers-list-color">
+                                        <div class="col-6 o_kanban_primary_left">
+                                            Cashiers: <t t-foreach="record.cashier_ids.raw_value" t-as="o">                                        
+                                               <div class="badge o_kanban_inline_block"><t t-esc="o.name"/>s</div>
+                                                <!-- <t t-esc="o.many2onefield[1]"/> -->
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
                                 <div class="row">
                                     <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
                                         <div role="menuitem" class="o_kanban_card_manage_title">
