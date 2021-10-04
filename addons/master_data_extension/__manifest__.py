@@ -9,7 +9,7 @@
         Long description of module's purpose
     """,
 
-    'author': "M2h",
+    'author': "UMG's ODOO DEVELOPER",
     'website': "http://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
