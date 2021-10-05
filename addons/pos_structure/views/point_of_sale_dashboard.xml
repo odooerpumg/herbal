@@ -108,21 +108,21 @@
                                             </div>
                                         </div>
 
-                                        <div t-if="record.last_session_closing_date.value" class="row">
+                                        <!-- <div t-if="record.last_session_closing_date.value" class="row">
                                             <div class="col-6">
                                                 <span>Cash Balance</span>
                                             </div>
                                             <div class="col-6">
                                                 <span><field name="last_session_closing_cash" widget="monetary"/></span>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <t t-if="record.cashier_count.value > 0">
                                     <div class="row cashiers-list-color">
                                         <div class="col-6 o_kanban_primary_left">
                                             Cashiers: <t t-foreach="record.cashier_ids.raw_value" t-as="o">                                        
-                                               <div class="badge o_kanban_inline_block"><t t-esc="o.name"/>s</div>
+                                               <div class="badge o_kanban_inline_block"><t t-esc="o.name"/></div>
                                                 <!-- <t t-esc="o.many2onefield[1]"/> -->
                                             </t>
                                         </div>

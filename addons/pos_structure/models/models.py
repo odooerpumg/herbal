@@ -17,4 +17,5 @@ class PosConfig(models.Model):
     def _compute_cashiers_list(self):
         for record in self:
             record.cashier_count = len(record.cashier_ids)
-            print("record.cashier_list_str",record.cashier_count)
+            # print("record.cashier_list_str",record.cashier_count)
+    
