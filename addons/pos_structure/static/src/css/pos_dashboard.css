@@ -1,0 +1,11 @@
+.cashiers-list-color {
+    /* background: rgba(0, 0, 0, 0.3);
+    color: #ffffff; */
+    /* background: rgb(32,183,236);
+    background: linear-gradient(90deg, rgba(32,183,236,1) 59%, rgba(255,255,255,1) 93%); */
+    /* background: rgb(95,141,158);
+    background: linear-gradient(90deg, rgba(95,141,158,1) 45%, rgba(255,255,255,1) 93%); */
+    background: rgb(95,141,158);
+    background: linear-gradient(90deg, rgba(95,141,158,1) 23%, rgba(255,255,255,1) 68%);
+    color: #ffffff;
+}

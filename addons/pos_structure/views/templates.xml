@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+      <template id="pos_structure_assets_id" name="website assets for pos structure" inherit_id="web.assets_backend">
+          <xpath expr="." position="inside">
+          <link rel="stylesheet" href="/pos_structure/static/src/css/pos_dashboard.css"/>
+          </xpath>
+      </template>
+    </data>
+</odoo>
