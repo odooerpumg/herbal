@@ -65,7 +65,7 @@
                                         <div class="badge badge-info o_kanban_inline_block">Opening Control</div>
                                     </t>
                                     <t t-if="record.pos_session_state.raw_value == 'opened'">
-                                        <div class="badge badge-success o_kanban_inline_block">In Progress</div>
+                                        <span class="lead"><div class="badge badge-success o_kanban_inline_block">In Progress</div></span>
                                     </t>
                                     <!-- <t t-if="!record.current_session_id.raw_value &amp;&amp; record.pos_session_username.value">
                                         <div class="badge badge-info o_kanban_inline_block">Opened by <t t-esc="record.pos_session_username.value"/></div>
@@ -74,10 +74,10 @@
                                         <div class="badge badge-info o_kanban_inline_block">Closing Control</div>
                                     </t>
                                     <t t-if="record.pos_session_state.raw_value == 'opened' and record.pos_session_duration.raw_value > 1">
-                                        <div t-attf-class="badge badge-#{record.pos_session_duration.raw_value > 3 and 'danger' or 'warning'} o_kanban_inline_block"
+                                        <span class="lead"><div t-attf-class="badge badge-#{record.pos_session_duration.raw_value > 3 and 'danger' or 'warning'} o_kanban_inline_block"
                                              title="The session has been opened for an unusually long period. Please consider closing.">
                                              To Close
-                                        </div>
+                                        </div></span>
                                     </t>
                                     <t t-set="unused_message">Unused</t>
                                     <div class="o_secondary mt16"><t t-esc="record.pos_session_username.value || unused_message"/></div>
@@ -121,10 +121,10 @@
                                 <t t-if="record.cashier_count.value > 0">
                                     <div class="row cashiers-list-color">
                                         <div class="col-6 o_kanban_primary_left">
-                                            Cashiers: <t t-foreach="record.cashier_ids.raw_value" t-as="o">                                        
+                                            <span class="lead">Cashiers: <t t-foreach="record.cashier_ids.raw_value" t-as="o">                                        
                                                <div class="badge o_kanban_inline_block"><t t-esc="o.name"/></div>
                                                 <!-- <t t-esc="o.many2onefield[1]"/> -->
-                                            </t>
+                                            </t></span>
                                         </div>
                                     </div>
                                 </t>
