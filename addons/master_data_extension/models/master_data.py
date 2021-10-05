@@ -106,3 +106,7 @@ class BusinessUnit(models.Model):
 	def onchange_city_id(self):
 		self.division_id = self.city_id.region_id.id
 	
+class HRemployee(models.Model):
+
+	_inherit = 'hr.employee'
+	bu_id = fields.Many2one('business.unit',string='BU/BR/DIV')

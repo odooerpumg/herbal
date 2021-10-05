@@ -19,7 +19,7 @@
     'version': '1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail'],
+    'depends': ['base','mail','hr'],
 
     # always loaded
     'data': [
@@ -34,7 +34,8 @@
         'views/business_type.xml',
         'views/industry_zone.xml',
         'views/building_floor.xml',
-        'views/business_unit.xml'
+        'views/business_unit.xml',
+        'views/hr_employee.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
