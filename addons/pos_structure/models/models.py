@@ -3,7 +3,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
-class ResUsers(models.AbstractModel):
+class ResUsers(models.Model):
     _inherit = 'res.users'
     pos_session_id = fields.Many2one('pos.config', string='Pos Session ID')
 

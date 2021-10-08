@@ -10,7 +10,7 @@
     'author': "UMG's ODOO DEVELOPER",
     'company': '',
     'website': "",
-    'depends': ['base', 'hr'],
+    'depends': ['base', 'hr', 'master_data_extension'],
     'data': ['views/employee_creation_from_user_view.xml'],
     'demo': [],
     'images': ['static/description/banner.jpg'],
