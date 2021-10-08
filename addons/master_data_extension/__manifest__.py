@@ -36,6 +36,7 @@
         'views/building_floor.xml',
         'views/business_unit.xml',
         'views/hr_employee.xml',
+        'views/res_users.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
