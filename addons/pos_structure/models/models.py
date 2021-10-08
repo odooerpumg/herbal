@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class ResUsers(models.AbstractModel):
     _inherit = 'res.users'
@@ -9,7 +10,7 @@ class ResUsers(models.AbstractModel):
 class PosConfig(models.Model):
     _inherit = 'pos.config'
 
-    cashier_ids = fields.One2many('res.users', 'pos_session_id', string='Cashiers')
+    cashier_ids = fields.One2many('res.users', 'pos_session_id', string='Cashiers', domain="[('pos_session_id', '=', False)]")
     
     cashier_count = fields.Integer(string="Assigned cashier", compute="_compute_cashiers_list")
 
@@ -17,5 +18,4 @@ class PosConfig(models.Model):
     def _compute_cashiers_list(self):
         for record in self:
             record.cashier_count = len(record.cashier_ids)
-            # print("record.cashier_list_str",record.cashier_count)
     
