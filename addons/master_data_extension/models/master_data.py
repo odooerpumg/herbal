@@ -111,6 +111,11 @@ class HRemployee(models.Model):
 	_inherit = 'hr.employee'
 	bu_id = fields.Many2one('business.unit',string='Business Unit')
 
+class HRemployeePublic(models.Model):
+
+	_inherit = 'hr.employee.public'
+	bu_id = fields.Many2one('business.unit',string='Business Unit')
+
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
