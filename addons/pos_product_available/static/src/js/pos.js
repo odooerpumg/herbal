@@ -10,7 +10,6 @@ odoo.define("pos_product_available.PosModel", function(require) {
     var rpc = require("web.rpc");
     var models = require("point_of_sale.models");
     var field_utils = require("web.field_utils");
-
     models.load_fields("product.product", ["qty_available", "type"]);
 
     var PosModelSuper = models.PosModel.prototype;
@@ -20,20 +19,11 @@ odoo.define("pos_product_available.PosModel", function(require) {
                 if(model.model === "product.product"){
                     model.domain = function(self){
                             // var domain = ['&', ['sale_ok','=',true],'|',['company_id','=',self.config.company_id[0]],['company_id','=',false]];
-                            var domain = ['&', '&', '&',['sale_ok','=',true],['available_in_pos','=',true],['qty_available','>',0],'|',['company_id','=',self.config.company_id[0]],['company_id','=',false]];
-
-                            var stock_quant = await rpc.query({
-                                model: "stock.quant",
-                                method: "search_read",
-                                args: [],
-                                fields: ["product_id", "location_id"],
-                                domain: [['location_id','=', self.config.default_location_src_id[0]]]
-                            }).then(function (stock_quant) {
-                                var location_p_ids = stock_quant.map(data=> data.product_id[0])
-                                console.log("location_product_ids",location_p_ids);
-                                return location_p_ids
-                            })
-                            
+                            var domain = ['&', '&', ['sale_ok','=',true],['available_in_pos','=',true], '|', ['company_id','=',self.config.company_id[0]],['company_id','=',false]];
+                            if (self.config.avaliable_product_ids){
+                                domain.unshift('&')
+                                domain.push(['id', 'in', self.config.avaliable_product_ids])
+                            }
                             if (self.config.limit_categories &&  self.config.iface_available_categ_ids.length) {
                                 domain.unshift('&');
                                 domain.push(['pos_categ_id', 'in', self.config.iface_available_categ_ids]);
@@ -44,7 +34,6 @@ odoo.define("pos_product_available.PosModel", function(require) {
                             }
                             return domain;
                         }
-                    // console.log("models",model.domain)
                 }
                 
                 return model.model === "product.product";
@@ -66,48 +55,20 @@ odoo.define("pos_product_available.PosModel", function(require) {
             }
             // If product.product model is not presented in this.models after super was called then pos_cache module installed
             return loaded.then(function() {
-
-                var stock_quant = rpc.query({
-                        model: "stock.quant",
+                return rpc
+                    .query({
+                        model: "product.product",
                         method: "search_read",
                         args: [],
-                        fields: ["product_id", "location_id"],
-                        domain: [['location_id','=', self.config.default_location_src_id[0]]]
-                    }).then(function (stock_quant) {
-                        return stock_quant.map(data=> data.product_id[0])
-                    }).then(function(location_product_ids) {
-                        console.log();("location_product_ids++++",location_product_ids)
-                        return rpc.query({
-                            model: "product.product",
-                            method: "search_read",
-                            args: [],
-                            fields: ["qty_available", "type"],
-                            // domain: self.product_product_model.domain,
-                            domain: [['id', 'in', location_product_ids]],
-                            context: _.extend(self.product_product_model.context, {
-                                location: self.config.default_location_src_id[0],
-                            }),
-                        }).then(function(products) {
-                            console.log("products====",products);
-                            self.add_product_qty(products);
-                        })
+                        fields: ["qty_available", "type"],
+                        domain: self.product_product_model.domain,
+                        context: _.extend(self.product_product_model.context, {
+                            location: self.config.default_location_src_id[0],
+                        }),
                     })
-                
-
-                // return rpc
-                //     .query({
-                //         model: "product.product",
-                //         method: "search_read",
-                //         args: [],
-                //         fields: ["qty_available", "type"],
-                //         domain: self.product_product_model.domain,
-                //         context: _.extend(self.product_product_model.context, {
-                //             location: self.config.default_location_src_id[0],
-                //         }),
-                //     })
-                //     .then(function(products) {
-                //         self.add_product_qty(products);
-                //     });
+                    .then(function(products) {
+                        self.add_product_qty(products);
+                    });
             });
         },
         set_product_qty_available: function(product, qty) {
@@ -182,7 +143,7 @@ odoo.define("pos_product_available.PosModel", function(require) {
             var value = parseFloat(val);
             value = field_utils.format.float(value, {digits: [69, 3]});
             return String(parseFloat(value));
-        },
+        },       
         rounded_qty: function() {
             return this.format_float_value(this.qty_available);
         },
