@@ -44,6 +44,6 @@
                 </form>
             </field>
         </record>
-        <menuitem action="account.action_account_type_form" id="account_type_menu" name="COA Type" parent="account.account_account_menu" sequence="2" groups="petty_cash_expense_extension.group_coa_admin"/>
+        <menuitem action="account.action_account_type_form" id="account_type_menu" name="COA Type" parent="account.account_account_menu" sequence="2" groups="base.group_erp_manager"/>
     </data>
 </odoo>
