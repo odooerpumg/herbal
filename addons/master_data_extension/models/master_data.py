@@ -120,3 +120,8 @@ class HRemployeePublic(models.Model):
 class ResUsers(models.Model):
     _inherit = 'res.users'
     bu_id = fields.Many2one('business.unit',string='Business Unit')
+
+class ResCompany(models.Model):
+	_inherit = 'res.company'
+	bu_id = fields.Many2one('business.unit',string='Business Unit')
+	business_unit_type_id = fields.Many2one(related="bu_id.business_unit_type_id", comodel_name='business.type', string='BU Type', readonly=True)

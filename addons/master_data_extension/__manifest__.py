@@ -37,6 +37,7 @@
         'views/business_unit.xml',
         'views/hr_employee.xml',
         'views/res_users.xml',
+        'views/res_company.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
