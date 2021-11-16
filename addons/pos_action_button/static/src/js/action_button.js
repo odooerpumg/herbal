@@ -83,4 +83,28 @@ pos_screens.define_action_button({
     'condition': function(){return this.pos;},
 });
 
+
+/* ------------ SET UMGian Normal Price ------------ */
+// create a new button by extending the base UmgianButton
+var NormalPriceButton = UmgianButton.extend({
+    template: 'NormalPriceButton',
+
+    button_click: function(){
+        var self = this;
+        var order = self.pos.get_order();        
+        var selected_orderline = order.get_selected_orderline();
+        if(selected_orderline){
+            selected_orderline.price_manually_set = true;
+            selected_orderline.set_unit_price(order.get_selected_orderline().get_product().lst_price);
+        }
+    },
+    
+});
+
+pos_screens.define_action_button({
+    'name': 'NormalPriceButton',
+    'widget': NormalPriceButton,
+    'condition': function(){return this.pos;},
+});
+
 });

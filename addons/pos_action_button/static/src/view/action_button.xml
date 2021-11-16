@@ -19,6 +19,13 @@
             </div>   
         </t>      
     </t>
+    <t t-name="NormalPriceButton">
+        <t t-if='widget.get_selected_orderline'>
+            <div class='control-button' id="normal_price">
+                <i class="fa fa-dashboard" />Normal Price<br/>
+            </div>   
+        </t>      
+    </t>
 
 
     <t t-extend="Product">
