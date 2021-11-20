@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- Menu item to open Import Master list -->
+        <menuitem id="menu_master_data_import"
+                  name="Data Import"
+                  sequence="100" web_icon="master_data_import,static/description/icon.png" groups="base.group_no_one"/>
+
+		<menuitem id="menu_master_import" name="Master Import" parent="menu_master_data_import" />
+
+         <record id="view_form_master_import" model="ir.ui.view">
+            <field name="name">Import Master Form</field>
+            <field name="model">master.import</field>
+            <field name="arch" type="xml">
+                <form string="Master" version="7.0">
+					<header>
+						<button name="import_data" string="Import Master" type="object"
+							class="oe_highlight" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,completed,error" />
+					</header>
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="import_date" />
+							<field name="import_file" filename="import_fname" />
+							<field name="import_fname" invisible="1" class="oe_inline oe_right" />
+							<field name="company_id" />
+							<field name="note" />
+						</group>
+					</sheet>
+				</form>
+            </field>
+         </record>
+
+		<record id="view_master_import_tree" model="ir.ui.view">
+			<field name="name">Import Master Tree</field>
+			<field name="model">master.import</field>
+			<field name="arch" type="xml">
+				<tree string="Import POS Config">
+					<field name="import_date" />
+					<field name="name" />
+					<field name="import_fname" />
+					<field name="note" />
+					<field name="company_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Action -->
+		<record id="action_master_import" model="ir.actions.act_window">
+			<field name="name">Import POS Config</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">master.import</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_master_import_tree" />
+		</record>
+		
+		<!-- First level menu -->
+		<menuitem id="main_menu_master_import" name="POS Config"
+			action="action_master_import" parent="menu_master_data_import" sequence="1"/>
+
+    </data>
+</odoo>
