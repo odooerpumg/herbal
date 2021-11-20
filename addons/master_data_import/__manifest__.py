@@ -7,7 +7,11 @@
     'author': 'Infinite Business Solution Co.,Ltd',
     'website': '',
     'summary': 'Master Data Import',
-    'data': ['views/master_import_view.xml','security/ir.model.access.csv'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/master_import_view.xml',
+        'views/payment_method_import.xml'
+    ],
     'application': 'True',
     'depends': ['base', 'base_import'],
     'description':  """

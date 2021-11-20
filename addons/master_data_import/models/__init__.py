@@ -1,1 +1,1 @@
-from.import master_import
+from.import master_import,payment_method_import

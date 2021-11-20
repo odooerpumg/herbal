@@ -4,8 +4,8 @@
 
         <!-- Menu item to open Import Master list -->
         <menuitem id="menu_master_data_import"
-                  name="Master Data Import"
-                  sequence="2" web_icon="master_import_med,static/description/import.png"/>
+                  name="Data Import"
+                  sequence="100" web_icon="master_data_import,static/description/icon.png" groups="base.group_no_one"/>
 
 		<menuitem id="menu_master_import" name="Master Import" parent="menu_master_data_import" />
 
@@ -37,7 +37,7 @@
 			<field name="name">Import Master Tree</field>
 			<field name="model">master.import</field>
 			<field name="arch" type="xml">
-				<tree string="Master Import">
+				<tree string="Import POS Config">
 					<field name="import_date" />
 					<field name="name" />
 					<field name="import_fname" />
@@ -50,7 +50,7 @@
 
 		<!-- Action -->
 		<record id="action_master_import" model="ir.actions.act_window">
-			<field name="name">Master Import</field>
+			<field name="name">Import POS Config</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">master.import</field>
 			<field name="view_mode">tree,form</field>
@@ -58,8 +58,8 @@
 		</record>
 		
 		<!-- First level menu -->
-		<menuitem id="main_menu_master_import" name="Import Master"
-			action="action_master_import" parent="point_of_sale.menu_point_config_product" sequence="22"/>
+		<menuitem id="main_menu_master_import" name="POS Config"
+			action="action_master_import" parent="menu_master_data_import" sequence="1"/>
 
     </data>
 </odoo>

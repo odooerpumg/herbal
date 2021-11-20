@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paymethod_import_tree" model="ir.ui.view">
+        <field name="name">paymethod_import.tree</field>
+        <field name="model">paymethod.import</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="import_date" />
+                <field name="name" />
+                <field name="import_fname" />
+                <field name="note" />
+                <field name="company_id" />
+                <field name="state" />             
+            </tree>
+        </field>
+    </record>
+
+    <record id="paymethod_import_form" model="ir.ui.view">
+        <field name="name">paymethod_import.form</field>
+        <field name="model">paymethod.import</field>
+        <field name="arch" type="xml">
+                <form string="Master" version="7.0">
+					<header>
+						<button name="import_data" string="Import Payment Methods" type="object"
+							class="oe_highlight" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,completed,error" />
+					</header>
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="import_date" />
+							<field name="import_file" filename="import_fname" />
+							<field name="import_fname" invisible="1" class="oe_inline oe_right" />
+							<field name="company_id" />
+							<field name="note" />
+						</group>
+					</sheet>
+				</form>
+        </field>
+    </record>
+
+    <record id="paymethod_import_action" model="ir.actions.act_window">
+        <field name="name">Import Payment Methods</field>
+        <field name="res_model">paymethod.import</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="paymethod_import_menu"
+        name="Payment Methods"
+        sequence="11"
+        action="paymethod_import_action"
+        parent="menu_master_data_import"
+        />
+
+</odoo>
