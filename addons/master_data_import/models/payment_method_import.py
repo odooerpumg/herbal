@@ -7,6 +7,7 @@ import logging
 from datetime import datetime
 from decimal import Decimal
 from odoo.fields import Char
+from odoo.exceptions import UserError
 # from pip.commands.show import print_results
 _logger = logging.getLogger(__name__)
 # import sys
@@ -73,8 +74,9 @@ class PaymentMethodImport(models.Model):
     def get_headers(self, line):
         print("line[0].strip().lower()",line[0].strip().lower())
         if line[0].strip() not in header_fields:
-                    raise orm.except_orm(_('Error :'), _("Error while processing the header line %s.\
-                     \n\nPlease check your Excel separator as well as the column header fields") % line)
+            error_message = ("Error while processing the header line %s.\
+                     \n\nPlease check your Excel separator as well as the column header fields") % line
+            raise UserError(_(error_message))            
         else:
             # ## set header_fields to header_index with value -1
             for header in header_fields:
@@ -99,22 +101,6 @@ class PaymentMethodImport(models.Model):
             for header in header_fields:
                 if header_indexes[header] < 0:                    
                     self.err_log += '\n' + _("Invalid Excel file, Header '%s' is missing !") % header
-    
-    # def import_data(self):
-    #     print('IMPORT DATA IMPOre-------------------------')
-    #     # self = self.with_context(force_company=252, company_id=252)
-    #     company = self.env['res.company'].search([('id','=',252)])
-    #     inter_user = self.env['res.users'].browse(2)
-    #     pos_config = self.env['pos.config']
-    #     data = {
-    #         "name":"TEST",
-    #         "company_id":252,
-    #         "payment_method_ids":[4],
-    #         "picking_type_id":2304,
-    #         "journal_id":70
-    #     }
-    #     result = pos_config.with_context(allowed_company_ids=inter_user.company_ids.ids).create(data)
-    #     print('result------->', result)
 
     def import_data(self):
         print('IMPORT DATA IMPOre-------------------------')
@@ -184,7 +170,17 @@ class PaymentMethodImport(models.Model):
                     "receivable_account_id": receivable_account_id
                 }
                 result = pos_payment_method.with_context(allowed_company_ids=inter_user.company_ids.ids).create(data)
-                print('result------->', result)
+                
+                skipped_data_str = ''
+                for sk in skipped_data:
+                    skipped_data_str += str(sk) + ','                
+                message = 'Import Success at ' + str(datetime.strptime(datetime.today().strftime('%Y-%m-%d %H:%M:%S'),
+                          '%Y-%m-%d %H:%M:%S'))+ '\n' + str(len(all_data))+' records imported' +'\
+                          \n' + str(create_count) + ' created\n' + str(update_count) + ' updated' + '\
+                          \n' + str(skipped_count) + 'skipped' + '\
+                          \n\n' + skipped_data_str
+                          
+                self.write({'state': 'completed','note': message})
                 
 
 
