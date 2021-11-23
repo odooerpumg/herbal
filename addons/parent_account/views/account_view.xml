@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_account_withparent_form" >
+        <field name="name">account.account.form</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="parent_id" domain="[('internal_type','=','view')]"
+                    context="{'show_parent_account':True}" />
+            </field>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="account.action_account_form">
+        <field name="context">{'show_parent_account':True}</field>
+    </record>
+    <menuitem action="account.action_account_type_form" id="menu_action_account_type_form" 
+            parent="account.account_account_menu" sequence="1"/>
+   
+    <record model="ir.ui.view" id="view_account_tree">
+            <field name="name">account.account.tree</field>
+            <field name="model">account.account</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Chart of accounts">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="parent_id" invisible="1"/>
+                    <field name="user_type_id"/>
+                    <field name="internal_type" invisible="1"/>
+                    <field name="currency_id" options="{'no_create': True}" />
+                    <field name="company_id" options="{'no_create': True}" />
+                    <field name="debit" sum="Total Debit"/>
+                    <field name="credit" sum="Total Credit"/>
+                    <field name="balance" sum="Total Balance"/>
+                </tree>
+            </field>
+        </record>
+    
+    <record model="ir.actions.act_window" id="open_view_account_tree">
+        <field name="name">Chart of Account Heirarchy</field>
+        <field name="res_model">account.account</field>
+        <!-- <field name="view_type">tree</field> -->
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_account_tree"/>
+        <field name="domain">[('parent_id','=',False)]</field>
+        <field name="context">{'show_parent_account':True}</field>
+    </record>
+    <record model="ir.ui.view" id="view_account_noparent_tree">
+            <field name="name">account.account.tree</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <tree string="Chart of accounts">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="parent_id" invisible="1" />
+                    <field name="user_type_id"/>
+                    <field name="internal_type" invisible="1"/>
+                    <field name="currency_id" options="{'no_create': True}" />
+                    <field name="company_id" options="{'no_create': True}" />
+                    <field name="debit" sum="Total Debit"/>
+                    <field name="credit" sum="Total Credit"/>
+                    <field name="balance" sum="Total Balance"/>
+                </tree>
+            </field>
+        </record>
+    
+    <record model="ir.actions.act_window" id="open_view_account_noparent_tree">
+        <field name="name">Chart of Account Heirarchy</field>
+        <field name="res_model">account.account</field>
+        <!-- <field name="view_type">tree</field> -->
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_account_noparent_tree"/>
+        <field name="context">{'show_parent_account':True}</field>
+    </record>
+    
+     <record model="ir.actions.act_window" id="action_move_lines_open">
+        <field name="name">Journal Entry Items</field>
+        <field name="res_model">account.move.line</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('account_id','child_of',[active_id])]</field>
+    </record>
+    
+     <!-- <record id="action_open_account" model="ir.default">
+        <field eval="'tree_but_open'" name="key2"/>
+        <field eval="'account.account'" name="model"/>
+        <field name="name">Accounts</field>
+        <field eval="'ir.actions.act_window,%d'%action_move_lines_open" name="value"/>
+    </record> -->
+
+    <menuitem id="menu_account_type" name="Account Types" sequence="21" parent="account.menu_finance_entries"  action="account.action_account_type_form"/>
+
+
+    <record model="ir.ui.view" id="view_account_list_parent_inherit">
+        <field name="name">account.account.parent.inherit.tree</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="parent_id" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_search_parent">
+        <field name="name">account.account.parent.inherit.filter</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <filter name="Account Group" domain="[('user_type_id','!=','Parent')]" context="{'group_by':'parent_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
