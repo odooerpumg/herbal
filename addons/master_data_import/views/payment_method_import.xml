@@ -28,12 +28,14 @@
 					</header>
 					<sheet>
 						<group>
-							<field name="name" />
-							<field name="import_date" />
-							<field name="import_file" filename="import_fname" />
-							<field name="import_fname" invisible="1" class="oe_inline oe_right" />
-							<field name="company_id" />
-							<field name="note" />
+                            <group>
+                                <field name="name" />
+                                <field name="import_date" />
+                                <field name="import_file" filename="import_fname" />
+                                <field name="import_fname" invisible="1" class="oe_inline oe_right" />
+                                <field name="company_id" />
+                                <field name="note" />
+                            </group>
 						</group>
 					</sheet>
 				</form>

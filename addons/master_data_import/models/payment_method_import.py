@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 # reload(sys)
 # sys.setdefaultencoding('utf8')
 
-header_fields = ['name','receivable_account_id','is_cash_count','split_transactions','company_id']		
+header_fields = ['name','receivable_account_id','is_cash_count','split_transactions','company_id','cash_journal_id']		
 
 
 header_indexes = {}
@@ -160,6 +160,9 @@ class PaymentMethodImport(models.Model):
                 # company_id
                 company_id = int(float(str(data['company_id']).strip()))
 
+                # cash_journal_id
+                cash_journal_id = int(float(str(data['cash_journal_id']).strip()))
+
                 inter_user = self.env['res.users'].browse(2)
                 pos_payment_method = self.env['pos.payment.method']
                 data = {
@@ -167,7 +170,8 @@ class PaymentMethodImport(models.Model):
                     "company_id": company_id,
                     "split_transactions": split_transactions,
                     "is_cash_count": is_cash_count,
-                    "receivable_account_id": receivable_account_id
+                    "receivable_account_id": receivable_account_id,
+                    "cash_journal_id": cash_journal_id,
                 }
                 result = pos_payment_method.with_context(allowed_company_ids=inter_user.company_ids.ids).create(data)
                 
