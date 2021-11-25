@@ -165,14 +165,21 @@ class PaymentMethodImport(models.Model):
 
                 inter_user = self.env['res.users'].browse(2)
                 pos_payment_method = self.env['pos.payment.method']
+                receivable_account = self.env['account.account'].with_context(allowed_company_ids=inter_user.company_ids.ids).search([("company_id","=",company_id),("code","=","101300")])
+                cash_journal = self.env['account.journal'].search([("company_id","=",company_id),("code","=","CSH1"),("type","=","cash")])
+                print("receivable_account",receivable_account.id)
+                if not receivable_account:
+                    print("==========>",company_id)
                 data = {
                     "name": name,
                     "company_id": company_id,
                     "split_transactions": split_transactions,
                     "is_cash_count": is_cash_count,
-                    "receivable_account_id": receivable_account_id,
-                    "cash_journal_id": cash_journal_id,
+                    "receivable_account_id": receivable_account.id,
                 }
+                print("receivable_account2",receivable_account.id)
+                if is_cash_count:
+                    data["cash_journal_id"]=  cash_journal.id
                 result = pos_payment_method.with_context(allowed_company_ids=inter_user.company_ids.ids).create(data)
                 
                 skipped_data_str = ''
