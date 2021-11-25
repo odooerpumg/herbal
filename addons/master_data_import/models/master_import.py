@@ -154,6 +154,7 @@ class ProductImport(models.Model):
                 payment_methods_ids = []
                 for i in payment_methods_ids_str.split(","):
                     payment_methods_ids.append(int(float(i)))
+                payment_methods = self.env['pos.payment.method'].search([("company_id","=",company_id)])
                 print("payment_methods_ids",payment_methods_ids)
                 # picking_type_id
                 picking_type_id = int(float(str(data['operation_type_id'])))
@@ -164,12 +165,13 @@ class ProductImport(models.Model):
                 inter_user = self.env['res.users'].browse(2)
                 pos_config = self.env['pos.config']
                 invoice_journal = self.env['account.journal'].search([("company_id","=",company_id),("code","=","INV"),("type","=","sale")])
+                sale_journal = self.env['account.journal'].search([("company_id","=",company_id),("code","=","POSS"),("type","=","sale")])
                 data = {
                     "name": name,
                     "company_id": company_id,
-                    "payment_method_ids": payment_methods_ids,
+                    "payment_method_ids": payment_methods.ids,
                     "picking_type_id": picking_type_id,
-                    "journal_id": sales_journal_id,
+                    "journal_id": sale_journal.id,
                     "invoice_journal_id": invoice_journal.id,
                 }
                 result = pos_config.with_context(allowed_company_ids=inter_user.company_ids.ids).create(data)
