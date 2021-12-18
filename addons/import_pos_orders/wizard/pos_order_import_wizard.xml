@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pos_order_import_wizard" model="ir.ui.view">
+            <field name="name">posorder.import.wizard.form</field>
+            <field name="model">posorder.import</field>
+            <field name="arch" type="xml">
+                <form string="POS ORDER IMPORT">
+                    <group>
+                        <field name="session_id" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="orders_lists_file" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Import" class="btn-primary" type="object" name="action_import"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_pos_order_import" model="ir.actions.act_window">
+            <field name="name">Orders Import</field>
+            <field name="res_model">posorder.import</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pos_order_import_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+<menuitem
+    id="pos_order_import_menu"
+    name="Import Orders"
+    action="action_pos_order_import"
+    parent="point_of_sale.menu_point_of_sale"
+    sequence="30"/>
+
+    </data>
+</odoo>
