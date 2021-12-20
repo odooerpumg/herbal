@@ -66,30 +66,41 @@ class import_pos_orders(models.TransientModel):
                     if order and lines:
                         order['lines'] = lines
                         data.append(order)
-                    order = {}
-                    lines = []
-                    order['user_id'] = row[1].value
-                    order['session_id'] = row[2].value
+                        order = {}
+                        lines = []
+                    order['user_id'] = int(row[1].value)
+                    order['session_id'] = int(row[2].value)
                     order['pos_reference'] = row[3].value
                     order['partner_id'] = row[4].value
-                    order['fiscal_position_id'] = False
+                    order['fiscal_position_id'] = row[5].value
+                    order['amount_tax'] = 0
+                    order['amount_total'] = row[10].value
+                    order['amount_paid'] = row[10].value
+                    order['amount_return'] = 0
+
+                if row[0].value == 'end':
+                    if order and lines:
+                        order['lines'] = lines
+                        data.append(order)
+
                 if row[0].value == 'line' and order:
                     line = [
                         0, 0,
                         {
-                            'product_id': 3,
-                            'qty': 1,
-                            'price_unit': 170000,
-                            'price_subtotal': 170000,
-                            'price_subtotal_incl': 170000, 
-                            'discount': 0, 
+                            'product_id': int(row[6].value),
+                            'qty': int(row[7].value),
+                            'price_unit': float(row[8].value),
+                            'price_subtotal': int(row[7].value) * float(row[8].value),
+                            'price_subtotal_incl': int(row[7].value) * float(row[8].value),
+                            'discount': 0.0, 
                             'tax_ids': [[6, False, []]],
                             'pack_lot_ids': [],
                             # 'name': 'Backlogs/0046'
                         }
                     ]
                     lines.append(line)
-            print("ORDER", data)
+        for o in data:
+            model.create(o)
         return True
 
 class PosOrder(models.Model):
@@ -97,6 +108,5 @@ class PosOrder(models.Model):
 
     @api.model
     def create(self, values):
-        print("++++++++++>", values)
         result = super(PosOrder, self).create(values)
         return result
