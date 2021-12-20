@@ -38,7 +38,8 @@
         'views/hr_employee.xml',
         'views/res_users.xml',
         'views/res_company.xml',
-        'views/stock_warehouse.xml'
+        'views/stock_warehouse.xml',
+        'views/stock_location.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

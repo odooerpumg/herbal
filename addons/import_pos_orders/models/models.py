@@ -63,6 +63,9 @@ class import_pos_orders(models.TransientModel):
         for rowx, row in enumerate(map(sheet.row, range(sheet.nrows)), 1):
             if rowx > 1:
                 if row[0].value == 'order':
+                    if order and lines:
+                        order['lines'] = lines
+                        data.append(order)
                     order = {}
                     lines = []
                     order['user_id'] = row[1].value
@@ -86,7 +89,7 @@ class import_pos_orders(models.TransientModel):
                         }
                     ]
                     lines.append(line)
-            print("ORDER",)
+            print("ORDER", data)
         return True
 
 class PosOrder(models.Model):
