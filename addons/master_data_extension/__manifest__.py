@@ -19,7 +19,7 @@
     'version': '1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','hr'],
+    'depends': ['base', 'mail', 'hr', 'stock'],
 
     # always loaded
     'data': [
@@ -38,6 +38,7 @@
         'views/hr_employee.xml',
         'views/res_users.xml',
         'views/res_company.xml',
+        'views/stock_warehouse.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
