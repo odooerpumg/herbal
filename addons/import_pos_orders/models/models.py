@@ -110,6 +110,7 @@ class import_pos_orders(models.TransientModel):
 class PayPosOrder(models.TransientModel):
     _name = 'posorder.payment'
     _description = 'Create payment records for selected orders.'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     payment_method_id = fields.Many2one('pos.payment.method', string='Payment Method')
     order_ids = fields.Many2many('pos.order', string='Selected Orders')
@@ -121,27 +122,30 @@ class PayPosOrder(models.TransientModel):
         """
         self.ensure_one()
 
-        order = self.env['pos.order'].browse(self.env.context.get('active_id', False))
-        currency = order.currency_id
+        orders = self.env['pos.order'].browse(self.env.context.get('active_ids', False))
+        try:
+            for order in orders:
+                currency = order.currency_id
 
-        init_data = {
-            'amount': order.amount_total,
-            'payment_name': self.payment_method_id.name,
-            'payment_method_id': self.payment_method_id.id
-        }
-        if not float_is_zero(init_data['amount'], precision_rounding=currency.rounding):
-            order.add_payment({
-                'pos_order_id': order.id,
-                'amount': order._get_rounded_amount(init_data['amount']),
-                'name': init_data['payment_name'],
-                'payment_method_id': init_data['payment_method_id'],
-            })
+                init_data = {
+                    'amount': order.amount_total,
+                    'payment_name': self.payment_method_id.name,
+                    'payment_method_id': self.payment_method_id.id
+                }
+                if not float_is_zero(init_data['amount'], precision_rounding=currency.rounding):
+                    order.add_payment({
+                        'pos_order_id': order.id,
+                        'amount': order._get_rounded_amount(init_data['amount']),
+                        'name': init_data['payment_name'],
+                        'payment_method_id': init_data['payment_method_id'],
+                    })
 
-        if order._is_pos_order_paid():
-            order.action_pos_order_paid()
+                if order._is_pos_order_paid():
+                    order.action_pos_order_paid()
+            self.env.user.notify_success(message='My success message')
             return {'type': 'ir.actions.act_window_close'}
-
-        return self.launch_payment()
+        except Exception as error:
+            return UserError(_(error))
 
 
     
