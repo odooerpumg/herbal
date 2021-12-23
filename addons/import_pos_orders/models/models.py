@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 import xlrd
 import base64
 class import_pos_orders(models.TransientModel):
@@ -104,6 +105,54 @@ class import_pos_orders(models.TransientModel):
             'domain': domain,
         }
         return action
+
+
+class PayPosOrder(models.TransientModel):
+    _name = 'posorder.payment'
+    _description = 'Create payment records for selected orders.'
+
+    payment_method_id = fields.Many2one('pos.payment.method', string='Payment Method')
+    order_ids = fields.Many2many('pos.order', string='Selected Orders')
+
+    def check(self):
+        """Check the order:
+        if the order is not paid: continue payment,
+        if the order is paid print ticket.
+        """
+        self.ensure_one()
+
+        order = self.env['pos.order'].browse(self.env.context.get('active_id', False))
+        currency = order.currency_id
+
+        init_data = {
+            'amount': order.amount_total,
+            'payment_name': self.payment_method_id.name,
+            'payment_method_id': self.payment_method_id.id
+        }
+        if not float_is_zero(init_data['amount'], precision_rounding=currency.rounding):
+            order.add_payment({
+                'pos_order_id': order.id,
+                'amount': order._get_rounded_amount(init_data['amount']),
+                'name': init_data['payment_name'],
+                'payment_method_id': init_data['payment_method_id'],
+            })
+
+        if order._is_pos_order_paid():
+            order.action_pos_order_paid()
+            return {'type': 'ir.actions.act_window_close'}
+
+        return self.launch_payment()
+
+
+    
+    @api.model
+    def default_get(self, fields):
+        res = super(PayPosOrder, self).default_get(fields)
+        active_ids = self._context.get('active_ids') or self._context.get('active_id')
+        res['order_ids'] = active_ids
+        return res
+        
+    
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'

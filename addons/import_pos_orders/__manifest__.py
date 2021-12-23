@@ -29,6 +29,7 @@
         'views/templates.xml',
         'wizard/pos_order_import_wizard.xml',
         'wizard/product_import_view.xml',
+        'wizard/pos_order_payment_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
