@@ -1,60 +1,23 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="import_pos_orders.list">
-      <field name="name">import_pos_orders list</field>
-      <field name="model">import_pos_orders.import_pos_orders</field>
+    <record id="pos_config_form" model="ir.ui.view">
+      <field name="name">pos.config.form</field>
+      <field name="model">pos.config</field>
+      <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr="//div[@id='title']" position="after">
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane">
+                <field name="back_logs"/>
+              </div>
+              <div class="o_setting_right_pane">
+                <label for="back_logs"/>
+              </div>
+            </div>
+          </div>
+        </xpath>
       </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="import_pos_orders.action_window">
-      <field name="name">import_pos_orders window</field>
-      <field name="res_model">import_pos_orders.import_pos_orders</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="import_pos_orders.action_server">
-      <field name="name">import_pos_orders server</field>
-      <field name="model_id" ref="model_import_pos_orders_import_pos_orders"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="import_pos_orders" id="import_pos_orders.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="import_pos_orders.menu_1" parent="import_pos_orders.menu_root"/>
-    <menuitem name="Menu 2" id="import_pos_orders.menu_2" parent="import_pos_orders.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="import_pos_orders.menu_1_list" parent="import_pos_orders.menu_1"
-              action="import_pos_orders.action_window"/>
-    <menuitem name="Server to list" id="import_pos_orders" parent="import_pos_orders.menu_2"
-              action="import_pos_orders.action_server"/>
--->
   </data>
 </odoo>
