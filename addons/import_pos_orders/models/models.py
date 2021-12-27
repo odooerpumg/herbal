@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 import xlrd
 import base64
-class import_pos_orders(models.TransientModel):
+class ImportPosOrders(models.TransientModel):
     _name = 'posorder.import'
     _description = 'import_pos_orders'
 
@@ -19,14 +19,14 @@ class import_pos_orders(models.TransientModel):
     orders_lists_file = fields.Binary(string='File' )
 
     sample_template = fields.Char(string="Sample Template", default='http://localhost:8069/import_pos_orders/static/src/custom_import_pos_order_template.xlsx')
-
-    def odoo_button_click(self):
-        return{
-            'type': 'ir.actions.act_url',
-            'url': str('/import_pos_orders/static/src/custom_import_pos_order_template.xlsx'),
-            'target': 'new',
-        }
-
+    
+    @api.model
+    def default_get(self, fields):
+        res = super(ImportPosOrders, self).default_get(fields)
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        res['sample_template'] = '%s/import_pos_orders/static/src/custom_import_pos_order_template.xlsx' % base_url
+        return res
+    
     def action_import(self):
         model = self.env['pos.order']
         payment_model = self.env['pos.make.payment']
@@ -165,11 +165,3 @@ class PayPosOrder(models.TransientModel):
         return res
         
     
-
-class PosOrder(models.Model):
-    _inherit = 'pos.order'
-
-    @api.model
-    def create(self, values):
-        result = super(PosOrder, self).create(values)
-        return result
