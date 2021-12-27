@@ -11,13 +11,21 @@ class import_pos_orders(models.TransientModel):
     name = fields.Char()
     session_id = fields.Many2one('pos.session', string='Session')
     config_id = fields.Many2one('pos.config', related='session_id.config_id', string='POS config')
-    payment_method_id = fields.Many2one('pos.payment.method', string='Payment Method')
     
     # customer
     customer_included = fields.Boolean("Customer Included In Template." , default=True)
     partner_id = fields.Many2one('res.partner', string='Customer') 
 
     orders_lists_file = fields.Binary(string='File' )
+
+    sample_template = fields.Char(string="Sample Template", default='http://localhost:8069/import_pos_orders/static/src/custom_import_pos_order_template.xlsx')
+
+    def odoo_button_click(self):
+        return{
+            'type': 'ir.actions.act_url',
+            'url': str('/import_pos_orders/static/src/custom_import_pos_order_template.xlsx'),
+            'target': 'new',
+        }
 
     def action_import(self):
         model = self.env['pos.order']
@@ -84,14 +92,7 @@ class import_pos_orders(models.TransientModel):
             _ids = []
             for o in data:
                 current_order = model.create(o)
-                _ids.append(current_order.id)
-                # if current_order:
-                #     current_order.add_payment({
-                #         'pos_order_id': current_order.id,
-                #         'amount': current_order._get_rounded_amount(init_data['amount']),
-                #         'name': init_data['payment_name'],
-                #         'payment_method_id': self.payment_method.id,
-                #     })  
+                _ids.append(current_order.id) 
         except Exception as error:
             raise UserError(_(str(error)))
         # Domain to filterout only current created order
@@ -104,6 +105,10 @@ class import_pos_orders(models.TransientModel):
             'view_mode': 'list,form',
             'domain': domain,
         }
+        # notify_success(self, message="Default message", title=None, sticky=False)
+        # Import completed
+        # records were successfully imported
+        self.env.user.notify_success(message='%s records were successfully imported.' % str(len(_ids)), title='Import completed')        
         return action
 
 
@@ -142,7 +147,10 @@ class PayPosOrder(models.TransientModel):
 
                 if order._is_pos_order_paid():
                     order.action_pos_order_paid()
-            self.env.user.notify_success(message='My success message')
+            # notify_success(self, message="Default message", title=None, sticky=False)
+            # Import completed
+            # records were successfully imported
+            self.env.user.notify_success(message='records were successfully created.', title='Create completed')
             return {'type': 'ir.actions.act_window_close'}
         except Exception as error:
             return UserError(_(error))
