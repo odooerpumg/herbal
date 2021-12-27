@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="posorder_payment_wizard_form" model="ir.ui.view">
+        <field name="name">posorder.payment.form</field>
+        <field name="model">posorder.payment</field>
+        <field name="arch" type="xml">
+            <form string="Payment">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="payment_method_id" required="1"/>
+                        </group>
+                    </group>
+                    <!-- <notebook>
+                        <page name="selected_orders" string="Selected Orders">
+                            <field name="order_ids" readonly="1" options="{'no_open': True}">
+                                <tree string="POS Orders" editabe="top" create="0" delete="0" decoration-info="state == 'draft'" decoration-muted="state in ('done','cancel')" options="{'no_open': True}">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="session_id" />
+                                    <field name="date_order"/>
+                                    <field name="pos_reference"/>
+                                    <field name="partner_id"/>
+                                    <field string="Cashier" name="user_id"/>
+                                    <field name="amount_total" sum="Amount total" widget="monetary"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook> -->
+                </sheet>
+                <footer>
+                    <button name="check" type="object" string="Make Payment" class=" btn btn-warning"/>
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="posorder_payment_action" model="ir.actions.act_window">
+        <field name="name">POS Order Payment</field>
+        <field name="res_model">posorder.payment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="posorder_payment_wizard_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_pos_order"/>
+        <field name="binding_view_types">list</field>        
+    </record>
+</odoo>

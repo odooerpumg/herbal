@@ -8,13 +8,24 @@
             <field name="arch" type="xml">
                 <form string="POS ORDER IMPORT">
                     <group>
-                        <field name="session_id" required="1"/>
-                    </group>
-                    <group>
+                        <group string='Session'>
+                            <field name="session_id" domain="[('state', '=', 'opened')]" required="1"/>
+                             <field name="config_id" readonly="1"/>
+                        </group>                          
+                        <group string="Customer">
+                            <field name="customer_included" string="Included In Template"/>
+                            <field name="partner_id" attrs="{
+                                'invisible':[('customer_included', '=', True)],
+                                'required':[('customer_included', '=', False)]
+                            }"/>
+                        </group>                              
                         <group>
                             <field name="orders_lists_file" required="1"/>
                         </group>
-                    </group>
+                    </group> 
+                        <field nolabel="1" text="Sample Template" style="text-align: center" name="sample_template" widget="url" readonly="1"/>
+                    <group>
+                    </group>                   
                     <footer>
                         <button string="Import" class="btn-primary" type="object" name="action_import"/>
                         <button string="Cancel" class="btn-secondary" special="cancel"/>
