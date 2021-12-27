@@ -8,9 +8,9 @@
             <field name="arch" type="xml">
                 <form string="POS ORDER IMPORT">
                     <group>
-                        <group string='Session'>
-                            <field name="session_id" domain="[('state', '=', 'opened')]" required="1"/>
-                             <field name="config_id" readonly="1"/>
+                        <group string='POS Config'>
+                            <!-- <field name="session_id" domain="[('state', '=', 'opened')]" required="1"/> -->
+                            <field name="config_id" required="1"/>
                         </group>                          
                         <group string="Customer">
                             <field name="customer_included" string="Included In Template"/>

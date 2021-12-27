@@ -10,7 +10,8 @@ class ImportPosOrders(models.TransientModel):
 
     name = fields.Char()
     session_id = fields.Many2one('pos.session', string='Session')
-    config_id = fields.Many2one('pos.config', related='session_id.config_id', string='POS config')
+    # config_id = fields.Many2one('pos.config', related='session_id.config_id', string='POS config')
+    config_id = fields.Many2one('pos.config', string='POS config')
     
     # customer
     customer_included = fields.Boolean("Customer Included In Template." , default=True)
@@ -37,6 +38,8 @@ class ImportPosOrders(models.TransientModel):
             data = []
             order = {}
             lines = []
+            self.config_id.open_session_cb()
+            session_id = self.config_id.current_session_id
             for rowx, row in enumerate(map(sheet.row, range(sheet.nrows)), 1):
                 if rowx > 1:
                     # ENDING FLAG
@@ -53,7 +56,7 @@ class ImportPosOrders(models.TransientModel):
                             order = {}
                             lines = []
                         order['user_id'] = self.env.user.id
-                        order['session_id'] = self.session_id.id
+                        order['session_id'] = session_id.id
                         order['pos_reference'] = row[1].value
 
                         if self.customer_included:
@@ -85,7 +88,7 @@ class ImportPosOrders(models.TransientModel):
                                 'discount': float(row[8].value), 
                                 'tax_ids': [[6, False, []]],
                                 'pack_lot_ids': [],
-                                'name': 'Backlogs/Session-%s' % self.session_id.name
+                                'name': 'Backlogs/Session-%s' % session_id.name
                             }
                         ]
                         lines.append(line)
