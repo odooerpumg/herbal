@@ -10,7 +10,7 @@
                     <group>
                         <group string='POS Config'>
                             <!-- <field name="session_id" domain="[('state', '=', 'opened')]" required="1"/> -->
-                            <field name="config_id" domain="[('back_logs', '=', True)]" required="1"/>
+                            <field name="config_id" domain="[('back_logs', '=', True)]" options="{'no_create': True, 'no_open': True}" required="1"/>
                         </group>                          
                         <group string="Customer">
                             <field name="customer_included" string="Included In Template"/>
