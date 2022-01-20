@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+from http import server
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 import xlrd
 import base64
+
 class ImportPosOrders(models.TransientModel):
     _name = 'posorder.import'
     _description = 'import_pos_orders'
@@ -114,7 +116,6 @@ class ImportPosOrders(models.TransientModel):
         self.env.user.notify_success(message='%s records were successfully imported.' % str(len(_ids)), title='Import completed')        
         return action
 
-
 class PayPosOrder(models.TransientModel):
     _name = 'posorder.payment'
     _description = 'Create payment records for selected orders.'
@@ -122,7 +123,7 @@ class PayPosOrder(models.TransientModel):
 
     payment_method_id = fields.Many2one('pos.payment.method', string='Payment Method')
     order_ids = fields.Many2many('pos.order', string='Selected Orders')
-
+    backlogs_payment_date = fields.Datetime("Payment Date")
     def check(self):
         """Check the order:
         if the order is not paid: continue payment,
@@ -132,21 +133,29 @@ class PayPosOrder(models.TransientModel):
 
         orders = self.env['pos.order'].browse(self.env.context.get('active_ids', False))
         try:
+            set_backlogs_payment_date = False
+            pids = []
             for order in orders:
+                if set_backlogs_payment_date == False:
+                    order.session_id.write({'backlogs_payment_date': self.backlogs_payment_date})
                 currency = order.currency_id
 
                 init_data = {
                     'amount': order.amount_total,
                     'payment_name': self.payment_method_id.name,
-                    'payment_method_id': self.payment_method_id.id
+                    'payment_method_id': self.payment_method_id.id,
+                    'payment_date': self.backlogs_payment_date
                 }
                 if not float_is_zero(init_data['amount'], precision_rounding=currency.rounding):
-                    order.add_payment({
+                    payment = order.add_payment_for_backlogs_order({
                         'pos_order_id': order.id,
                         'amount': order._get_rounded_amount(init_data['amount']),
                         'name': init_data['payment_name'],
                         'payment_method_id': init_data['payment_method_id'],
+                        'payment_date': init_data['payment_date']
                     })
+                    if payment:
+                        pids.append(payment.id)
 
                 if order._is_pos_order_paid():
                     order.action_pos_order_paid()
@@ -154,25 +163,77 @@ class PayPosOrder(models.TransientModel):
             # Import completed
             # records were successfully imported
             self.env.user.notify_success(message='records were successfully created.', title='Create completed')
-            return {'type': 'ir.actions.act_window_close'}
+            # return {'type': 'ir.actions.act_window_close'}
+            # Domain to filterout only current created order
+            domain = [('id', 'in', pids)]
+            action = {
+                'name': _('Payments'),
+                'type': 'ir.actions.act_window',
+                'res_model': 'pos.payment',
+                'view_type': 'list',
+                'view_mode': 'list,form',
+                'domain': domain,
+            } 
+            return action           
         except Exception as error:
             return UserError(_(error))
 
-
-    
     @api.model
     def default_get(self, fields):
         res = super(PayPosOrder, self).default_get(fields)
         active_ids = self._context.get('active_ids') or self._context.get('active_id')
         res['order_ids'] = active_ids
         return res
-        
-    
-
 
 class PointOfSaleConfig(models.Model):
     _inherit = 'pos.config'
 
     back_logs = fields.Boolean("Backlog")
-    
 
+class PosOrder(models.AbstractModel):
+
+    _inherit = 'pos.order'
+    
+    def add_payment_for_backlogs_order(self, data):
+        """Create a new payment for the Backlogs order"""
+        self.ensure_one()
+        payment = self.env['pos.payment'].create(data)
+        self.amount_paid = sum(self.payment_ids.mapped('amount'))   
+        return payment 
+
+class PosPayment(models.AbstractModel):
+
+    _inherit = 'pos.payment'    
+    backlogs_payment_date = fields.Datetime("Payment Date")
+
+class PosSessions(models.Model):
+    _inherit = 'pos.session'
+    backlogs_payment_date = fields.Datetime("Payment Date")
+
+    def _create_account_move(self):
+        """ Create account.move and account.move.line records for this session.
+
+        Side-effects include:
+            - setting self.move_id to the created account.move record
+            - creating and validating account.bank.statement for cash payments
+            - reconciling cash receivable lines, invoice receivable lines and stock output lines
+        """
+        journal = self.config_id.journal_id
+        # Passing default_journal_id for the calculation of default currency of account move
+        # See _get_default_currency in the account/account_move.py.
+        account_move = self.env['account.move'].with_context(default_journal_id=journal.id).create({
+            'journal_id': journal.id,
+            'date': self.backlogs_payment_date if self.backlogs_payment_date else fields.Date.context_today(self),
+            'ref': self.name,
+        })
+        self.write({'move_id': account_move.id})
+
+        data = {}
+        data = self._accumulate_amounts(data)
+        data = self._create_non_reconciliable_move_lines(data)
+        data = self._create_cash_statement_lines_and_cash_move_lines(data)
+        data = self._create_invoice_receivable_lines(data)
+        data = self._create_stock_output_lines(data)
+        data = self._create_extra_move_lines(data)
+        data = self._create_balancing_line(data)
+        data = self._reconcile_account_move_lines(data)
