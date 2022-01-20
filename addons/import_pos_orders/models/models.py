@@ -189,6 +189,7 @@ class PointOfSaleConfig(models.Model):
     _inherit = 'pos.config'
 
     back_logs = fields.Boolean("Backlog")
+    business_unit = fields.Many2one('business.unit', string='Business Unit',)
 
 class PosOrder(models.AbstractModel):
 
