@@ -1,0 +1,7 @@
+.pos .clientlist-screen .client-detail > .label{
+    font-weight: bold;
+    display: inline-block;
+    width: 120px!important;
+    text-align: right;
+    margin-right: 8px;
+}

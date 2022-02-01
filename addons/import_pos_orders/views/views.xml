@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+    <!-- POS config -->
+    <record id="pos_config_form" model="ir.ui.view">
+      <field name="name">pos.config.form</field>
+      <field name="model">pos.config</field>
+      <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@id='title']" position="after">
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane">
+                <field name="back_logs"/>
+              </div>
+              <div class="o_setting_right_pane">
+                <label for="back_logs"/>
+              </div>
+            </div>
+          </div>
+          <div class="row mt16 o_settings_container">
+            <div class="col-12 col-lg-6 o_setting_box">
+              <div class="o_setting_left_pane">
+              </div>
+              <div class="o_setting_right_pane">
+                  <span class="o_form_label">Business Unit</span>
+                  <!-- <div class="text-muted">
+                      Set barcodes to scan products, customer cards, etc.
+                  </div> -->
+                  <div class="content-group mt16 row">
+                      <label for="business_unit" string="Business Unit" class="col-lg-3 o_light_label"/>
+                      <field name="business_unit"/>
+                  </div>
+              </div>
+            </div>
+          </div>          
+        </xpath>
+      </field>
+    </record>
+    <!-- POS payment -->
+    <record id="view_pos_payment_form" model="ir.ui.view">
+      <field name="name">POS Payment Form</field>
+      <field name="model">pos.payment</field>
+      <field name="inherit_id" ref="point_of_sale.view_pos_payment_form" />
+      <field name="arch" type="xml">
+        <field name="session_id" position="after">
+          <field name="payment_date" readonly="1" groups="base.group_no_one"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>

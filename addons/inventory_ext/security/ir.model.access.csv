@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nrc_no,inventory_ext.nrc_no,model_nrc_no,base.group_user,1,1,1,1
+access_nrc_description,inventory_ext.nrc_description,model_nrc_description,base.group_user,1,1,1,1
+access_nrc_type,inventory_ext.nrc_type,model_nrc_type,base.group_user,1,1,1,1
+access_business_branch,inventory_ext.business_branch,model_business_branch,base.group_user,1,1,1,1
+access_office_location,inventory_ext.office_location,model_office_location,base.group_user,1,1,1,1

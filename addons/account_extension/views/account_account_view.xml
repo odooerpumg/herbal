@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_view_account_form_inherit">
+            <field name="name">account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="parent_id" domain="[('is_sub','=',False)]" />
+                    <field name="is_sub" />
+                </xpath>
+                <xpath expr="//field[@name='user_type_id']" position="after">
+                    <field name="bu_br_name" />
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_account_list_inherit">
+            <field name="name">account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_type_id']" position="after">
+                    <field name="bu_br_name" />
+                </xpath>
+            </field>
+        </record>
+        <record id="account.view_account_type_form" model="ir.ui.view">
+            <field name="name">account.account.type.form</field>
+            <field name="model">account.account.type</field>
+            <field name="arch" type="xml">
+                <form string="Account Type">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="include_initial_balance"/>
+                            <field name="internal_group"/>
+                        </group>
+                    </group>
+                    <separator string="Description"/>
+                    <field name="note"/>
+                </form>
+            </field>
+        </record>
+        <menuitem action="account.action_account_type_form" id="account_type_menu" name="COA Type" parent="account.account_account_menu" sequence="2" groups="base.group_erp_manager"/>
+    </data>
+</odoo>

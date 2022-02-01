@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+    <!-- product.template inherit form view -->
+    <record id="product_template_search_form_view_stock" model="ir.ui.view">
+      <field name="name">product.template.inherit.view.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='group_standard_price']" position="after">
+          <group></group>
+          <group string="UMGian Prices" name="group_umgian_price">
+              <label for="umgian_price"/>
+              <div name="pricing">
+                <field name="umgian_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+              </div>
+              <label for="umgian_family_price"/>
+              <div name="pricing">
+                <field name="umgian_family_price" class="oe_inline" widget='monetary' options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+              </div>
+          </group>              
+        </xpath>        
+      </field>
+    </record>
+  </data>
+</odoo>
