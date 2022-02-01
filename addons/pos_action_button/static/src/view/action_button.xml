@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="UmgianFamilyButton">
+        <t t-if='widget.get_selected_orderline'>
+            <!-- <div class='control-button' id="umgian_price">
+                <i class="fa fa-dashboard" />UMGian Price<br/>
+            </div>    -->
+            <div class='control-button' id='umgian_family_price'>
+                <i class="fa fa-dashboard" />Family Price<br/>
+            </div>   
+        </t>      
+    </t>
+
+    <t t-name="UmgianButton">
+        <t t-if='widget.get_selected_orderline'>
+            <div class='control-button' id="umgian_price">
+                <i class="fa fa-dashboard" />UMGian Price<br/>
+            </div>   
+        </t>      
+    </t>
+    <t t-name="NormalPriceButton">
+        <t t-if='widget.get_selected_orderline'>
+            <div class='control-button' id="normal_price">
+                <i class="fa fa-dashboard" />Normal Price<br/>
+            </div>   
+        </t>      
+    </t>
+
+
+    <t t-extend="Product">
+        <t t-jquery=".price-tag" t-operation="after">
+            <span class="umgian-price-tag">
+                <t t-esc="widget.format_currency(product.get_umgian_price())"/>
+            </span>
+            <span class="family-price-tag">
+                <t t-esc="widget.format_currency(product.get_umgian_family_price())"/>
+            </span>            
+        </t>
+    </t>
+
+</templates>

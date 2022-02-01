@@ -1,0 +1,1085 @@
+<odoo>
+	<data>
+		<menuitem name="Master Data" id="master_data_menu" parent="hr.menu_hr_root" sequence="99"/>
+
+		<!-- Executive Officer Name Code -->
+		<record model="ir.ui.view" id="chief_name_code_tree">
+			<field name="name">Executive Officer Name Code</field>
+			<field name="model">chief.name.code</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="chief_name_code_form">
+			<field name="name">Executive Officer Name Code</field>
+			<field name="model">chief.name.code</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="chief_name_code_search" model="ir.ui.view">
+			<field name="name">chief.name.code.search</field>
+			<field name="model">chief.name.code</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="chief_name_code_action_window">
+			<field name="name">Executive Officer Name Code</field>
+			<field name="res_model">chief.name.code</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="chief_name_code_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Executive Officer Name Code" id="chief_name_code_menu" parent="master_data_menu" action="chief_name_code_action_window" sequence="2"/>
+
+		<!-- Business Type -->
+		<record model="ir.ui.view" id="business_type_tree">
+			<field name="name">Business Type</field>
+			<field name="model">business.type</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="business_type_form">
+			<field name="name">Business Type</field>
+			<field name="model">business.type</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="business_type_action_window">
+			<field name="name">Business Type</field>
+			<field name="res_model">business.type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Business Type" id="business_type_menu" parent="master_data_menu" action="business_type_action_window" sequence="2"/>
+
+		<!-- Business Sector Type -->
+		<record model="ir.ui.view" id="business_sector_type_tree">
+			<field name="name">Business Sector Type</field>
+			<field name="model">business.sector.type</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="business_sector_type_form">
+			<field name="name">Business Sector Type</field>
+			<field name="model">business.sector.type</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="business_sector_type_action_window">
+			<field name="name">Business Sector Type</field>
+			<field name="res_model">business.sector.type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Business Sector Type" id="business_sector_type_menu" parent="master_data_menu" action="business_sector_type_action_window" sequence="3"/>
+
+		<!-- Position Level -->
+		<record model="ir.ui.view" id="position_level_tree">
+			<field name="name">Position Level</field>
+			<field name="model">position.level</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="active" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="position_level_form">
+			<field name="name">Position Level</field>
+			<field name="model">position.level</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="active" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="position_level_action_window">
+			<field name="name">Position Level</field>
+			<field name="res_model">position.level</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Position Level" id="position_level_menu" parent="master_data_menu" action="position_level_action_window" sequence="4"/>
+
+		<!-- Job Level -->
+		<record model="ir.ui.view" id="hr_job_level_tree">
+			<field name="name">Job Level</field>
+			<field name="model">hr.job.level</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_job_level_form">
+			<field name="name">Job Level</field>
+			<field name="model">hr.job.level</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_job_level_action_window">
+			<field name="name">Job Level</field>
+			<field name="res_model">hr.job.level</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Job Level" id="hr_job_level_menu" parent="master_data_menu" action="hr_job_level_action_window" sequence="5"/>
+
+		<!-- Competency -->
+		<record model="ir.ui.view" id="hr_competency_tree">
+			<field name="name">Competency</field>
+			<field name="model">hr.competency</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="worker_type_id" />
+					<field name="continuous_improvement" />
+					<field name="able_to_express" />
+					<field name="initiative_innovation" />
+					<field name="customer_focus" />
+					<field name="teamwork" />
+					<field name="active_listening" />
+					<field name="building_confidence" />
+					<field name="analysis" />
+					<field name="discipline" />
+					<field name="motivational" />
+					<field name="planning" />
+					<field name="problem_solving" />
+					<field name="empowering" />
+					<field name="people_development" />
+					<field name="change_management" />
+					<field name="decision_making" />
+					<field name="building_network" />
+					<field name="conceptual_design" />
+					<field name="strategic_leadership" />
+					<field name="total_competencies" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_competency_form">
+			<field name="name">Competency</field>
+			<field name="model">hr.competency</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="worker_type_id" />
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="motivational" />
+								<field name="continuous_improvement" />
+								<field name="able_to_express" />
+								<field name="initiative_innovation" />
+								<field name="customer_focus" />
+								<field name="teamwork" />
+								<field name="active_listening" />
+								<field name="building_confidence" />
+								<field name="analysis" />
+								<field name="discipline" />
+							</group>
+							<group>
+								<field name="planning" />
+								<field name="problem_solving" />
+								<field name="empowering" />
+								<field name="people_development" />
+								<field name="change_management" />
+								<field name="decision_making" />
+								<field name="building_network" />
+								<field name="conceptual_design" />
+								<field name="strategic_leadership" />
+							</group>
+						</group>
+						<label for="total_competencies" string="Total Competencies" class="oe_inline"/>
+						<field name="total_competencies" />
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_competency_search" model="ir.ui.view">
+			<field name="name">chr.competency.search</field>
+			<field name="model">hr.competency</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="worker_type_id" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_competency_action_window">
+			<field name="name">Competency</field>
+			<field name="res_model">hr.competency</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_competency_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Competency" id="hr_competency_menu" parent="master_data_menu" action="hr_competency_action_window" sequence="6"/>
+
+		<!-- Sir Name -->
+		<record model="ir.ui.view" id="sir_name_tree">
+			<field name="name">Sir Name</field>
+			<field name="model">sir.name</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sir_name_form">
+			<field name="name">Sir Name</field>
+			<field name="model">sir.name</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="sir_name_action_window">
+			<field name="name">Sir Name</field>
+			<field name="res_model">sir.name</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Sir Name" id="sir_name_menu" parent="master_data_menu" action="sir_name_action_window" sequence="7"/>
+
+		<!-- Sir MM Name -->
+		<record model="ir.ui.view" id="sir_mm_name_tree">
+			<field name="name">Sir MM Name</field>
+			<field name="model">sir.mm.name</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sir_mm_name_form">
+			<field name="name">Sir MM Name</field>
+			<field name="model">sir.mm.name</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="sir_mm_name_action_window">
+			<field name="name">Sir MM Name</field>
+			<field name="res_model">sir.mm.name</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Sir MM Name" id="sir_mm_name_menu" parent="master_data_menu" action="sir_mm_name_action_window" sequence="7"/>
+
+		<!-- Qualification Type -->
+		<record model="ir.ui.view" id="qualification_type_tree">
+			<field name="name">Qualification Type</field>
+			<field name="model">qualification.type</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="qualification_type_form">
+			<field name="name">Qualification Type</field>
+			<field name="model">qualification.type</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="qualification_type_action_window">
+			<field name="name">Qualification Type</field>
+			<field name="res_model">qualification.type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Qualification Type" id="qualification_type_menu" parent="master_data_menu" action="qualification_type_action_window" sequence="8"/>
+
+		<!-- Education Type -->
+		<record model="ir.ui.view" id="education_type_tree">
+			<field name="name">Education Type</field>
+			<field name="model">education.type</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="education_type_form">
+			<field name="name">Education Type</field>
+			<field name="model">education.type</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="education_type_action_window">
+			<field name="name">Education Type</field>
+			<field name="res_model">education.type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Education Type" id="education_type_menu" parent="master_data_menu" action="education_type_action_window" sequence="9"/>
+
+		<!-- Degree -->
+		<record model="ir.ui.view" id="education_degree_tree">
+			<field name="name">Degree</field>
+			<field name="model">education.degree</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="education_degree_form">
+			<field name="name">Degree</field>
+			<field name="model">education.degree</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="education_degree_action_window">
+			<field name="name">Degree</field>
+			<field name="res_model">education.degree</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Degree" id="education_degree_menu" parent="master_data_menu" action="education_degree_action_window" sequence="11"/>
+
+		<!-- University -->
+		<record model="ir.ui.view" id="hr_university_tree">
+			<field name="name">University</field>
+			<field name="model">hr.university</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_university_form">
+			<field name="name">University</field>
+			<field name="model">hr.university</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_university_action_window">
+			<field name="name">University</field>
+			<field name="res_model">hr.university</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="University" id="hr_university_menu" parent="master_data_menu" action="hr_university_action_window" sequence="12"/>
+
+		<!-- Job Industry -->
+		<record model="ir.ui.view" id="job_industry_tree">
+			<field name="name">Job Industry</field>
+			<field name="model">job.industry</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="job_industry_form">
+			<field name="name">Job Industry</field>
+			<field name="model">job.industry</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="job_industry_action_window">
+			<field name="name">Job Industry</field>
+			<field name="res_model">job.industry</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Job Industry" id="job_industry_menu" parent="master_data_menu" action="job_industry_action_window" sequence="13"/>
+
+		<!-- Job Function -->
+		<record model="ir.ui.view" id="job_function_tree">
+			<field name="name">Job Function</field>
+			<field name="model">job.function</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="job_function_form">
+			<field name="name">Job Function</field>
+			<field name="model">job.function</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="job_function_action_window">
+			<field name="name">Job Function</field>
+			<field name="res_model">job.function</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Job Function" id="job_function_menu" parent="master_data_menu" action="job_function_action_window" sequence="14"/>
+
+		<!-- Region -->
+		<record model="ir.ui.view" id="hr_region_tree">
+			<field name="name">Region</field>
+			<field name="model">hr.region</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="types" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_region_form">
+			<field name="name">Region</field>
+			<field name="model">hr.region</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="types" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_region_search" model="ir.ui.view">
+			<field name="name">hr.region.search</field>
+			<field name="model">hr.region</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+					<field name="types" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_region_action_window">
+			<field name="name">Region</field>
+			<field name="res_model">hr.region</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_region_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Region" id="hr_region_menu" parent="master_data_menu" action="hr_region_action_window" sequence="15"/>
+
+		<!-- City -->
+		<record model="ir.ui.view" id="hr_city_tree">
+			<field name="name">City</field>
+			<field name="model">hr.city</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+					<field name="region_id" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_city_form">
+			<field name="name">City</field>
+			<field name="model">hr.city</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="code" />
+							</group>
+							<group>
+								<field name="region_id" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_city_search" model="ir.ui.view">
+			<field name="name">hr.city.search</field>
+			<field name="model">hr.city</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+					<field name="region_id" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_city_action_window">
+			<field name="name">City</field>
+			<field name="res_model">hr.city</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_city_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="City" id="hr_city_menu" parent="master_data_menu" action="hr_city_action_window" sequence="15"/>
+
+		<!-- Township -->
+		<record model="ir.ui.view" id="hr_township_tree">
+			<field name="name">Township</field>
+			<field name="model">hr.township</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+					<field name="city_id" />
+					<field name="district_id" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_township_form">
+			<field name="name">Township</field>
+			<field name="model">hr.township</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="code" />
+							</group>
+							<group>
+								<field name="city_id" />
+								<field name="district_id" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_township_search" model="ir.ui.view">
+			<field name="name">hr.township.search</field>
+			<field name="model">hr.township</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+					<field name="code" />
+					<field name="city_id" />
+					<field name="district_id" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_township_action_window">
+			<field name="name">Township</field>
+			<field name="res_model">hr.township</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_township_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Township" id="hr_township_menu" parent="master_data_menu" action="hr_township_action_window" sequence="16"/>
+
+		<!-- District -->
+		<record model="ir.ui.view" id="hr_district_tree">
+			<field name="name">District</field>
+			<field name="model">hr.district</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_district_form">
+			<field name="name">District</field>
+			<field name="model">hr.district</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_district_action_window">
+			<field name="name">District</field>
+			<field name="res_model">hr.district</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="District" id="hr_district_menu" parent="master_data_menu" action="hr_district_action_window" sequence="17"/>
+
+		<!-- Country -->
+		<record model="ir.ui.view" id="hr_country_tree">
+			<field name="name">Country</field>
+			<field name="model">hr.country</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="country_code" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_country_form">
+			<field name="name">Country</field>
+			<field name="model">hr.country</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="country_code" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_country_action_window">
+			<field name="name">Country</field>
+			<field name="res_model">hr.country</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- End -->
+		<menuitem name="Country" id="hr_country_menu" parent="master_data_menu" action="hr_country_action_window" sequence="18"/>
+
+		<!-- Candidate Program -->
+		<record model="ir.ui.view" id="candidate_program_tree">
+			<field name="name">Candidate Program</field>
+			<field name="model">candidate.program</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="candidate_program_form">
+			<field name="name">Candidate Program</field>
+			<field name="model">candidate.program</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="candidate_program_search" model="ir.ui.view">
+			<field name="name">candidate.program.search</field>
+			<field name="model">candidate.program</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+					<field name="code" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="candidate_program_action_window">
+			<field name="name">Candidate Program</field>
+			<field name="res_model">candidate.program</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="candidate_program_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Candidate Program" id="candidate_program_menu" parent="master_data_menu" action="candidate_program_action_window" sequence="19"/>
+
+		<!-- Location -->
+		<record model="ir.ui.view" id="hr_location_tree">
+			<field name="name">Location</field>
+			<field name="model">hr.location</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_location_form">
+			<field name="name">Location</field>
+			<field name="model">hr.location</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_location_search" model="ir.ui.view">
+			<field name="name">hr.location.search</field>
+			<field name="model">hr.location</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_location_action_window">
+			<field name="name">Location</field>
+			<field name="res_model">hr.location</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_location_search"/>
+		</record>
+		<!-- End -->
+		<menuitem name="Location" id="hr_location_menu" parent="master_data_menu" action="hr_location_action_window" sequence="19"/>
+
+		<!-- Language -->
+		<record model="ir.ui.view" id="hr_language_tree">
+			<field name="name">Language</field>
+			<field name="model">hr.language</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_language_form">
+			<field name="name">Language</field>
+			<field name="model">hr.language</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_language_search" model="ir.ui.view">
+			<field name="name">hr.language.search</field>
+			<field name="model">hr.language</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_language_action_window">
+			<field name="name">Language</field>
+			<field name="res_model">hr.language</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_language_search"/>
+		</record>
+
+		<menuitem name="Language" id="hr_language_menu" parent="master_data_menu" action="hr_language_action_window" sequence="20"/>
+		<!-- End -->
+
+		<!-- Language Line -->
+		<record model="ir.ui.view" id="hr_language_line_tree">
+			<field name="name">Language Line</field>
+			<field name="model">hr.language.line</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="language_id" />
+					<field name="speaking" />
+					<field name="listening" />
+					<field name="reading" />
+					<field name="writing" />
+					<field name="employee_id" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_language_line_form">
+			<field name="name">Language Line</field>
+			<field name="model">hr.language.line</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="language_id" />
+								<field name="speaking" />
+								<field name="listening" />
+							</group>
+							<group>
+								<field name="reading" />
+								<field name="writing" />
+								<field name="employee_id" />
+							</group>
+						</group>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="hr_language_line_search" model="ir.ui.view">
+			<field name="name">hr.language.line.search</field>
+			<field name="model">hr.language.line</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="language_id" />
+					<field name="speaking" />
+					<field name="listening" />
+					<field name="reading" />
+					<field name="writing" />
+					<field name="employee_id" />
+				</search>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="hr_language_line_action_window">
+			<field name="name">Language Line</field>
+			<field name="res_model">hr.language.line</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_language_line_search"/>
+		</record>
+
+		<menuitem name="Language Line" id="hr_language_line_menu" parent="master_data_menu" action="hr_language_line_action_window" sequence="21"/>
+		<!-- End -->
+
+	</data>
+</odoo>

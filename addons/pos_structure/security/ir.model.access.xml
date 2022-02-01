@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- POS Session Rule -->
+
+    <!-- <record model="ir.rule" id="admin_pos_session_rule">
+        <field name="name">Admin Access For POS Session</field>
+        <field name="model_id" ref="model_pos_config"/>
+        <field name="groups" eval="[(4, ref('base.group_erp_manager')), (4, ref('point_of_sale.group_pos_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record model="ir.rule" id="cashier_pos_session_rule">
+        <field name="name">Cashiers Access For POS Session</field>
+        <field name="model_id" ref="model_pos_config"/>
+        <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="domain_force">[('cashier_ids', 'in', [user.id])]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record> -->
+
+<!-- POS Session Rule -->
+
+<!-- POS Payments Rule -->
+
+    <!-- <record model="ir.rule" id="admin_pos_payment_rule">
+        <field name="name">Admin Access For POS Payments View</field>
+        <field name="model_id" ref="point_of_sale.model_pos_payment" />
+        <field name="groups" eval="[(4, ref('base.group_erp_manager')), (4, ref('point_of_sale.group_pos_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="cashier_pos_payments_rule" model="ir.rule">
+        <field name="name">Cashiers Access For POS Payments View</field>
+        <field name="model_id" ref="point_of_sale.model_pos_payment" />
+        <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record> -->
+
+<!-- POS Payments Rule -->
+
+<!-- POS Order Rule -->
+
+    <!-- <record model="ir.rule" id="admin_pos_order_rule">
+        <field name="name">Admin Access For POS Order View</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order" />
+        <field name="groups" eval="[(4, ref('base.group_erp_manager')), (4, ref('point_of_sale.group_pos_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="cashier_pos_order_rule" model="ir.rule">
+        <field name="name">Cashiers Access For POS Order View</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order" />
+        <field name="groups" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record> -->
+
+<!-- POS Order Rule -->
+</odoo>
