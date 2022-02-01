@@ -107,6 +107,11 @@ class ResPartner(models.Model):
             self.bu_city_id = self.business_unit_id.city_id.id
             self.bu_division_id = self.business_unit_id.division_id.id
             self.bu_country_id = self.business_unit_id.country_id.id
+            
+class StockValuationLayerInh(models.Model):
+    _inherit = 'stock.valuation.layer'
+
+    location = fields.Char("Current BU/BR/Div",related="stock_move_id.location_dest_id.name")
 
 
     

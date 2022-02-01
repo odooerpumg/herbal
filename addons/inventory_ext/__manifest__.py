@@ -15,7 +15,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'master_data_extension'],
+    'depends': ['base', 'stock', 'master_data_extension','stock_account'],
 
     # always loaded
     'data': [
@@ -23,7 +23,8 @@
         'views/product_views.xml',
         'views/res_partner_views.xml',
         'views/nrc_views.xml',
-        'views/bu_br_views.xml'
+        'views/bu_br_views.xml',
+        'views/stock_valuation_layer_view.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
