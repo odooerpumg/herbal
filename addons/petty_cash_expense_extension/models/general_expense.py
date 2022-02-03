@@ -173,7 +173,7 @@ class hr_general_expense(models.Model):
 	# team_id = fields.Many2one('res.partner.coveredteam', string='Team', required=True)
 	currency_rate = fields.Float(string='Currency Rate')
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager')
-	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('department_id','=','Finance & Account')]")
+	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]")
 	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve',default=False)
 	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
 	user_id = fields.Many2one('res.users','User', default=lambda self: self.env.user)
