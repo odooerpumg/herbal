@@ -41,7 +41,7 @@ class PettyCashExpense(models.Model):
 	name = fields.Char('Description',tracking=True)
 	requested_by_id = fields.Many2one('hr.employee',string='Requested By', default=employee_get, required=True,tracking=True)
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager', required=True)
-	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('department_id','=','Finance&Account')]", required=True)
+	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]", required=True)
 	amount = fields.Float('Amount',tracking=True)
 	description = fields.Text('Description')
 	request_journal_id = fields.Many2one('account.journal',string="To", required=True) 

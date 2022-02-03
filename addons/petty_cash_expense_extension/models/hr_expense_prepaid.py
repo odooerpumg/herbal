@@ -121,7 +121,7 @@ class Expense_Prepaid(models.Model):
 	currency_rate = fields.Float(string='Currency Rate')
 	# md = fields.Boolean('Need MD Approved ?')
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager', required=True)
-	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('department_id','=','Finance & Account')]", required=True)
+	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]", required=True)
 	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve',default=False)
 	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
 	# is_user = fields.Boolean('Is User',compute='get_approve',default=False)

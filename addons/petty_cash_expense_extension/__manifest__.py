@@ -15,7 +15,8 @@ Advanced Expenses
 				'hr_expense',
 				'account',
 				'mail',
-				'hr'
+				'hr',
+				'stock'
 				],
 	'data': [
 		'data/ir_sequence_data.xml',

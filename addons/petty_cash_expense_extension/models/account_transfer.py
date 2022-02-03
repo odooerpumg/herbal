@@ -35,7 +35,7 @@ class AccountTransfer(models.Model):
 	to_account_id = fields.Many2one('account.account',string='To Account',required=True,tracking=True)
 	transfer_date = fields.Date('Transfer Date', default=fields.date.today())
 	paid_ref = fields.Char('Paid Ref', states={'paid':[('readonly', True)], 'closed':[('readonly', True)]})
-	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('department_id','=','Finance&Account')]", required=True)
+	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]", required=True)
 	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
 	state = fields.Selection([
 		('draft', 'Draft'),
@@ -56,6 +56,9 @@ class AccountTransfer(models.Model):
 	move_line_ids = fields.One2many('account.move.line','acc_transfer_id',string='Account Move Line',stored=True)
 	product_id = fields.Many2many('product.product', 'transfer_product_rel', 'transfer_id', 'product_id',string='Product')
 	line_ids = fields.One2many('account.transfer.line', 'transfer_id', 'Account Transfer Lines')
+	from_location_id = fields.Many2one('stock.location',string='From Bu/Br/Div',required=True,tracking=True)
+	to_location_id = fields.Many2one('stock.location',string='To Bu/Br/Div',required=True,tracking=True)
+	remark = fields.Text('Remark')
 
 	@api.model
 	def _needaction_domain_get(self):
@@ -128,6 +131,7 @@ class AccountTransfer(models.Model):
 
 	def transfer_paid(self):
 		for expense in self:
+			print("expense", expense.currency_id)
 			journal = expense.state_type
 			expense.transfer_date = date.today()
 			if not journal:
@@ -144,6 +148,7 @@ class AccountTransfer(models.Model):
 				# to set it to '' which cause no number to be given to the account.move when posted.
 				'name': '/',
 			})
+			print(move,'this is account move-------------------------------/////>>>>>>>')
 			company_currency = expense.company_id.currency_id
 			diff_currency_p = expense.currency_id != company_currency
 			#one account.move.line per expense (+taxes..)
@@ -152,6 +157,7 @@ class AccountTransfer(models.Model):
 			#create one more move line, a counterline for the total on payable account
 			payment_id = False
 			total, total_currency, move_lines = expense._compute_expense_totals(company_currency, move_lines, acc_date)
+			# print(total,'total_currency',total_currency,'move')
 			emp_account = expense.from_account_id.id
 			if not emp_account:
 				raise ValidationError('Define From Account')
@@ -164,13 +170,13 @@ class AccountTransfer(models.Model):
 					'price': total,
 					'account_id': emp_account,
 					'date_maturity': acc_date,
-					'amount_currency': expense.amount*-1,
-					'currency_id': False,
 					'payment_id': payment_id,
 					})
-
+			print(move_lines,'this is move line---------------------show')
 			#convert eml into an osv-valid format
 			lines = list(map(lambda x: (0, 0, expense._prepare_move_line(x)), move_lines))
+			print(lines,'this is print line id-----------------------------------------------aaaa')
+			# print(move.with_context(dont_create_taxes=True).write({'line_ids': lines}),'this account move line------------------------aaaa----------------------------------------------') 
 			move.with_context(dont_create_taxes=True).write({'line_ids': lines})
 			move.post()
 		return self.write({'account_move_id': move.id,'state': 'paid'})
@@ -202,18 +208,8 @@ class AccountTransfer(models.Model):
 		total = 0.0
 		total_currency = 0.0
 		for line in account_move_lines:
-			#print "line loop"
-			line['currency_id'] = False
-			line['amount_currency'] = False
-			if self.currency_id != company_currency:
-				line['currency_id'] = self.currency_id.id
-				line['amount_currency'] = line['price']
-				#line['price'] = self.currency_id.compute(line['price'], company_currency)
-				line['price'] = line['price']
 			total -= line['price']
-			#print line['price'], line['amount_currency']
-			total_currency -= line['amount_currency'] or line['price']
-			#raise ValidationError('Emergenncy Stop')
+			total_currency -= line['price']
 		return total, total_currency, account_move_lines
 
 	# @api.multi
@@ -222,6 +218,7 @@ class AccountTransfer(models.Model):
 		for expense in self:
 			move_line = expense._prepare_move_line_value()
 			account_move.append(move_line)
+		print("account_move###", account_move)
 		return account_move
 
 
@@ -233,28 +230,21 @@ class AccountTransfer(models.Model):
 			for rec_line in rec.line_ids:
 				rec_line.unlink()
 		return super(Expense_Prepaid, self).unlink()
-
 	
-
 	def _prepare_move_line(self, line):
-		print('woking here ---------------------------->><<>>><<>>>',line['price'])
 		return {
 			'date_maturity': line.get('date_maturity'),
 			'acc_transfer_id': self.id,
-			#'partner_id': partner_id,
 			'name': line['name'][:64],
 			'debit': line['price'] > 0 and line['price'],
 			'credit': line['price'] < 0 and - line['price'],
 			'account_id': line['account_id'],
 			'analytic_line_ids': line.get('analytic_line_ids'),
-			'amount_currency': line['price'] > 0 and abs(line.get('amount_currency')) or - abs(line.get('amount_currency')),
-			# 'exchange_rate':self.currency_rate,
-			'currency_id': self.currency_id.id,
-			# 'tax_line_id': line.get('tax_line_id'),
-			# 'tax_ids': line.get('tax_ids'),
+			'tax_line_id': line.get('tax_line_id'),
+			'tax_ids': line.get('tax_ids'),
 			'quantity': line.get('quantity', 1.00),
 			'product_id': line.get('product_id'),
-			# 'product_uom_id': line.get('uom_id'),
+			'product_uom_id': line.get('uom_id'),
 			'analytic_account_id': line.get('analytic_account_id'),
 			'payment_id': line.get('payment_id'),
 		}
