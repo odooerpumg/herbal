@@ -320,7 +320,7 @@ class Expense_Prepaid(models.Model):
 	def _prepare_move_line(self, line):
 		#partner_id = self.employee_name.address_home_id.commercial_partner_id.i
 		if self.currency_id.id !=self.company_id.currency_id.id:
-			print('woking here ---------------------------->><<>>><<>>>',line['price'])
+			# print('woking here ---------------------------->><<>>><<>>>',line['price'])
 			return {
 				'date_maturity': line.get('date_maturity'),
 				'general_exp_id': self.id,
