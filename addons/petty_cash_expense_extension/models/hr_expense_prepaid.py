@@ -75,6 +75,68 @@ class Expense_Prepaid(models.Model):
 			return ids[0]
 		return False
 
+	def get_approve_gm(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_gm_user_id = False
+		group_gm_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_gm')[1]
+
+		if group_gm_user_id in [g.id for g in user.groups_id]:
+			is_gm_user_id = True
+
+		if is_gm_user_id:
+			result=True
+		self.is_approve_gm = result
+  
+	def get_approve_fn(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		print(user,'current user show-----------------')
+		is_finance_user_id = False
+		group_finance_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_finance')[1]
+
+		if group_finance_user_id in [g.id for g in user.groups_id]:
+			print ('group_finance_user_id',group_finance_user_id)
+			is_finance_user_id = True
+
+		if is_finance_user_id:
+			result=True
+		self.is_approve_finance = result
+  
+	def get_approve_user(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_req_user_id = False
+		group_req_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_user')[1]
+
+		if group_req_user_id in [g.id for g in user.groups_id]:
+			is_req_user_id = True
+
+		if is_req_user_id:
+			result=True
+		self.is_user = result
+	
+	def get_approve_manager(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_manager_user_id = False
+		group_manager_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_manager')[1]
+
+		if group_manager_user_id in [g.id for g in user.groups_id]:
+			is_manager_user_id = True
+
+		if is_manager_user_id:
+			result=True
+		self.is_approve = result
+
 	account_ids = fields.Many2one('account.account', 'Advanced Account Name')
 	account_code = fields.Char(related = 'account_ids.code',string='Advanced Account Code')
 	name_reference = fields.Char('Reference', required=True)
@@ -122,9 +184,10 @@ class Expense_Prepaid(models.Model):
 	# md = fields.Boolean('Need MD Approved ?')
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager', required=True)
 	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]", required=True)
-	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve',default=False)
-	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
-	# is_user = fields.Boolean('Is User',compute='get_approve',default=False)
+	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve_manager',default=False)
+	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve_fn',default=False)
+	is_approve_gm = fields.Boolean('Is Approve GM ?',compute='get_approve_gm',default=False)
+	is_user = fields.Boolean('Is User',compute='get_approve_user',default=False)
 	user_id = fields.Many2one('res.users','User', default=lambda self: self.env.user,tracking=True)
 	# is_cashier = fields.Boolean('Is Cashier',compute='get_approve', default=False)
 
@@ -138,9 +201,9 @@ class Expense_Prepaid(models.Model):
 			admin = False
 			to_approve_id = self.env.uid
 			user = approve.user_id
-			print('.................. now id ',to_approve_id,' and approve id ',approve.approved_by_id.user_id)
+			# print('.................. now id ',to_approve_id,' and approve id ',approve.approved_by_id.user_id)
 			# to_approve_id= self.env['hr.employee'].search([('user_id', '=', self.env.uid)]).id
-			print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RES USERS = ',user)
+			# print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RES USERS = ',user)
 			if to_approve_id == approve.approved_by_id.user_id.id:
 				reason = True
 			if to_approve_id == approve.finance_approved_id.user_id.id:
@@ -150,8 +213,8 @@ class Expense_Prepaid(models.Model):
 			# 	print('........................... cashier ',cashier)
 			if user.has_group('petty_cash_expense_extension.group_users'):
 				user = True
-				print('............................... user ',user)
-			print ('>>>>>>>>>>>>> approve ? >>>>>>>>>>>>>>>>> ', reason,' and finance >>>>>>> ',finance)
+				# print('............................... user ',user)
+			# print ('>>>>>>>>>>>>> approve ? >>>>>>>>>>>>>>>>> ', reason,' and finance >>>>>>> ',finance)
 			approve.is_approve = reason
 			approve.is_approve_finance = finance
 			# approve.is_cashier = cashier
@@ -259,10 +322,10 @@ class Expense_Prepaid(models.Model):
 		aml_name = self.employee_name.name + ': ' + self.voucher_no.split('\n')[0][:64]
 		# if not self.account_ids:
 		# 	raise ValidationError('Define Advance Account')
-		acc_ids = self.env['account.account'].search([('name','=','Advance Payment -  Employee')])
-		print('--------------------------------------- default acc ',acc_ids)
-		self.account_ids = acc_ids.id
-		self.account_code = acc_ids.code
+		# acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
+		# print('--------------------------------------- default acc ',acc_ids)
+		# self.account_ids = acc_ids.id
+		# self.account_code = acc_ids.code
 		move_line = {
 			'type': 'src',
 			'name': aml_name,
@@ -320,7 +383,7 @@ class Expense_Prepaid(models.Model):
 	def _prepare_move_line(self, line):
 		#partner_id = self.employee_name.address_home_id.commercial_partner_id.i
 		if self.currency_id.id !=self.company_id.currency_id.id:
-			print('woking here ---------------------------->><<>>><<>>>',line['price'])
+			# print('woking here ---------------------------->><<>>><<>>>',line['price'])
 			return {
 				'date_maturity': line.get('date_maturity'),
 				'general_exp_id': self.id,

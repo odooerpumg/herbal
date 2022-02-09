@@ -53,34 +53,6 @@ class hr_general_expense(models.Model):
 	_description = "Advance Clearing"
 	_order = "date desc"
 
-	#by yma 20201026
-	# batch_id= fields.Many2one('education.batch','Batch')
-	# programme = fields.Many2one('product.product','Programme', domain=([('type','=','service'),('sale_ok','=',True)]))
-	# module_id = fields.Many2many('education.module',string='Modules')
-	# check = fields.Boolean('Check Module',default=False)
-	
-	# @api.onchange('programme')
-	# def _onchange_module(self):
-	# 	module = []
-	# 	check=False
-	# 	if self.programme:
-	# 		module_ids = self.env['education.module'].search([('certification_id','=',self.programme.id)])
-	# 		# print ('this module is is issi',module_ids,self.programme.id)
-	# 		if module_ids:
-	# 			for record in module_ids:
-	# 				module.append(record._origin.id)
-	# 			#print ("Hello programme>>>>>>> True",module,'----------------',module_ids)
-	# 			self.module_id = module
-	# 			self.check=True
-	# 			#print ("hello module name True--------------------------------------",self.check)
-	# 		else:
-	# 			for record in module_ids:
-	# 				module.append(record._origin.id)
-	# 			#print ("Hello programme>>>>>>>False ",module,'----------------',module_ids)
-	# 			self.module_id = module
-	# 			self.check=False
-	# 			#print ("hello module name False--------------------------------------",self.check)
-
 	
 	def get_sequence(self):
 		sequence = self.env['ir.sequence'].next_by_code('hr.expense')
@@ -110,6 +82,68 @@ class hr_general_expense(models.Model):
 		my_date = fields.Datetime.context_timestamp(self, timestamp=datetime.now())
 		_logger.critical("default Date>> '" + str(my_date))
 		return my_date
+
+	def get_approve_gm(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_gm_user_id = False
+		group_gm_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_gm')[1]
+
+		if group_gm_user_id in [g.id for g in user.groups_id]:
+			is_gm_user_id = True
+
+		if is_gm_user_id:
+			result=True
+		self.is_approve_gm = result
+  
+	def get_approve_fn(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		print(user,'current user show-----------------')
+		is_finance_user_id = False
+		group_finance_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_finance')[1]
+
+		if group_finance_user_id in [g.id for g in user.groups_id]:
+			print ('group_finance_user_id',group_finance_user_id)
+			is_finance_user_id = True
+
+		if is_finance_user_id:
+			result=True
+		self.is_approve_finance = result
+  
+	def get_approve_user(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_req_user_id = False
+		group_req_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_user')[1]
+
+		if group_req_user_id in [g.id for g in user.groups_id]:
+			is_req_user_id = True
+
+		if is_req_user_id:
+			result=True
+		self.is_user = result
+	
+	def get_approve_manager(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_manager_user_id = False
+		group_manager_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_manager')[1]
+
+		if group_manager_user_id in [g.id for g in user.groups_id]:
+			is_manager_user_id = True
+
+		if is_manager_user_id:
+			result=True
+		self.is_approve = result
 
 	product_id = fields.Many2many('product.product', 'hrexpense_product_rel', 'expense_id', 'product_id',string='Product', domain="[('can_be_expensed','=',False)]")
 	# product_uom_id = fields.Many2one('product.uom', string='Unit of Measure', required=False, readonly=True, states={'draft': [('readonly', False)], 'refused': [('readonly', False)]}, default=lambda self: self.env['product.uom'].search([], limit=1, order='id'))
@@ -174,8 +208,10 @@ class hr_general_expense(models.Model):
 	currency_rate = fields.Float(string='Currency Rate')
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager')
 	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]")
-	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve',default=False)
-	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
+	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve_manager',default=False)
+	is_user = fields.Boolean('Is User',compute='get_approve_user',default=False)
+	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve_fn',default=False)
+	is_approve_gm = fields.Boolean('Is Approve GM ?',compute='get_approve_gm',default=False)
 	user_id = fields.Many2one('res.users','User', default=lambda self: self.env.user)
 	is_cashier = fields.Boolean('Is Cashier',compute='get_approve', default=False)
 	adjustment_amount = fields.Float(string='Adjustment Amount', store=True, default=0.0)
@@ -486,6 +522,7 @@ class hr_general_expense(models.Model):
 		# if amount < adv:
 		# print('..........///////////////// general_expense_paid.......... if condition')
 		move_line_idd = self.env['account.move.line'].search([('general_exp_id','=',self.expense_prepaid_ids.id)])
+		print(move_line_idd,'here mvoe line',move_line_idd.move_id,'this is move id----------')
 		move_idd = self.env['account.move'].search([('id','=',move_line_idd.move_id.id)])
 		print('.................. Move id .........',move_idd.name)
 		# desc = 'Adv Clearing: ',str(move_idd.name)
