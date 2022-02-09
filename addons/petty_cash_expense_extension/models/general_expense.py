@@ -66,7 +66,7 @@ class hr_general_expense(models.Model):
 
 
 	# @api.multi
-	# @api.onchange('line_ids')
+	@api.onchange('line_ids.amount')
 	def _amount(self):
 		# #print "000000amount000000000"
 		total = 0.0
@@ -261,7 +261,7 @@ class hr_general_expense(models.Model):
 	def print_adv_clear(self):
 		par=self.ids
 		if par:
-			url = 'http://localhost:8080/birt/frameset?__report=idealab_advance_clear.rptdesign&order_id=' + str(self.ids[0])
+			url = 'http://localhost:8080/birt/frameset?__report=herbal_advance_clear.rptdesign&order_id=' + str(self.ids[0])
 		if url :
 			return {
 			'type' : 'ir.actions.act_url',
@@ -420,13 +420,15 @@ class hr_general_expense(models.Model):
 		mail_ids.create(value)
 		# Need for loop lines to input the variables 
 		# for la in self.line_ids.amount:
-		amount = self.line_ids.amount
+		for amt in self.line_ids:
+			amount = amt.amount
 		adv = self.expense_prepaid_ids.advance_amount
 		err = amount - adv
 		if amount > adv:
 			raise ValidationError ('Exceed amount it should be add in Additional Amount.')
-		self.adjustment_amount = self.line_ids.adjustment_amount
-		print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
+		for adj_amt in self.line_ids:
+			self.adjustment_amount = adj_amt.adjustment_amount
+		# print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
 		return self.write({'state': 'confirm', 'date_confirm': time.strftime('%Y-%m-%d')})
 
 
@@ -461,8 +463,9 @@ class hr_general_expense(models.Model):
 				'res_id': cc,
 		}
 		mail_ids.create(value)
-		self.adjustment_amount = self.line_ids.adjustment_amount
-		print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
+		for adj_amt in self.line_ids:
+			self.adjustment_amount = adj_amt.adjustment_amount
+		# print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
 		return self.write({'state': 'manager_approve', 'date_valid': time.strftime('%Y-%m-%d'),})
 
 	# @api.one
