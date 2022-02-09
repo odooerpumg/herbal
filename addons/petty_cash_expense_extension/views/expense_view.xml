@@ -106,8 +106,6 @@
 						<notebook>
 							<page string="Products">
 								<field name="line_ids" attrs="{'readonly': [('state', 'not in', 'draft')]}">
-								 
-								  
 									<tree string="General Expense Lines" editable="bottom">
 										<field name="sequence" invisible="1"/>
 										<field name="line_no" />
