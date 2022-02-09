@@ -66,7 +66,7 @@ class hr_general_expense(models.Model):
 
 
 	# @api.multi
-	@api.onchange('line_ids.amount')
+	# @api.onchange('line_ids')
 	def _amount(self):
 		# #print "000000amount000000000"
 		total = 0.0
@@ -428,7 +428,7 @@ class hr_general_expense(models.Model):
 			raise ValidationError ('Exceed amount it should be add in Additional Amount.')
 		for adj_amt in self.line_ids:
 			self.adjustment_amount = adj_amt.adjustment_amount
-		# print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
+		print('------------------- adj = ',self.adjustment_amount,' , Line ID = ',self.line_ids)
 		return self.write({'state': 'confirm', 'date_confirm': time.strftime('%Y-%m-%d')})
 
 
