@@ -11,19 +11,21 @@
 					<header>
 						<field name="can_reset" invisible="1"/>
 						<field name="can_approve" invisible="1" />
+						<field name="is_user" invisible="1"/>
 						<field name="is_approve" invisible="1"/>
 						<field name="is_approve_finance" invisible="1"/>
+						<field name="is_approve_gm" invisible="1"/>
 
 						<button name="prepaid_expense_draft" attrs="{'invisible': [('state', 'in', ['draft','confirm'])]}" string="Set to Draft" type="object" />
 
-						<button name="prepaid_expense_confirm" string="Confirm" type="object" class="oe_highlight" states="draft" />
+						<button name="prepaid_expense_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('is_user', '=', False),('state', 'not in', ['draft'])]}" />
 
-						<button name="prepaid_expense_manager_accept" string="Manager Approved" type="object" class="oe_highlight" attrs="{'invisible': [('is_approve', '=', False)]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_admin" states="confirm" />
+						<button name="prepaid_expense_manager_accept" string="Manager Approved" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('is_approve', '=', False),('state', 'not in', ['confirm'])]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_admin" states="confirm" />
 
-						<button name="approve" string="Finance Approve" type="object" attrs="{'invisible': [('is_approve_finance', '=', False),('state','not in','manager_approve')]}" groups="petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_admin" class="oe_highlight"/>
+						<button name="approve" string="Finance Approve" type="object" attrs="{'invisible': ['|', ('is_approve_finance', '=', False),('state', 'not in', ['manager_approve'])]}" groups="petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_admin" class="oe_highlight"/>
 						 
 
-						<button name="gm_approve" states="approve" string="GM Approve" groups="petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_gm,petty_cash_expense_extension.group_petty_admin" type="object"  class="oe_highlight"/>
+						<button name="gm_approve" attrs="{'invisible': ['|',('is_approve_gm', '=', False),('state', 'not in', ['approve'])]}" string="GM Approve" groups="petty_cash_expense_extension.group_petty_gm,petty_cash_expense_extension.group_petty_admin" type="object"  class="oe_highlight"/>
 
 						<button name="prepaid_expense_paid" states="gm_approve" string="Paid" type="object" groups="petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin" class="oe_highlight"/>
 						
