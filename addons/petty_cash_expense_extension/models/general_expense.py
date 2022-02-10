@@ -877,8 +877,8 @@ class hr_general_expense(models.Model):
 					'ref': collect,
 					'name': '/',
 					'line_ids': [
-						(0, 0,  {'name': self.expense_prepaid_ids.voucher_no,'date_maturity': self.date,'currency_id': self.currency_id.id, 'adj_exp_id': self.expense_prepaid_ids.id,'account_id':credit_acc.id, 'name':self.name, 'credit':self.adjustment_amount}),
-						(0, 0,  {'name': self.expense_prepaid_ids.voucher_no,'date_maturity': self.date,'currency_id': self.currency_id.id,'adj_exp_id': self.expense_prepaid_ids.id,'account_id':debit_acc.id, 'name':self.name,  'debit':self.adjustment_amount})
+						(0, 0,  {'name': self.expense_prepaid_ids.voucher_no,'date_maturity': self.date, 'adj_exp_id': self.expense_prepaid_ids.id,'account_id':credit_acc.id, 'name':self.name, 'credit':self.adjustment_amount}),
+						(0, 0,  {'name': self.expense_prepaid_ids.voucher_no,'date_maturity': self.date, 'adj_exp_id': self.expense_prepaid_ids.id,'account_id':debit_acc.id, 'name':self.name,  'debit':self.adjustment_amount})
 					]
 				})
 				acc_move.action_post()
