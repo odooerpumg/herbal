@@ -263,7 +263,7 @@ class hr_general_expense(models.Model):
 	def print_adv_clear(self):
 		par=self.ids
 		if par:
-			url = 'http://localhost:8080/birt/frameset?__report=herbal_advance_clear.rptdesign&order_id=' + str(self.ids[0])
+			url = 'http://128.199.107.125:8080/birt/frameset?__report=herbal_advance_clear.rptdesign&order_id=' + str(self.ids[0])
 		if url :
 			return {
 			'type' : 'ir.actions.act_url',
