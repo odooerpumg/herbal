@@ -226,7 +226,7 @@ class Expense_Prepaid(models.Model):
 	def print_adv_claim(self):
 		par=self.ids
 		if par:
-			url = 'http://localhost:8080/birt/frameset?__report=herbal_claim_req.rptdesign&order_id=' + str(self.ids[0])
+			url = 'http://128.199.107.125:8080/birt/frameset?__report=herbal_claim_req.rptdesign&order_id=' + str(self.ids[0])
 		if url :
 			return {
 			'type' : 'ir.actions.act_url',
