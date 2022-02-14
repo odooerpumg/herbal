@@ -74,6 +74,8 @@ class hr_general_expense(models.Model):
 			
 			for line in self.line_ids:
 				total += line.amount
+				if line.adjustment_amount > 0:
+    					total += line.adjustment_amount
 		return total
 
 	@api.model
