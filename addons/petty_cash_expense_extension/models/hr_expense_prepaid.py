@@ -71,7 +71,7 @@ class Expense_Prepaid(models.Model):
 			return emp_id
 		ids = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 		if ids:
-			print('.................. id ',ids)
+			# print('.................. id ',ids)
 			return ids[0]
 		return False
 
@@ -94,7 +94,7 @@ class Expense_Prepaid(models.Model):
 		result = False
 		user_id = self.env.uid
 		user = self.env['res.users'].browse(user_id)
-		print(user,'current user show-----------------')
+		# print(user,'current user show-----------------')
 		is_finance_user_id = False
 		group_finance_user_id = \
 			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_finance')[1]
@@ -189,57 +189,10 @@ class Expense_Prepaid(models.Model):
 	is_approve_gm = fields.Boolean('Is Approve GM ?',compute='get_approve_gm',default=False)
 	is_user = fields.Boolean('Is User',compute='get_approve_user',default=False)
 	user_id = fields.Many2one('res.users','User', default=lambda self: self.env.user,tracking=True)
-	# is_cashier = fields.Boolean('Is Cashier',compute='get_approve', default=False)
-
-	def get_approve(self):
-		for approve in self:
-			reason = False
-			finance = False
-			cashier = False
-			user = False
-			approver = False
-			admin = False
-			to_approve_id = self.env.uid
-			user = approve.user_id
-			# print('.................. now id ',to_approve_id,' and approve id ',approve.approved_by_id.user_id)
-			# to_approve_id= self.env['hr.employee'].search([('user_id', '=', self.env.uid)]).id
-			# print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RES USERS = ',user)
-			if to_approve_id == approve.approved_by_id.user_id.id:
-				reason = True
-			if to_approve_id == approve.finance_approved_id.user_id.id:
-				finance = True
-			# if user.has_group('petty_cash_expense_extension.group_petty_cashier'):
-			# 	cashier = True
-			# 	print('........................... cashier ',cashier)
-			if user.has_group('petty_cash_expense_extension.group_users'):
-				user = True
-				# print('............................... user ',user)
-			# print ('>>>>>>>>>>>>> approve ? >>>>>>>>>>>>>>>>> ', reason,' and finance >>>>>>> ',finance)
-			approve.is_approve = reason
-			approve.is_approve_finance = finance
-			# approve.is_cashier = cashier
-			# approve.is_user = user
-			# approve.write({'is_cashier': cashier})
-			# approve.write({'is_user': user})
-			# print('....................... cashier= ',cashier,' and user= ',user)
 
 	@api.onchange('employee_name')
 	def onchange_employee(self):
 		self.department_id = self.employee_name.department_id.id
-
-	# @api.model
-	# @api.onchange('currency_id')
-	# def get_apiData(self):
-	# 	locale.setlocale(locale.LC_ALL, '')
-	# 	url = 'https://forex.cbm.gov.mm/api/latest'
-	# 	resp = requests.get(url, verify=False)
-	# 	response = json.loads(resp.text)
-	# 	api_data = response['rates']
-	# 	if self.currency_id:
-	# 		if self.currency_id.name != 'MMK':
-	# 			self.currency_rate = locale.atof(api_data[self.currency_id.name])
-	# 		else:
-	# 			self.currency_rate = 1.0
 
 	def print_adv_req(self):
 		par=self.ids
@@ -260,7 +213,6 @@ class Expense_Prepaid(models.Model):
 	def compute_amount(self):
 		if self.line_ids:
 			total = 0.0
-			print ('why no woking ----------------------------------------------->><<>><<>><<>>')
 			for line in self.line_ids:
 				total += line.amount
 			self.advance_amount = total
@@ -316,16 +268,12 @@ class Expense_Prepaid(models.Model):
 		return self.write({'account_move_id': move.id,'state': 'paid'})
 
 	#expense prepaid
-	# @api.multi
 	def _prepare_move_line_value(self):
 		self.ensure_one()
 		aml_name = self.employee_name.name + ': ' + self.voucher_no.split('\n')[0][:64]
-		# if not self.account_ids:
-		# 	raise ValidationError('Define Advance Account')
-		# acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
-		# print('--------------------------------------- default acc ',acc_ids)
-		# self.account_ids = acc_ids.id
-		# self.account_code = acc_ids.code
+		acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
+		self.account_ids = acc_ids.id
+		self.account_code = acc_ids.code
 		move_line = {
 			'type': 'src',
 			'name': aml_name,
@@ -341,7 +289,6 @@ class Expense_Prepaid(models.Model):
 
 	# @api.multi
 	def _compute_expense_totals(self, company_currency, account_move_lines, move_date):
-		#print "----------------cumpute expense total--------------------"
 		self.ensure_one()
 		total = 0.0
 		total_currency = 0.0
@@ -405,7 +352,7 @@ class Expense_Prepaid(models.Model):
 				'payment_id': line.get('payment_id'),
 			}
 		else:
-			print('not working here ----------------------->><<>><<>>')
+			# print('not working here ----------------------->><<>><<>>')
 			return {
 				'date_maturity': line.get('date_maturity'),
 				'general_exp_id': self.id,

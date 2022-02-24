@@ -9,14 +9,13 @@
 			<field name="arch" type="xml">
 				<form string="Expense Sheet">
 					<header>
-						<field name="can_reset" invisible="1"/>
-						<field name="can_approve" invisible="1" />
 						<field name="is_user" invisible="1"/>
 						<field name="is_approve" invisible="1"/>
 						<field name="is_approve_finance" invisible="1"/>
 						<field name="is_approve_gm" invisible="1"/>
 
-						<button name="prepaid_expense_draft" attrs="{'invisible': [('state', 'in', ['draft','confirm'])]}" string="Set to Draft" type="object" />
+						<button name="prepaid_expense_draft" attrs="{'invisible': [('state', 'in', ['draft','confirm'])]}" string="Set to Draft" type="object" groups="petty_cash_expense_extension.group_petty_admin
+							,base.group_system"/>
 
 						<button name="prepaid_expense_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('is_user', '=', False),('state', 'not in', ['draft'])]}" />
 
@@ -58,18 +57,16 @@
 								<field name="department_id" attrs="{'readonly': [('state', 'not in', ('draft','confirm'))]}" />
 								<field name="approved_by_id" attrs="{'readonly': [('state', 'not in', ('draft','confirm'))]}"/>
 								<field name="finance_approved_id" attrs="{'readonly': [('state', 'not in', ('draft','confirm'))]}"/>
-								<field name="account_ids"  attrs="{'invisible':[('state','=','draft')]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin"/>
+								<field name="account_ids" invisible="1" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin"/>
 								<field name="account_code" readonly="1" attrs="{'invisible':[('state','=','draft')]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin"/>	
-								<!-- 20190524 by yma							 -->
 								<field name="analytic_id" attrs="{'readonly': [('state', '!=', 'draft')]}" invisible='1' />							
 							</group>
 							<group name="right_group">
-								<!-- Update By TPS 21-6-2019 -->
 								<field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
 								<field name="invoice_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
 								<field name="state_type" attrs="{'invisible':[('state','=','draft')]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin" />
 								<field name="cash_account" attrs="{'invisible':[('state','=','draft')]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin" />
-								<field name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+								<field name="currency_id" readonly="1"/>
 								<field name="advance_amount" string ="Amount" attrs="{'readonly':[('state','!=','draft')]}"/>
 							</group>
 						</group>
@@ -197,9 +194,6 @@
 					<field name="name_reference" />
 					<field name="employee_name" />
 					<field name="voucher_no" string="Voucher No"/>
-					<!-- <field name="main_category" />
-					<field name="sub_category" />
-					<field name="team_id" /> -->
 					<field name="note" />
 					<field name="invoice_date" />					
 				</search>
@@ -210,7 +204,6 @@
 			<field name="name">HR Expense Account</field>
 			<field name="res_model">expense.prepaid.account</field>
 			<field name="type">ir.actions.act_window</field>
-			<!-- <field name="view_type">form</field> -->
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="view_hr_prepaid_expense_filter"/>
 			<field name="view_id" ref="view_hr_expense_account_tree" />
@@ -227,8 +220,6 @@
 					<field name="description" />
 					<field name="date"/>
 					<field name="employee_id" />
-				   <!--  <field name="main_category" />
-					<field name="sub_category" /> -->
 					<field name="note" />
 					<filter icon="terp-document-new" name="general_expense_draft" domain="[('state','=','draft')]" string="Draft" help="New Expense"/>
 					<filter icon="terp-camera_test" domain="[('state','=','confirm')]" string="Confirm" name="general_expense_confirm"/>
@@ -274,7 +265,6 @@
 			<field name="res_model">product.product</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="view_mode">tree,form,kanban</field>
-		   <!--  <field name="view_type">form</field> -->
 			<field name="search_view_id" ref="product.product_search_form_view"/>
 			<field name="view_id" eval="False"/> <!-- Force empty -->
 			<field name="help" type="html">
