@@ -29,18 +29,15 @@
 			<field name="arch" type="xml">
 				<form string="Advance Clearing Sheet">
 					<header>
-						<field name="can_reset" invisible="1"/>
-
 						<field name="is_user" invisible="1"/>
 						<field name="is_approve" invisible="1"/>
 						<field name="is_approve_finance" invisible="1"/>
 						<field name="is_approve_gm" invisible="1"/>
 
-						<field name="is_cashier" invisible="1"/>
-						<!-- <field name="can_approve" invisible="1"/> -->
 						<button name="general_expense_confirm" string="Submit" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('is_user', '=', False),('state', 'not in', ['draft'])]}"/>     
 						
-						<button name="reset_to_draft" string="Reset to Draft" type="object" class="oe_highlight" attrs="{'invisible':[('state','in',('draft','paid'))]}"/>
+						<button name="reset_to_draft" string="Reset to Draft" type="object" class="oe_highlight" groups="petty_cash_expense_extension.group_petty_admin
+							,base.group_system"/>
 
 						<button name="general_expense_manager_accept" states="confirm" string="Manager Approved" type="object" attrs="{'invisible': ['|', ('is_approve', '=', False),('state', 'not in', ['confirm'])]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_admin" class="oe_highlight"/>
 						
@@ -70,33 +67,21 @@
 						</div>
 						<group>
 							<group>
-								<!-- <field name="main_category" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
-								<field name="sub_category" attrs="{'readonly': [('state', 'not in', 'draft')]}"/> -->
 								<field name="employee_id" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
-								<!-- <field name="team_id" attrs="{'readonly': [('state', 'not in', 'draft')]}"/> -->
-								<!-- <field name="product_id" options="{'no_create': True,'no_open': False,'no_create_edit': True,'no_quick_create':True}" widget="many2many_tags"/> -->
 								<field name="date" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
 								<field name="department_id" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
 
 								<field name="approved_by_id" attrs="{'readonly': [('state', 'not in', ('draft','confirm'))]}" required="1" />
 								<field name="finance_approved_id" attrs="{'readonly': [('state', 'not in', ('draft','confirm'))]}" required="1" />
-								<!-- 20190524 by yma -->                            
 								<field name="analytic_id" string="Analytic Account" attrs="{'readonly': [('state', 'not in', 'draft')]}" invisible='1' />
-								<!-- 20190527 by yma -->
 								<field name="prepaid_type" invisible="1"/>
-
-								
-								<!-- end by  yma 20201026-->                    
-
 							</group>
 							<group>
-								<!-- <field name="user_valid" attrs="{'invisible': [('state','=','draft')]}" /> -->
-								<!-- <field name="user_valid" /> -->
 								<field name="cash_inv" invisible="1"/>
 								<field name="company_id" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
 								<field name="expense_prepaid_ids" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
 								<field name="advance_amount" invisible="1" />
-								<field name="currency_id" attrs="{'readonly': [('state', 'not in', 'draft')]}"/>
+								<field name="currency_id" readonly="1"/>
 								<field name="state_type" attrs="{'invisible':[('state','=','draft')]}" groups="petty_cash_expense_extension.group_petty_manager,petty_cash_expense_extension.group_petty_finance,petty_cash_expense_extension.group_petty_cashier,petty_cash_expense_extension.group_petty_admin" />
 								<field name="cash_account" attrs="{'invisible':['|',('cash_inv','=',True),('state','=','draft')],'required':[('cash_inv','!=',True),('state','=','confirm')]}" />
 								<field name="paid_date" invisible="1"/>
@@ -113,7 +98,6 @@
 
 										<field name="date_value" string="Expense Date"/>
 										<field name="ref"/>
-										<!-- 20190524 by yma -->
 										<field name="analytic_account" string="Analytical Account" invisible='1' />
 										<field name="account_ids" invisible="1"/>
 										<field name="account_code" string="Account Code" invisible="1"/>
