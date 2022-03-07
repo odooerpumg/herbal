@@ -253,7 +253,7 @@ class AccountMoveLine(models.Model):
 class AccountPayment(models.Model):
 	_inherit = 'account.payment'
 
-	sequence = fields.Char('Sequence Code',required=True)
+	sequence = fields.Char('Sequence Code')
 	state = fields.Selection([('draft', 'Draft'), ('posted', 'Post'), ('sent', 'Sent'), ('reconciled', 'Reconciled'), ('cancelled', 'Cancelled')], readonly=True, default='draft', copy=False, string="Status")
 
 	def cancel(self):
