@@ -913,8 +913,8 @@ class hr_general_expense(models.Model):
 			diff_amount = expense.advance_amount - expense.amount
 			aid = expense.expense_prepaid_ids.account_ids if diff_amount < 0 else expense.expense_prepaid_ids.cash_account
 			amount = diff_amount if diff_amount > 0 else diff_amount * (-1)
-			if diff_amount > 0 and not expense.state_type.default_debit_account_id:
-				raise UserError(_("No debit account found for the %s journal, please configure one.") % (expense.state_type.name))
+			# if diff_amount > 0 and not expense.state_type.default_debit_account_id:
+			# 	raise UserError(_("No debit account found for the %s journal, please configure one.") % (expense.state_type.name))
 			move_line = {
 					'type': 'src',
 					'adj_exp_id': expense.expense_prepaid_ids.id,
@@ -935,8 +935,8 @@ class hr_general_expense(models.Model):
 			diff_amount = (expense.currency_rate-expense.expense_prepaid_ids.currency_rate)*expense.amount
 			aid = expense.expense_prepaid_ids.account_ids if diff_amount < 0 else expense.company_id.currency_exchange_journal_id.default_debit_account_id
 			amount = diff_amount if diff_amount > 0 else diff_amount * (-1)
-			if diff_amount > 0 and not expense.state_type.default_debit_account_id:
-				raise UserError(_("No debit account found for the %s journal, please configure one.") % (expense.state_type.name))
+			# if diff_amount > 0 and not expense.state_type.default_debit_account_id:
+			# 	raise UserError(_("No debit account found for the %s journal, please configure one.") % (expense.state_type.name))
 			move_line = {
 					'type': 'src',
 					'name': expense.expense_prepaid_ids.voucher_no or expense.employee_id.name,
