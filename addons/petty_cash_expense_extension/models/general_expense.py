@@ -280,13 +280,6 @@ class hr_general_expense(models.Model):
 		# record_id.amount = record_id._amount()      
 		return record_id
 
-	def write(self,vals):
-		total = self._amount()
-		##print total
-		vals['amount'] = total
-		record = super(hr_general_expense, self).write(vals)
-		return record
-
 	def unlink(self):
 		for rec in self.browse(self.ids):
 			if rec.state != 'draft':
@@ -987,16 +980,13 @@ class hr_general_expense_line(models.Model):
 	sequence = fields.Integer('Sequence', select=True, help="Gives the sequence order when displaying a list of expense lines.")
 
 	def _get_line_numbers(self):
-		for expense in self.mapped('expense_id'):
-			line_no = 1
-			for line in expense.line_ids:
-				line.line_no = line_no
-				line_no += 1
-	@api.model
-	def default_get(self, fields_list):
-		res = super(hr_general_expense_line, self).default_get(fields_list)
-		res.update({'line_no': len(self._context.get('line_ids', [])) + 1}) 
-		return res
+		for rec in self:
+			for exp in rec.expense_id:
+				line_no = 1
+				for line in exp.line_ids:
+					line.line_no = line_no
+					line_no += 1
+				rec.line_no = line_no - 1
 
 
 	@api.model
@@ -1004,11 +994,6 @@ class hr_general_expense_line(models.Model):
 		if data:
 			record = super(hr_general_expense_line, self).create(data)
 		return record
-
-	def write(self,vals):
-		flag = super(hr_general_expense_line, self).write(vals)
-
-		return flag
 
 	@api.model
 	@api.onchange('product_id')
