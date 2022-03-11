@@ -56,8 +56,6 @@ class AccountTransfer(models.Model):
 	move_line_ids = fields.One2many('account.move.line','acc_transfer_id',string='Account Move Line',stored=True)
 	product_id = fields.Many2many('product.product', 'transfer_product_rel', 'transfer_id', 'product_id',string='Product')
 	line_ids = fields.One2many('account.transfer.line', 'transfer_id', 'Account Transfer Lines')
-	from_location_id = fields.Many2one('stock.location',string='From Bu/Br/Div',required=True,tracking=True)
-	to_location_id = fields.Many2one('stock.location',string='To Bu/Br/Div',required=True,tracking=True)
 	form_bu_id = fields.Many2one('business.unit',string='From Bu/Br/Div',required=True,tracking=True)
 	to_bu_id = fields.Many2one('business.unit',string='From Bu/Br/Div',required=True,tracking=True)
 	remark = fields.Text('Remark')
