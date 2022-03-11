@@ -68,7 +68,6 @@ class hr_general_expense(models.Model):
 	@api.depends('line_ids')
 	def _amount(self):
 		total = 0.0
-		# for rec in self:
 		for line in self.line_ids:
 			total += line.amount
 			if line.adjustment_amount > 0:
