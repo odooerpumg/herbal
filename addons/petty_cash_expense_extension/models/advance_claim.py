@@ -262,9 +262,9 @@ class Expense_Prepaid(models.Model):
 		aml_name = self.employee_name.name + ': ' + self.voucher_no.split('\n')[0][:64]
 		# if not self.account_ids:
 		# 	raise ValidationError('Define Advance Account')
-		acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
-		self.account_ids = acc_ids.id
-		self.account_code = acc_ids.code
+		# acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
+		# self.account_ids = acc_ids.id
+		# self.account_code = acc_ids.code
 		move_line = {
 			'type': 'src',
 			'name': aml_name,
