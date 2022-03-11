@@ -65,16 +65,15 @@ class hr_general_expense(models.Model):
 		return seq_no
 
 
-	# @api.onchange('line_ids')
+	@api.depends('line_ids')
 	def _amount(self):
 		total = 0.0
-		if self.line_ids:
-			
-			for line in self.line_ids:
-				total += line.amount
-				if line.adjustment_amount > 0:
-    					total += line.adjustment_amount
-		return total
+		# for rec in self:
+		for line in self.line_ids:
+			total += line.amount
+			if line.adjustment_amount > 0:
+				total += line.adjustment_amount
+		self.amount = total
 
 	@api.model
 	def get_default_date(self):
@@ -278,7 +277,7 @@ class hr_general_expense(models.Model):
 					'expense_id': record_id.id,
 				}
 				self.env['hr.expense.line'].create(line_vals)
-		record_id.amount = record_id._amount()      
+		# record_id.amount = record_id._amount()      
 		return record_id
 
 	def write(self,vals):
@@ -987,14 +986,12 @@ class hr_general_expense_line(models.Model):
 	analytic_account = fields.Many2one('account.analytic.account','Analytic account',related="expense_id.analytic_id")
 	sequence = fields.Integer('Sequence', select=True, help="Gives the sequence order when displaying a list of expense lines.")
 
-
 	def _get_line_numbers(self):
 		for expense in self.mapped('expense_id'):
 			line_no = 1
 			for line in expense.line_ids:
 				line.line_no = line_no
 				line_no += 1
-
 	@api.model
 	def default_get(self, fields_list):
 		res = super(hr_general_expense_line, self).default_get(fields_list)

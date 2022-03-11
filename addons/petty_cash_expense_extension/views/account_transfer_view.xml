@@ -9,8 +9,8 @@
 					<field name="name"/>
 					<field name="from_account_id"/>
 					<field name="to_account_id"/>
-					<field name="from_location_id"/>
-					<field name="to_location_id"/>
+					<field name="form_bu_id"/>
+					<field name="to_bu_id"/>
 					<field name="transfer_date"/>
 					<field name="finance_approved_id"/>
 					<field name="amount" />
@@ -53,8 +53,8 @@
 								<field name="from_account_id"/>
 								<field name="to_account_id"/>
 								<field name="transfer_date"/>
-								<field name="from_location_id"/>
-								<field name="to_location_id"/>
+								<field name="form_bu_id"/>
+								<field name="to_bu_id"/>
 								<field name="remark" />
 							</group>
 							<group>
