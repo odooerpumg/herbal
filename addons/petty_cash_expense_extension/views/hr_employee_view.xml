@@ -19,6 +19,29 @@
 				<xpath expr="//field[@name='parent_id']" position="after">
 					<field name="gm_id" />
 					<field name="is_gm" />
+					<field name="finance" string="Is Finance ?"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="hr_employee_public_view_tree_inherit1" model="ir.ui.view">
+			<field name="name">Employee Public</field>
+			<field name="model">hr.employee.public</field>
+			<field name="inherit_id" ref="hr.hr_employee_public_view_tree" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='parent_id']" position="after">
+					<field name="gm_id" />
+				</xpath>
+			</field>
+		</record>
+		<record id="hr_employee_public_view_form_inherit1" model="ir.ui.view">
+			<field name="name">Employee Public</field>
+			<field name="model">hr.employee.public</field>
+			<field name="inherit_id" ref="hr.hr_employee_public_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='parent_id']" position="after">
+					<field name="gm_id" />
+					<field name="is_gm" />
+					<field name="finance" string="Is Finance ?"/>
 				</xpath>
 			</field>
 		</record>

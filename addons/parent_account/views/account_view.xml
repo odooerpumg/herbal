@@ -7,7 +7,9 @@
         <field name="arch" type="xml">
             <field name="code" position="after">
                 <field name="parent_id" domain="[('internal_type','=','view')]"
-                    context="{'show_parent_account':True}" />
+                    context="{'show_parent_account':True}" 
+                    options="{'no_create_edit': True}"
+                    />
             </field>
         </field>
     </record>

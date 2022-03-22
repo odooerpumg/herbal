@@ -15,7 +15,8 @@ Advanced Expenses
 				'hr_expense',
 				'account',
 				'mail',
-				'hr'
+				'hr',
+				'stock'
 				],
 	'data': [
 		'data/ir_sequence_data.xml',
@@ -29,7 +30,7 @@ Advanced Expenses
 		'views/expense_view.xml',
 		'views/hr_expense_prepaid_view.xml',
 		'views/account_transfer_view.xml',
-		'views/account_move_view.xml',
+		# 'views/account_move_view.xml',
 		'views/advance_claim_view.xml',
 		'views/hr_employee_view.xml'
 	],

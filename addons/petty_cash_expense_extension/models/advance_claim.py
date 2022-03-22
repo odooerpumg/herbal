@@ -50,9 +50,69 @@ class Expense_Prepaid(models.Model):
 			return emp_id
 		ids = self.env['hr.employee'].search([('user_id', '=', self.env.uid)])
 		if ids:
-			print('.................. id ',ids)
 			return ids[0]
 		return False
+	
+	def get_approve_gm(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_gm_user_id = False
+		group_gm_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_gm')[1]
+
+		if group_gm_user_id in [g.id for g in user.groups_id]:
+			is_gm_user_id = True
+
+		if is_gm_user_id:
+			result=True
+		self.is_approve_gm = result
+  
+	def get_approve_fn(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_finance_user_id = False
+		group_finance_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_finance')[1]
+
+		if group_finance_user_id in [g.id for g in user.groups_id]:
+			print ('group_finance_user_id',group_finance_user_id)
+			is_finance_user_id = True
+
+		if is_finance_user_id:
+			result=True
+		self.is_approve_finance = result
+  
+	def get_approve_user(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_req_user_id = False
+		group_req_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_user')[1]
+
+		if group_req_user_id in [g.id for g in user.groups_id]:
+			is_req_user_id = True
+
+		if is_req_user_id:
+			result=True
+		self.is_user = result
+	
+	def get_approve_manager(self):
+		result = False
+		user_id = self.env.uid
+		user = self.env['res.users'].browse(user_id)
+		is_manager_user_id = False
+		group_manager_user_id = \
+			self.env['ir.model.data'].get_object_reference('petty_cash_expense_extension', 'group_petty_manager')[1]
+
+		if group_manager_user_id in [g.id for g in user.groups_id]:
+			is_manager_user_id = True
+
+		if is_manager_user_id:
+			result=True
+		self.is_approve = result
 
 	account_ids = fields.Many2one('account.account', 'Advanced Account Name')
 	account_code = fields.Char(related = 'account_ids.code',string='Advanced Account Code')
@@ -75,8 +135,8 @@ class Expense_Prepaid(models.Model):
 	# exp_move_line_ids = fields.One2many('account.move.line', 'exp_exp_id', string='Journal Expense', store=True)
 	# adj_move_line_ids = fields.One2many('account.move.line', 'adj_exp_id', string='Journal Adjustment', store=True)
 	note = fields.Text('ADVANCE NOTE')
-	can_reset = fields.Boolean(compute='_get_can_reset')
-	can_approve = fields.Boolean(compute='_get_can_approve')
+	# can_reset = fields.Boolean(compute='_get_can_reset')
+	# can_approve = fields.Boolean(compute='_get_can_approve')
 	paid_date = fields.Date('Cash Paid Date',default=fields.date.today() , states={'approve':[('required', True)], 'paid':[('readonly', True)], 'closed':[('readonly', True)]})
 	paid_ref = fields.Char('Paid Ref', states={'paid':[('readonly', True)], 'closed':[('readonly', True)]})
 	close_date = fields.Date('Cash Refund Date', states={'closed':[('readonly', True)]})
@@ -100,84 +160,33 @@ class Expense_Prepaid(models.Model):
 	currency_rate = fields.Float(string='Currency Rate')
 	# md = fields.Boolean('Need MD Approved ?')
 	approved_by_id = fields.Many2one('hr.employee',string='Approved By Manager', required=True)
-	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('department_id','=','Finance&Account')]", required=True)
-	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve',default=False)
-	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve',default=False)
-	is_user = fields.Boolean('Is User',compute='get_approve',default=False)
+	finance_approved_id = fields.Many2one('hr.employee',string='Finance Approved', domain="[('finance','=',True)]", required=True)
+	is_approve = fields.Boolean('Is Approve Manager ?',compute='get_approve_manager',default=False)
+	is_approve_finance = fields.Boolean('Is Approve Finance ?',compute='get_approve_fn',default=False)
+	is_approve_gm = fields.Boolean('Is Approve GM ?',compute='get_approve_gm',default=False)
+	is_user = fields.Boolean('Is User',compute='get_approve_user',default=False)
 	user_id = fields.Many2one('res.users','User', default=lambda self: self.env.user,tracking=True)
-	is_cashier = fields.Boolean('Is Cashier',compute='get_approve', default=False)
-
-	def get_approve(self):
-		for approve in self:
-			reason = False
-			finance = False
-			cashier = False
-			user = False
-			approver = False
-			admin = False
-			to_approve_id = self.env.uid
-			user = approve.user_id
-			print('.................. now id ',to_approve_id,' and approve id ',approve.approved_by_id.user_id)
-			# to_approve_id= self.env['hr.employee'].search([('user_id', '=', self.env.uid)]).id
-			print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> RES USERS = ',user)
-			if to_approve_id == approve.approved_by_id.user_id.id:
-				reason = True
-			if to_approve_id == approve.finance_approved_id.user_id.id:
-				finance = True
-			# if user.has_group('petty_cash_expense_extension.group_petty_cashier'):
-			# 	cashier = True
-			# 	print('........................... cashier ',cashier)
-			if user.has_group('petty_cash_expense_extension.group_users'):
-				user = True
-				print('............................... user ',user)
-			print ('>>>>>>>>>>>>> approve ? >>>>>>>>>>>>>>>>> ', reason,' and finance >>>>>>> ',finance)
-			approve.is_approve = reason
-			approve.is_approve_finance = finance
-			# approve.is_cashier = cashier
-			# approve.is_user = user
-			# approve.write({'is_cashier': cashier})
-			approve.write({'is_user': user})
 
 	def get_sequence(self):
-	# 11-01-2021 by M2h ********************************************8
 		sequence = self.env['ir.sequence'].next_by_code('advance.claim')
 		journal = self.state_type.id
-		print('>>>>>>>>>>>> state_type ',str(self.state_type))
-		print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.  code ',str(self.state_type.code))
-		print('.......>>>>>>>>>>>>.--------------- CHOOSE JOURNAL ',journal)
 		journal_ids = self.env['account.journal'].search([('id','=',journal)])
 		code = journal_ids.code
-		print('...........>>>>>>>>>>>>>>>>>>>>>>>>>>>>> code = ',code,' and journal = ',journal_ids)
 		year = datetime.now().year
 		month = datetime.now().month
 		if month < 10:
 			month = '0'+str(month)
 		seq_no = str(self.env.user.company_id.code)+'-'+str(code)+'-'+str(year)+'-'+str(month)+sequence
-		print('....................... sequence no is = ',str(seq_no))
 		return seq_no
 
 	@api.onchange('employee_name')
 	def onchange_employee(self):
 		self.department_id = self.employee_name.department_id.id
 
-	# @api.model
-	# @api.onchange('currency_id')
-	# def get_apiData(self):
-	# 	locale.setlocale(locale.LC_ALL, '')
-	# 	url = 'https://forex.cbm.gov.mm/api/latest'
-	# 	resp = requests.get(url, verify=False)
-	# 	response = json.loads(resp.text)
-	# 	api_data = response['rates']
-	# 	if self.currency_id:
-	# 		if self.currency_id.name != 'MMK':
-	# 			self.currency_rate = locale.atof(api_data[self.currency_id.name])
-	# 		else:
-	# 			self.currency_rate = 1.0
-
 	def print_adv_claim(self):
 		par=self.ids
 		if par:
-			url = 'http://localhost:8080/birt/frameset?__report=idealab_claim_req.rptdesign&order_id=' + str(self.ids[0])
+			url = 'http://103.116.190.54:8080/birt/frameset?__report=herbal_claim_req.rptdesign&order_id=' + str(self.ids[0])
 		if url :
 			return {
 			'type' : 'ir.actions.act_url',
@@ -193,7 +202,6 @@ class Expense_Prepaid(models.Model):
 	def compute_amount(self):
 		if self.line_ids:
 			total = 0.0
-			print ('why no woking ----------------------------------------------->><<>><<>><<>>')
 			for line in self.line_ids:
 				total += line.amount
 			self.advance_amount = total
@@ -249,12 +257,14 @@ class Expense_Prepaid(models.Model):
 		return self.write({'account_move_id': move.id,'state': 'paid'})
 
 	#expense prepaid
-	# @api.multi
 	def _prepare_move_line_value(self):
 		self.ensure_one()
 		aml_name = self.employee_name.name + ': ' + self.voucher_no.split('\n')[0][:64]
-		if not self.account_ids:
-			raise ValidationError('Define Advance Account')
+		# if not self.account_ids:
+		# 	raise ValidationError('Define Advance Account')
+		# acc_ids = self.env['account.account'].search([('name','=','Advance Payment - Employee')])
+		# self.account_ids = acc_ids.id
+		# self.account_code = acc_ids.code
 		move_line = {
 			'type': 'src',
 			'name': aml_name,
@@ -265,10 +275,7 @@ class Expense_Prepaid(models.Model):
 			'account_id': self.account_ids.id,
 		}
 		return move_line
-
 	
-
-	# @api.multi
 	def _compute_expense_totals(self, company_currency, account_move_lines, move_date):
 		#print "----------------cumpute expense total--------------------"
 		self.ensure_one()
@@ -312,7 +319,6 @@ class Expense_Prepaid(models.Model):
 	def _prepare_move_line(self, line):
 		#partner_id = self.employee_name.address_home_id.commercial_partner_id.i
 		if self.currency_id.id !=self.company_id.currency_id.id:
-			print('woking here ---------------------------->><<>>><<>>>',line['price'])
 			return {
 				'date_maturity': line.get('date_maturity'),
 				'adv_claim_id': self.id,
@@ -334,7 +340,6 @@ class Expense_Prepaid(models.Model):
 				'payment_id': line.get('payment_id'),
 			}
 		else:
-			print('not working here ----------------------->><<>><<>>')
 			return {
 				'date_maturity': line.get('date_maturity'),
 				'adv_claim_id': self.id,
@@ -356,44 +361,12 @@ class Expense_Prepaid(models.Model):
 				'payment_id': line.get('payment_id'),
 			}
 
-	def _get_currency(self, cr, uid, context=None):
-		user = self.pool.get('res.users').browse(cr, uid, [uid], context=context)[0]
-		return user.company_id.currency_id.id
-
-	#@api.one
-	def _get_can_reset(self):
-		result = False
-		is_financial_manager = False
-		user = self.env['res.users'].browse()
-		group_financial_manager_id = self.env['ir.model.data'].get_object_reference('account', 'group_account_manager')[1]
-		if group_financial_manager_id in [g.id for g in user.groups_id]:
-			is_financial_manager = True
-
-		for expense in self.browse(self.id):
-			if expense.state in ['confirm','cancel']:
-				if is_financial_manager:
-					result = False
-				elif expense.employee_name and expense.employee_name.user_id and expense.employee_name.user_id.id == self.env.uid:
-					result = True
-		self.can_reset = result
-
-	# @api.one
-	def _get_can_approve(self):
-		#print '--------------------GET CAN APPROVE-------------------------'
-		# result = False
-		# #print self.env.user , self.fst_aproval.user_id
-		# if self.fst_aproval.user_id == self.env.user:
-		#     #print "Correct User"
-		#     self.can_approve = True
-		self.can_approve = True
-
 	@api.model
 	def create(self, data):
 		# data['voucher_no'] = self.get_sequence()
 		record_id = super(Expense_Prepaid, self).create(data)
 		return record_id
 
-	# @api.multi
 	def name_get(self):
 		res = super(Expense_Prepaid, self).name_get()
 		data = []
@@ -424,7 +397,6 @@ class Expense_Prepaid(models.Model):
 		for d in dd:
 			cc += str(d)
 		cc = int(cc)
-		# print('........................................... id ',str(dd),' and cc ',cc)
 		value = {
 				'activity_type_id': 4,
 				'date_deadline': date,
@@ -435,11 +407,7 @@ class Expense_Prepaid(models.Model):
 		}
 		mail_ids.create(value)
 		self.voucher_no = self.get_sequence()
-		# print('............... mail.activity created',mail_ids)
 		return self.write({'state': 'confirm'})
-
-	# def md_approved(self):
-	# 	return self.write({'state': 'md'})
 
 	def advance_claim_draft(self):
 		user_ids = self.env['res.users'].search([('id','=',self.env.uid)])
@@ -460,9 +428,7 @@ class Expense_Prepaid(models.Model):
 		for d in dd:
 			cc += str(d)
 		cc = int(cc)
-		# print('........................................... id ',str(dd),' and cc ',cc)
 		mail_s = mail_ids.search([('res_model','=','advance.claim'),('res_id','=',cc)])
-		# print('>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<< +++++++++++++++  ',mail_s)
 		mail_s.unlink()
 		value = {
 				'activity_type_id': 4,
@@ -473,7 +439,6 @@ class Expense_Prepaid(models.Model):
 				'res_id': cc,
 		}
 		mail_ids.create(value)
-		# print('............... mail.activity created',mail_ids)
 		return self.write({'state': 'manager_approve'})
 
 	def approve(self):
@@ -516,11 +481,6 @@ class Expense_Prepaid(models.Model):
 		# mail_s.unlink()
 		return self.write({'state': 'gm_approve'})
 
-	# @api.one
-	# def advance_claim_manager_accept_snd(self):
-	# 	return self.write({'state': 'manager_accepted_snd'})
-
-	# @api.one
 	def cancel(self):
 		return self.write({'state': 'cancel'})
 
@@ -532,7 +492,6 @@ class Expense_Prepaid(models.Model):
 		return self.write({'close_date': date,'state': 'closed','close_ref':close_ref})
 
 	#for closed function
-	# @api.multi
 	def _move_line_get_closed(self):
 		account_move = []
 		for expense in self:
@@ -540,7 +499,6 @@ class Expense_Prepaid(models.Model):
 			account_move.append(move_line)
 		return account_move
 
-	# @api.multi
 	def _prepare_move_line_value_closed(self):
 		self.ensure_one()
 		aml_name = self.employee_name.name + ': ' + self.voucher_no.split('\n')[0][:64]
@@ -609,7 +567,6 @@ class Expense_Prepaid_Line(models.Model):
 			self.analytic_account = self.calim_id.analytic_id
 			self.ref = self.calim_id.name_reference
 
-	# @api.multi
 	def _get_line_numbers(self):
 		for expense in self.mapped('calim_id'):
 			line_no = 1
@@ -627,11 +584,9 @@ class Expense_Prepaid_Line(models.Model):
 	@api.model
 	def create(self,data):
 		if data:
-			#print data,"Data_______"
 			calim_id = super(Expense_Prepaid_Line, self).create(data)
 		return calim_id
 	
-	# @api.one
 	def write(self,vals):
 		flag = super(Expense_Prepaid_Line, self).write(vals)
 

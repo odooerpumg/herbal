@@ -8,8 +8,11 @@
             <t t-if='receipt.cashier'>
                 <div class='pos-receipt-order-data' style='text-align: left;margin-top: 3%'>
                     <div>Cashier : <t t-esc='receipt.cashier' /></div>
+                    <div>Customer : <t t-esc='receipt.client' /></div>
+                    <div>Thank You</div>
                 </div>
-            </t>            
+            </t>
+            <br/>
         </t>
     </t>
 </templates>

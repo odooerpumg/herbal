@@ -23,37 +23,31 @@
 		<record id="group_petty_manager" model="res.groups">
 			<field name="name">Petty Manager</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_user'))]"/>
 		</record>
 
 		<record id="group_petty_finance" model="res.groups">
 			<field name="name">Petty Finance</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_manager'))]"/>
 		</record>
 
 		<record id="group_petty_cashier" model="res.groups">
 			<field name="name">Petty Cashier</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_finance'))]"/>
 		</record>
 
 		<record id="group_petty_gm" model="res.groups">
 			<field name="name">Petty GM</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_cashier'))]"/>
 		</record>
 
 		<record id="group_petty_admin" model="res.groups">
 			<field name="name">Petty Admin</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_gm'))]"/>
 		</record>
 
 		<record id="group_users" model="res.groups">
 			<field name="name">Request Users</field>
 			<field name="category_id" ref="petty_cash_expense_extension.module_petty_cash_access"/>
-			<field name="implied_ids" eval="[(4, ref('petty_cash_expense_extension.group_petty_admin'))]"/>
 		</record>
 
 		<!-- Request User Record Rule -->
