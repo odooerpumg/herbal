@@ -238,3 +238,13 @@ class PosSessions(models.Model):
         data = self._create_extra_move_lines(data)
         data = self._create_balancing_line(data)
         data = self._reconcile_account_move_lines(data)
+
+    def _get_statement_line_vals(self, statement, receivable_account, amount, date=False, partner=False):
+        return {
+            'date': self.backlogs_payment_date,
+            'amount': amount,
+            'name': self.name,
+            'statement_id': statement.id,
+            'account_id': receivable_account.id,
+            'partner_id': partner and self.env["res.partner"]._find_accounting_partner(partner).id
+        }
