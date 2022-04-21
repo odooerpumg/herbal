@@ -416,7 +416,7 @@ class PosSessions(models.Model):
 
     def _get_statement_line_vals(self, statement, receivable_account, amount, date=False, partner=False):
         return {
-            'date': self.backlogs_payment_date,
+            'date': self.backlogs_payment_date if self.backlogs_payment_date else fields.Date.context_today(self),
             'amount': amount,
             'name': self.name,
             'statement_id': statement.id,
