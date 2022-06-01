@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_read,sale_order_read,sale.model_sale_order,sale_extension.group_sale_read_access,1,0,0,0
+access_sale_order_line_read,sale_order_line_read,sale.model_sale_order_line,sale_extension.group_sale_read_access,1,0,0,0
+access_stock_picking_read,stock_picking_read,stock.model_stock_picking,sale_extension.group_sale_read_access,1,0,0,0
+access_stock_scrap_read,stock_scrap_read,stock.model_stock_scrap,sale_extension.group_sale_read_access,1,0,0,0
+access_sale_report_read,sale_report_read,sale.model_sale_report,sale_extension.group_sale_read_access,1,0,0,0
+

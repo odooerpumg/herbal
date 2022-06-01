@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   
+    <record id="purchase.menu_report_purchase" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('purchase_extension.group_purchase_read_access')), (3, ref('purchase.group_purchase_manager'))]"/>
+    </record>
+    <record id="purchase.purchase_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('purchase_extension.group_purchase_read_access')), (3, ref('purchase.group_purchase_user'))]"/>
+    </record>
+     <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('purchase_extension.group_purchase_read_access')), (3, ref('purchase.group_purchase_user')),(3, ref('purchase.group_purchase_manager'))]"/>
+    </record>
+    <menuitem action="purchase.purchase_form_action" id="purchase.menu_purchase_form_action" parent="purchase.menu_procurement_management" groups="purchase_extension.group_purchase_read_access" sequence="6"/>
+
+    <!-- Products Control Menu -->
+    <menuitem id="purchase.menu_purchase_products" name="Products" parent="purchase.menu_purchase_root" groups="purchase.group_purchase_user" sequence="5"/>
+
+    <menuitem action="purchase.purchase_rfq" id="purchase.menu_purchase_rfq"
+            parent="purchase.menu_procurement_management"
+            groups="purchase.group_purchase_user" sequence="0"/>
+
+    <!--Supplier menu-->
+    <menuitem id="purchase.menu_procurement_management_supplier_name" name="Vendors"
+        parent="purchase.menu_procurement_management"
+        action="account.res_partner_action_supplier" 
+        groups="purchase.group_purchase_user" sequence="15"/>
+</odoo>

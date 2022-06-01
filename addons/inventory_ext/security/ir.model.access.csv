@@ -4,3 +4,7 @@ access_nrc_description,inventory_ext.nrc_description,model_nrc_description,base.
 access_nrc_type,inventory_ext.nrc_type,model_nrc_type,base.group_user,1,1,1,1
 access_business_branch,inventory_ext.business_branch,model_business_branch,base.group_user,1,1,1,1
 access_office_location,inventory_ext.office_location,model_office_location,base.group_user,1,1,1,1
+stock_account.access_stock_picking_invoicing_payments,stock.picking,stock.model_stock_picking,inventory_ext.group_stock_read_access,1,0,0,0
+access_stock_move_doc,inventory_ext.stock_move_doc,stock.model_stock_move,inventory_ext.group_stock_read_access,1,0,0,0
+access_stock_move_line_doc,inventory_ext.stock_move_line_doc,stock.model_stock_move_line,inventory_ext.group_stock_read_access,1,0,0,0
+access_product_template_doc,inventory_ext.product_template_doc,product.model_product_template,inventory_ext.group_stock_read_access,1,0,0,0

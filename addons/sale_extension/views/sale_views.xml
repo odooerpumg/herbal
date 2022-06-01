@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="sale.menu_sale_report" model="ir.ui.menu">
-        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')), (3, ref('sales_team.group_sale_manager'))]"/>
+        <field name="groups_id" eval="[(4, ref('sale_extension.group_sale_read_access')), (3, ref('sales_team.group_sale_manager'))]"/>
+    </record>
+    <record id="sale.menu_sale_order" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('sale_extension.group_sale_read_access')), (3, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+    <record id="sale.menu_report_product_all" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('sale_extension.group_sale_read_access')),(3, ref('sales_team.group_sale_salesman'))]"/>
     </record>
 </odoo>
