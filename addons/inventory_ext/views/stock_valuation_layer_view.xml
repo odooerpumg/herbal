@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('inventory_ext.group_stock_read_access')), (3, ref('stock.group_stock_user')),(3, ref('stock.group_stock_manager'))]"/>
+    </record>
+
+    <record id="stock.all_picking" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('inventory_ext.group_stock_read_access')), (3, ref('stock.group_stock_user')),(3, ref('stock.group_stock_manager'))]"/>
+    </record>
+
+    <record id="stock.menu_warehouse_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('inventory_ext.group_stock_read_access')), (3, ref('stock.group_stock_manager'))]"/>
+    </record>
+    <menuitem id="stock.menu_stock_inventory_control" name="Master Data" parent="stock.menu_stock_root" groups="stock.group_stock_user" sequence="4"/>
 
     <record id="stock_valuation_layer_form_inherit" model="ir.ui.view">
         <field name="name">stock.move.inherit.form</field>
@@ -23,4 +35,6 @@
             </xpath>
         </field>
     </record>
+
+
 </odoo>

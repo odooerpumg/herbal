@@ -2,19 +2,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Sale Extension',
+    'name': 'Purchase Extension',
     'version': '1.1',
-    'category': 'Sales/Sales',
-    'summary': 'Sales internal machinery',
+    'category': 'Purchase Order',
+    'summary': 'Purchase internal machinery',
     'description': """
-This module contains all the common features of Sales Management and eCommerce.
+This module contains all the common features of Purchase Management and eCommerce.
     """,
-    'depends': ['sale'],
+    'depends': ['purchase'],
     'data': [
         'security/security_view.xml',
         'security/ir.model.access.csv',
-        'views/sale_views.xml',
-
+        'views/purchase_view.xml',
     ],
     'installable': True,
     'auto_install': False

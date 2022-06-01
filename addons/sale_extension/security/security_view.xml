@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_sale_read_access" model="res.groups">
+            <field name="name">User: Documents Read</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="comment">the user will have access to readonly data in the sales application.</field>
+        </record>
+         <record id="sales_team.group_sale_salesman" model="res.groups">
+            <field name="name">User: Own Documents Only</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('sale_extension.group_sale_read_access'))]"/>
+            <field name="comment">the user will have access to his own data in the sales application.</field>
+        </record>
+        
+    </data>
+</odoo>

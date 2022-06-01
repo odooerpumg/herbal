@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_read,purchase_order_read,purchase.model_purchase_order,purchase_extension.group_purchase_read_access,1,0,0,0
+access_purchase_order_line_read,purchase_order_line_read,purchase.model_purchase_order_line,purchase_extension.group_purchase_read_access,1,0,0,0
+access_stock_picking_read,stock_picking_read,stock.model_stock_picking,purchase_extension.group_purchase_read_access,1,0,0,0
+access_stock_scrap_read,stock_scrap_read,stock.model_stock_scrap,purchase_extension.group_purchase_read_access,1,0,0,0
+access_purchase_report_read,purchase_report_read,purchase.model_purchase_report,purchase_extension.group_purchase_read_access,1,0,0,0
