@@ -9,7 +9,7 @@
     'description': """
 This module contains all the common features of Purchase Management and eCommerce.
     """,
-    'depends': ['purchase'],
+    'depends': ['purchase','purchase_stock'],
     'data': [
         'security/security_view.xml',
         'security/ir.model.access.csv',
