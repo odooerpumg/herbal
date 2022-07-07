@@ -1,13 +1,16 @@
 
 from odoo import api, fields, models, _
-from odoo.tools.float_utils import float_compare, float_round
-from dateutil import relativedelta
-from odoo.exceptions import UserError
+# from odoo.tools.float_utils import float_compare, float_round
+# from dateutil import relativedelta
+# from odoo.exceptions import UserError
+# from odoo.addons.purchase.models.purchase import PurchaseOrder as Purchase
 
-class PurchaseOrder(models.Model):
+class PurchaseOrderInherit(models.Model):
     _inherit = 'purchase.order'
 
     def button_cancel(self):
+        print('BUtton Cancel=============+>>>---------------------------------------------------------')
+        self.write({'state':'cancel'})
         # for order in self:
             # for move in order.order_line.mapped('move_ids'):
             #     if move.state == 'done':
@@ -30,4 +33,4 @@ class PurchaseOrder(models.Model):
 
             # order.order_line.write({'move_dest_ids':[(5,0,0)]})
 
-        return super(PurchaseOrder, self).button_cancel()
+        # return super(PurchaseOrder, self).button_cancel()
