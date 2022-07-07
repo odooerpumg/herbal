@@ -8,7 +8,7 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     def button_cancel(self):
-        for order in self:
+        # for order in self:
             # for move in order.order_line.mapped('move_ids'):
             #     if move.state == 'done':
             #         raise UserError(_('Unable to cancel purchase order %s as some receptions have already been done.') % (order.name))
