@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@class='oe_title']/group" position="inside">
-                    <field name="bu_id" required="0"/>
+                    <field name="bu_id" required="1"/>
                 </xpath>
             </field>
         </record>
